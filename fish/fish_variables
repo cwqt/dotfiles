@@ -1,0 +1,41 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x20\x2d\x2dhidden\x20\x2d\x2dfollow\x20\x2dg\x20\x22\x21\x7b\x2egit\x2c\x2enext\x2cnode_modules\x2cdist\x7d\x22
+SETUVAR --export LSCOLORS:Exfxcxdxbxegedabagacad
+SETUVAR __fish_initialized:3100
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/cass/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/cass/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:/Users/cass/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e/Users/cass/\x2econfig/fish/functions/_nvm_list\x2efish\x1e/Users/cass/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e/Users/cass/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e/Users/cass/\x2econfig/fish/functions/nvm\x2efish\x1e/Users/cass/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e/Users/cass/\x2econfig/fish/completions/nvm\x2efish
+SETUVAR _fisher_joseluisq_2F_gitnow_40_32_2E_39_2E_30__files:/Users/cass/\x2econfig/fish/functions/__gitnow_config_file\x2efish\x1e/Users/cass/\x2econfig/fish/functions/__gitnow_functions\x2efish\x1e/Users/cass/\x2econfig/fish/functions/__gitnow_manual\x2efish\x1e/Users/cass/\x2econfig/fish/conf\x2ed/gitnow\x2efish\x1e/Users/cass/\x2econfig/fish/conf\x2ed/gitnow_config\x2efish\x1e/Users/cass/\x2econfig/fish/completions/__gitnow_completions\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/nvm\x2efish\x1epure\x2dfish/pure\x1ejorgebucaran/hydro\x1ejoseluisq/gitnow\x402\x2e9\x2e0
+SETUVAR fish_color_autosuggestion:BD93F9
+SETUVAR fish_color_cancel:\x2dr
+SETUVAR fish_color_command:F8F8F2
+SETUVAR fish_color_comment:6272A4
+SETUVAR fish_color_cwd:green
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:50FA7B
+SETUVAR fish_color_error:FFB86C
+SETUVAR fish_color_escape:00a6b2
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:normal
+SETUVAR fish_color_host_remote:yellow
+SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblue
+SETUVAR fish_color_normal:normal
+SETUVAR fish_color_operator:00a6b2
+SETUVAR fish_color_param:FF79C6
+SETUVAR fish_color_quote:F1FA8C
+SETUVAR fish_color_redirection:8BE9FD
+SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_status:red
+SETUVAR fish_color_user:brgreen
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_pager_color_completion:normal
+SETUVAR fish_pager_color_description:B3A06D\x1eyellow
+SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_user_paths:/Users/cass/\x2ecargo/bin\x1e/Users/cass/\x2eyarn/bin\x1e/opt/homebrew/bin
+SETUVAR nvm_data:/Users/cass/\x2elocal/share/nvm
+SETUVAR nvm_default_version:latest
+SETUVAR nvm_mirror:https\x3a//nodejs\x2eorg/dist

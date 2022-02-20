@@ -1,0 +1,40 @@
+{
+  "title": "Change Ctrl to Esc and Control on HHKB",
+  "rules": [
+    {
+      "description": "Change Ctrl to Esc and Control on HHKB",
+      "manipulators": [
+        {
+          "type": "device_if",
+          "identifiers": [
+            {
+              "vendor_id": 1278,
+              "product_id": 32,
+              "description": "HHKB"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_control",
+            "modifiers": {
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

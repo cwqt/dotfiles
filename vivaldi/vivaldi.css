@@ -1,0 +1,17 @@
+/* Hide new tab button */
+.newtab {
+  display: none;
+}
+
+/* Hide traffic light buttons macOS */
+#tabs-container.top {
+  padding-left: 5px !important;
+}
+.window-buttongroup {
+  display: none !important;
+}
+
+/* Hide active tab favicon highlight */
+.tab.active .favicon {
+  filter: none !important;
+}

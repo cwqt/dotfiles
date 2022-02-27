@@ -16,14 +16,8 @@ function _nvm_on_pwd --on-variable PWD
     test -e $PWD/.nvmrc && nvm use
 end
 
-set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow -g "!{.git,.next,node_modules,dist}"'
+set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow -g "!{.git,.next,node_modules,dist,.yarn.lock}"'
 set FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 
 set -gx EDITOR nvim
-
-
-
-
-
-
 

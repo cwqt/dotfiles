@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x20\x2d\x2dhidden\x20\x2d\x2dfollow\x20\x2dg\x20\x22\x21\x7b\x2egit\x2c\x2enext\x2cnode_modules\x2cdist\x7d\x22
+SETUVAR --export FZF_DEFAULT_COMMAND:rg\x20\x2d\x2dfiles\x20\x2d\x2dno\x2dignore\x20\x2d\x2dhidden\x20\x2d\x2dfollow\x20\x2dg\x20\x22\x21\x7b\x2egit\x2c\x2enext\x2cnode_modules\x2cdist\x2c\x2eyarn\x2elock\x7d\x22
 SETUVAR --export LSCOLORS:Exfxcxdxbxegedabagacad
 SETUVAR __fish_initialized:3100
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/cass/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/cass/\x2econfig/fish/completions/fisher\x2efish
@@ -37,5 +37,5 @@ SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_paths:/Users/cass/\x2ecargo/bin\x1e/Users/cass/\x2eyarn/bin\x1e/opt/homebrew/bin
 SETUVAR nvm_data:/Users/cass/\x2elocal/share/nvm
-SETUVAR nvm_default_version:latest
+SETUVAR nvm_default_version:17
 SETUVAR nvm_mirror:https\x3a//nodejs\x2eorg/dist

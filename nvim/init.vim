@@ -10,25 +10,26 @@ Plug 'kqito/vim-easy-replace' " fast replace cursor word across file
 Plug 'ellisonleao/glow.nvim' " markdown preview
 Plug 'numToStr/Comment.nvim' " comment
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" git ---------------------------------------------
+Plug 'TimUntersberger/neogit' " magit clone
 Plug 'APZelos/blamer.nvim' " git blame on cursor
+Plug 'lewis6991/gitsigns.nvim' " git gutter
+Plug 'sindrets/diffview.nvim' " git diff viewer
+Plug 'ruifm/gitlinker.nvim' " link to specific lines
+" ------------------------------------------------
 Plug 'rktjmp/lush.nvim' " styling for gruvbox
 Plug 'sstallion/vim-cursorline' " only show cursorline on active window
 Plug 'lukas-reineke/indent-blankline.nvim' " indentation guides
-Plug 'lewis6991/gitsigns.nvim' " git gutter
 Plug 'rhysd/conflict-marker.vim' " merge conflict markers
-Plug 'tpope/vim-fugitive' " git wrapper
-Plug 'rbong/vim-flog' " git graph
 Plug 'neovim/nvim-lspconfig' " language servers
 Plug 'creativenull/efmls-configs-nvim' " efm formatters & linters
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils' " ts lsp utils
 Plug 'windwp/nvim-spectre' " global search and replace
-Plug 'sindrets/diffview.nvim' " git diff viewer
 Plug 'kosayoda/nvim-lightbulb' " code action hiing
 Plug 'ray-x/lsp_signature.nvim' " fn signature while typing
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
-Plug 'OJFord/vim-quickfix-conflicts'
+Plug 'OJFord/vim-quickfix-conflicts' " all conflicts in quickfix
 Plug 'RRethy/vim-illuminate'
-Plug 'kevinhwang91/nvim-bqf' " better quickfix
 Plug 'numToStr/FTerm.nvim' " floating terminal
 Plug 'onsails/lspkind-nvim'
 Plug 'cwqt/nvim-code-action-menu'
@@ -45,8 +46,8 @@ Plug 'supercrabtree/vim-resurrect' " reopen closed buffers
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " treesitting
 Plug 'romgrk/nvim-treesitter-context' " context bar
 Plug 'hoob3rt/lualine.nvim' " status bar at the bottom
-Plug 'arkav/lualine-lsp-progress' " lsp progress
-Plug 'ggandor/lightspeed.nvim' " better easymotion
+Plug 'j-hui/fidget.nvim'
+Plug 'ggandor/lightspeed.nvim', { 'commit': '4d8359a30b26ee5316d0e7c79af08b10cb17a57b'} " better easymotion
 Plug 'pantharshit00/vim-prisma' " prisma syntax hiing
 Plug 'romgrk/barbar.nvim' " tab/buffer top bar
 Plug 'folke/trouble.nvim' " error hiing
@@ -59,9 +60,14 @@ Plug 'rebelot/kanagawa.nvim' " color theme
 Plug 'folke/todo-comments.nvim' " todo comment hi
 " Plug 'folke/which-key.nvim'
 Plug 'zeertzjq/which-key.nvim', { 'branch': 'patch-1'}
+Plug 'lewis6991/impatient.nvim' " faster startup
+Plug 'kyazdani42/nvim-tree.lua' " file tree 
 
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'tanvirtin/vgit.nvim'
 call plug#end()
+
+" cuts my load time from 120ms to 50ms
+lua require('impatient')
 
 set completeopt=menu,menuone,noselect
 syntax on 	       " hi syntax
@@ -124,11 +130,11 @@ autocmd TermOpen * startinsert
 autocmd FocusLost * silent! wall
 " exit terminal on double escape
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
-nmap <leader>` :ToggleTerm<CR>
 " ci" don't yank
 nnoremap c "_c
 " maintain cursor position in buffers
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
 
 lua require('main')
 
@@ -172,7 +178,7 @@ let g:sneak#label = 1
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 xnoremap <expr> P 'Pgv"'.v:register.'y`>'
 " Source Vim configuration file and install plugins
-nnoremap <silent><leader>1 :source $MYVIMRC \| :PlugInstall<CR>
+nnoremap <silent><leader>1 :source $MYVIMRC \| :PlugInstall \| :LuaCacheClear<CR>
 " redo
 noremap U <C-R>
 " line wrap go to next line
@@ -192,11 +198,7 @@ nnoremap <silent> _ :nohl<CR>
 " recenter cursor
 map <silent><leader>cc :set so=999 <CR>:set cursorline<CR>:set number<CR>
 " git mappings
-nmap <leader>gc :Git add .<bar>:Git commit<CR>
-nmap <leader>gph :Git push<CR>
-nmap <leader>gpl :Git pull<CR>
-nmap <leader>gb :Git blame<CR>
-nmap <leader>gs :Git status<CR>
+nmap <leader>gg :Neogit<CR>
 
 nmap <leader>rl :LspRestart<CR>
 " search and replace
@@ -208,6 +210,7 @@ nnoremap <silent> <leader>kk :silent !kitty @ set-spacing padding=0 margin=0<CR>
 " disable irrating command history
 nnoremap q: <nop>
 nnoremap Q <nop>
+
 
 " yank to end of line, like D
 map Y y$
@@ -234,6 +237,13 @@ command! -bang -nargs=* BLines
 noremap <silent> <leader>p :FZF<CR>
 nnoremap <silent> <leader>f :Rg<CR>
 nnoremap <silent> <leader>l :BLines<cr>
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
+" autocmd! FileType fzf
+" autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber nornu
+"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler number
+
+" let g:fzf_layout = { 'down': '40%' }
 let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'top' } }
 " escape to quit https://github.com/junegunn/fzf/issues/1393
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
@@ -241,6 +251,11 @@ autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 " create split and move to it
 nnoremap <A-;> <C-w>v<C-w>l<CR>
 nnoremap <A-'> <C-w>s<C-w>j<CR>
+" change split dimensions
+map <A-H> :vertical resize +4<CR>
+map <A-J> :resize -2<CR>
+map <A-K> :resize +2<CR>
+map <A-L> :vertical resize -4<CR>
 
 " moving around splits, backwards and forwards
 map <Tab> <C-W><C-W>
@@ -251,7 +266,7 @@ nnoremap <Leader>o o<Esc>0"_D
 nnoremap <Leader>O O<Esc>0"_D
 
 " git conflicts quickfix menu
-nnoremap <Leader>co <cmd>Conflicts<CR>
+nnoremap <Leader>co <cmd>call conflicts#PopulateConflicts() <bar> TroubleToggle quickfix<CR>
 
 " trouble
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
@@ -359,3 +374,4 @@ let g:startify_custom_header = ""
 " Lazy shift finger
 command! -bar -nargs=* -complete=file -range=% -bang W         <line1>,<line2>write<bang> <args>
 command! -bar -nargs=* -complete=file -range=% -bang Wq        <line1>,<line2>wq<bang> <args>
+

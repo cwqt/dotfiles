@@ -55,8 +55,7 @@ require("lualine").setup({
       {
         "filename",
         color = { bg = bg },
-      },
-      { "lsp_progress", color = { bg = bg } },
+      }
     },
     lualine_x = {
       {

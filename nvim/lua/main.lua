@@ -1,10 +1,37 @@
 local lsp = require("lspconfig")
 require("filetype").setup({})
-require("gitsigns").setup()
 require("goto-preview").setup({
   width = 80,
 })
 require("treesitter-context").setup({})
+require("gitlinker").setup({
+  opts = {
+    print_url = false,
+  },
+  mappings = "<leader>gy",
+})
+require("neogit").setup({
+  kind = "split",
+  integrations = {
+    diffview = true,
+  },
+  signs = {
+    section = { "", "" },
+    item = { "", "" },
+    hunk = { "", "" },
+  },
+})
+
+require("fidget").setup({
+  text = {
+    spinner = "dots",
+  },
+  window = {
+    relative = "win", -- where to anchor, either "win" or "editor"
+    blend = 0, -- &winblend for the window
+    zindex = nil, -- the zindex value for the window
+  },
+})
 
 require("FTerm").setup({
   cmd = "/opt/homebrew/bin/fish",
@@ -24,6 +51,7 @@ augroup kitty_mp
     autocmd VimEnter * :silent !kitty @ set-spacing padding=0 margin=0
 augroup END
 ]])
+
 -- File sidebar ------------------------------------------------------------
 require("nvim-tree").setup({
   auto_close = true,
@@ -31,6 +59,7 @@ require("nvim-tree").setup({
     enable = true,
   },
   view = {
+    width = 40,
     hide_root_folder = true,
   },
   hijack_cursor = true,
@@ -122,7 +151,13 @@ local on_attach = function(client, bufnr)
 
   -- buf_set_keymap("n", "ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   buf_set_keymap("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+  buf_set_keymap(
+    "n",
+    "gr",
+    "<Cmd>TroubleToggle lsp_references<CR>",
+    -- "<Cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>",
+    opts
+  )
   buf_set_keymap(
     "n",
     "ge",
@@ -279,8 +314,8 @@ local cb = require("diffview.config").diffview_callback
 
 require("diffview").setup({
   diff_binaries = false, -- Show diffs for binaries
-  enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
-  use_icons = true, -- Requires nvim-web-devicons
+  enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
+  use_icons = false, -- Requires nvim-web-devicons
   icons = {
     -- Only applies when use_icons is true.
     folder_closed = "",
@@ -291,10 +326,10 @@ require("diffview").setup({
     fold_open = "",
   },
   file_panel = {
-    position = "left", -- One of 'left', 'right', 'top', 'bottom'
+    position = "bottom", -- One of 'left', 'right', 'top', 'bottom'
     width = 35, -- Only applies when position is 'left' or 'right'
     height = 10, -- Only applies when position is 'top' or 'bottom'
-    listing_style = "tree", -- One of 'list' or 'tree'
+    listing_style = "list", -- One of 'list' or 'tree'
     tree_options = {
       -- Only applies when listing_style is 'tree'
       flatten_dirs = true, -- Flatten dirs that only contain one single dir
@@ -382,4 +417,42 @@ require("diffview").setup({
       ["q"] = cb("close"),
     },
   },
+})
+
+require("gitsigns").setup({
+  signs = {
+    add = { text = "┃" },
+    change = { text = "┃" },
+    delete = { text = "┃" },
+    topdelete = { text = "┃" },
+    changedelete = { text = "┃" },
+  },
+  on_attach = function(bufnr)
+    local function map(mode, lhs, rhs, opts)
+      opts = vim.tbl_extend(
+        "force",
+        { noremap = true, silent = true },
+        opts or {}
+      )
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    end
+
+    -- Navigation
+    map(
+      "n",
+      "]h",
+      "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'",
+      { expr = true }
+    )
+    map(
+      "n",
+      "[h",
+      "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'",
+      { expr = true }
+    )
+
+    map("n", "hp", "<cmd>Gitsigns preview_hunk<CR>")
+    map("n", "hd", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+    map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
+  end,
 })

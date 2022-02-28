@@ -11,7 +11,7 @@ require("gitlinker").setup({
   mappings = "<leader>gy",
 })
 require("neogit").setup({
-  kind = "split",
+  disable_hint = true,
   integrations = {
     diffview = true,
   },
@@ -31,6 +31,20 @@ require("fidget").setup({
     blend = 0, -- &winblend for the window
     zindex = nil, -- the zindex value for the window
   },
+})
+
+-- abuse which key to m -- show help message on the command line when the popup is visibleake our timeoutlen of 0 work
+-- so that things like fzf/toggleterm react instantly
+require("which-key").setup({
+  -- window = {
+  --   margin = { 0, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+  --   padding = { 1, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
+  -- },
+  -- show_help = false,
+  -- layout = {
+  --   height = { min = 1, max = 5 }, -- min and max height of the columns
+  --   spacing = 3, -- spacing between columns
+  -- },
 })
 
 require("FTerm").setup({
@@ -326,7 +340,7 @@ require("diffview").setup({
     fold_open = "",
   },
   file_panel = {
-    position = "bottom", -- One of 'left', 'right', 'top', 'bottom'
+    position = "left", -- One of 'left', 'right', 'top', 'bottom'
     width = 35, -- Only applies when position is 'left' or 'right'
     height = 10, -- Only applies when position is 'top' or 'bottom'
     listing_style = "list", -- One of 'list' or 'tree'
@@ -418,6 +432,26 @@ require("diffview").setup({
     },
   },
 })
+local last_tabpage = vim.api.nvim_get_current_tabpage()
+
+function DiffviewToggle()
+  local lib = require("diffview.lib")
+  local view = lib.get_current_view()
+  if view then
+    -- Current tabpage is a Diffview: go to previous tabpage
+    vim.api.nvim_set_current_tabpage(last_tabpage)
+  else
+    -- We are not in a Diffview: save current tabpagenr and go to a Diffview.
+    last_tabpage = vim.api.nvim_get_current_tabpage()
+    if #lib.views > 0 then
+      -- An open Diffview exists: go to that one.
+      vim.api.nvim_set_current_tabpage(lib.views[1].tabpage)
+    else
+      -- No open Diffview exists: Open a new one
+      vim.cmd(":DiffviewOpen")
+    end
+  end
+end
 
 require("gitsigns").setup({
   signs = {

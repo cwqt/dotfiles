@@ -10,7 +10,7 @@ Plug 'kqito/vim-easy-replace'                               " replace words unde
 Plug 'numToStr/Comment.nvim'                                " commenting
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comment, jsx
 " git ---------------------------------------------
-Plug 'TimUntersberger/neogit'                               " magit clone
+Plug 'tpope/vim-fugitive'                                   " git porcelain
 Plug 'APZelos/blamer.nvim'                                  " git blame on cursor
 Plug 'lewis6991/gitsigns.nvim'                              " git gutter
 Plug 'sindrets/diffview.nvim'                               " git disf viewer
@@ -63,6 +63,7 @@ Plug 'lewis6991/impatient.nvim'                             " faster startup via
 Plug 'kyazdani42/nvim-tree.lua'                             " file tree
 Plug 'junegunn/vim-easy-align'                              " aligning characters
 Plug 'ggandor/lightspeed.nvim'                              " better easymotion
+Plug 'benstockil/twilight.nvim'                                   " for demos
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
 call plug#end()
 
@@ -182,8 +183,9 @@ nnoremap <silent> _ :nohl<CR>
 " recenter cursor
 map <silent><leader>cc :set so=999 <CR>:set cursorline<CR>:set number<CR>
 " git mappings
-nmap <leader>ng :Neogit kind=split<CR>
-nmap <leader>nc :Neogit commit<CR>
+nmap <leader>gg :Git<CR>
+nmap <leader>gc :Git commit<CR>
+nmap <leader>gr :Git rebase -i<CR>
 nmap <leader>df :lua DiffviewToggle()<CR>
 
 nmap <leader>rl :LspRestart<CR>

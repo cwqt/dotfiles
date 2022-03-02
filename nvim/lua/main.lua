@@ -10,15 +10,9 @@ require("gitlinker").setup({
   },
   mappings = "<leader>gy",
 })
-require("neogit").setup({
-  disable_hint = true,
-  integrations = {
-    diffview = true,
-  },
-  signs = {
-    section = { "", "" },
-    item = { "", "" },
-    hunk = { "", "" },
+require("twilight").setup({
+  dimming = {
+    alpha = 0.5,
   },
 })
 
@@ -186,6 +180,17 @@ local on_attach = function(client, bufnr)
     opts
   )
 
+  --   vim.keymap.set("i", "<c-w>", function()
+  --   vim.lsp.buf.signature_help()
+  -- end, { buffer = true })
+  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  --   vim.lsp.handlers["signature_help"],
+  --   {
+  --     border = "single",
+  --     close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
+  --   }
+  -- )
+
   buf_set_keymap("n", "<space>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
   -- error diagnostic ]e
   e = tostring(vim.diagnostic.severity.ERROR)
@@ -219,18 +224,18 @@ local on_attach = function(client, bufnr)
     opts
   )
 
-  local lsp_signature = require("lsp_signature")
-  if lsp_signature then
-    lsp_signature.on_attach({
-      bind = true,
-      floating_window = true,
-      floating_window_above_cur_line = true,
-      hint_enable = false,
-      handler_opts = {
-        border = "rounded",
-      },
-    }, bufnr)
-  end
+  -- local lsp_signature = require("lsp_signature")
+  -- if lsp_signature then
+  --   lsp_signature.on_attach({
+  --     bind = true,
+  --     floating_window = true,
+  --     floating_window_above_cur_line = true,
+  --     hint_enable = false,
+  --     handler_opts = {
+  --       border = "rounded",
+  --     },
+  --   }, bufnr)
+  -- end
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -485,8 +490,16 @@ require("gitsigns").setup({
       { expr = true }
     )
 
-    map("n", "hp", "<cmd>Gitsigns preview_hunk<CR>")
-    map("n", "hd", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+    map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
     map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
   end,
 })
+
+-- highlight yanked text for 200ms using the "Visual" highlight group
+vim.cmd([[
+augroup highlight_yank
+autocmd!
+au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+augroup END
+
+]])

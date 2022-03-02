@@ -3,30 +3,45 @@ Plug 'nvim-lua/plenary.nvim'                                " async for coroutin
 Plug 'tweekmonster/startuptime.vim'                         " startup time tracker
 Plug 'nathom/filetype.nvim'                                 " startup time improvement
 Plug 'mhinz/vim-startify'                                   " startup screen
+Plug 'lewis6991/impatient.nvim'                             " startup speed via binaries
 Plug 'windwp/nvim-autopairs'                                " creates pairs for () {} []
-Plug 'windwp/nvim-ts-autotag'                               " autocomplete
-Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
-Plug 'kqito/vim-easy-replace'                               " replace words under cursor/visua
+Plug 'kqito/vim-easy-replace'                               " replace words under cursor/visual
 Plug 'numToStr/Comment.nvim'                                " commenting
+Plug 'sstallion/vim-cursorline'                             " only show cursorline on active window
+Plug 'lukas-reineke/indent-blankline.nvim'                  " indentation guides
+Plug 'rmagatti/goto-preview'                                " pop open definition in window
+Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
+Plug 'supercrabtree/vim-resurrect'                          " reopen closed buffers
+Plug 'pantharshit00/vim-prisma'                             " prisma syntax highlighting
+Plug 'romgrk/barbar.nvim'                                   " tab/buffer top bar
+Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
+Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
+Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
+Plug 'machakann/vim-sandwich'                               " allows for ci( etc.
+Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
+Plug 'junegunn/vim-easy-align'                              " aligning characters
+Plug 'ggandor/lightspeed.nvim'                              " better easymotion
+Plug 'benstockil/twilight.nvim'                             " for demos
+Plug 'rebelot/kanagawa.nvim'                                " color theme
+Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
+Plug 'kyazdani42/nvim-tree.lua'                             " file tree
+Plug 'numToStr/FTerm.nvim'                                  " floating terminal
+Plug 'folke/which-key.nvim'                                 " keybindings helper
+Plug 'windwp/nvim-spectre'                                  " global search and replace
+" treesitter --------------------------------------
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
+Plug 'romgrk/nvim-treesitter-context'                       " context bar
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comment, jsx
+Plug 'windwp/nvim-ts-autotag'                               " autoclose jsx/html tags
 " git ---------------------------------------------
 Plug 'tpope/vim-fugitive'                                   " git porcelain
 Plug 'APZelos/blamer.nvim'                                  " git blame on cursor
 Plug 'lewis6991/gitsigns.nvim'                              " git gutter
-Plug 'sindrets/diffview.nvim'                               " git disf viewer
+Plug 'sindrets/diffview.nvim'                               " git diff viewer
 Plug 'ruifm/gitlinker.nvim'                                 " link to specific lines
-" ------------------------------------------------
-Plug 'rktjmp/lush.nvim'                                     " styling for gruvbox
-Plug 'sstallion/vim-cursorline'                             " only show cursorline on active window
-Plug 'lukas-reineke/indent-blankline.nvim'                  " indentation guides
 Plug 'rhysd/conflict-marker.vim'                            " merge conflict markers
-Plug 'windwp/nvim-spectre'                                  " global search and replace
-Plug 'kosayoda/nvim-lightbulb'                              " code action hiing
-Plug 'rmagatti/goto-preview'                                " pop open definition in window
 Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in quickfix
-Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
-Plug 'numToStr/FTerm.nvim'                                  " floating terminal
-Plug 'cwqt/nvim-code-action-menu'                           " code action menu
 " lsp --------------------------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -43,27 +58,10 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
 Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
 Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
 Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
+Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
+Plug 'cwqt/nvim-code-action-menu'                           " lsp code action menu
+Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
-Plug 'supercrabtree/vim-resurrect'                          " reopen closed buffers
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
-Plug 'romgrk/nvim-treesitter-context'                       " context bar
-Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'pantharshit00/vim-prisma'                             " prisma syntax highlighting
-Plug 'romgrk/barbar.nvim'                                   " tab/buffer top bar
-Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
-Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
-Plug 'nvim-lua/popup.nvim'                                  " fuzzy finder & overlay
-Plug 'yuttie/comfortable-motion.vim'                        " smooth scrolling, C-d C-u
-Plug 'machakann/vim-sandwich'                               " allows for ci( etc.
-Plug 'rebelot/kanagawa.nvim'                                " color theme
-Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
-Plug 'folke/which-key.nvim'                                 " keybindings helper
-Plug 'lewis6991/impatient.nvim'                             " faster startup via binaries
-Plug 'kyazdani42/nvim-tree.lua'                             " file tree
-Plug 'junegunn/vim-easy-align'                              " aligning characters
-Plug 'ggandor/lightspeed.nvim'                              " better easymotion
-Plug 'benstockil/twilight.nvim'                                   " for demos
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
 call plug#end()
 
@@ -187,6 +185,8 @@ nmap <leader>gg :Git<CR>
 nmap <leader>gc :Git commit<CR>
 nmap <leader>gr :Git rebase -i<CR>
 nmap <leader>df :lua DiffviewToggle()<CR>
+nmap <silent><leader>gf :GBranches --locals<CR>
+nmap <silent><leader>gt :GTags<CR>
 
 nmap <leader>rl :LspRestart<CR>
 " search and replace
@@ -197,7 +197,6 @@ nnoremap <silent> <leader>kk :silent !kitty @ set-spacing padding=0 margin=0<CR>
 " disable irrating command history
 nnoremap q: <nop>
 nnoremap Q <nop>
-
 
 " yank to end of line, like D
 map Y y$

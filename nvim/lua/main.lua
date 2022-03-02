@@ -29,17 +29,7 @@ require("fidget").setup({
 
 -- abuse which key to m -- show help message on the command line when the popup is visibleake our timeoutlen of 0 work
 -- so that things like fzf/toggleterm react instantly
-require("which-key").setup({
-  -- window = {
-  --   margin = { 0, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-  --   padding = { 1, 0, 1, 0 }, -- extra window padding [top, right, bottom, left]
-  -- },
-  -- show_help = false,
-  -- layout = {
-  --   height = { min = 1, max = 5 }, -- min and max height of the columns
-  --   spacing = 3, -- spacing between columns
-  -- },
-})
+require("which-key").setup({})
 
 require("FTerm").setup({
   cmd = "/opt/homebrew/bin/fish",

@@ -1,4 +1,18 @@
 local lsp = require("lspconfig")
+
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = {
+  Error = "",
+  Warn = "",
+  Hint = "",
+  Info = "",
+}
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 require("filetype").setup({})
 require("goto-preview").setup({
   width = 80,
@@ -51,14 +65,53 @@ augroup END
 ]])
 
 -- File sidebar ------------------------------------------------------------
+vim.cmd([[
+let g:nvim_tree_highlight_opened_files = 2
+
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "",
+    \   'staged': "",
+    \   'unmerged': "",
+    \   'renamed': "",
+    \   'untracked': "",
+    \   'deleted': "",
+    \   'ignored': ""
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+
+]])
 require("nvim-tree").setup({
   auto_close = true,
   diagnostics = {
     enable = true,
+    icons = {
+      hint = "┃",
+      info = "┃",
+      warning = "┃",
+      error = "┃",
+      -- hint = "",
+      -- info = "",
+      -- warning = "",
+      -- error = "",
+    },
   },
   view = {
     width = 40,
     hide_root_folder = true,
+    signcolumn = "yes",
   },
   hijack_cursor = true,
   update_focused_file = {
@@ -90,8 +143,17 @@ require("scrollbar").setup({
   },
 })
 
--- TODO FIXME comments highlighting -------------------------------------------
-require("todo-comments").setup({})
+-- comments highlighting -------------------------------------------
+-- HACK:
+-- TODO:
+-- WARN:
+-- PERF:
+-- NOTE:
+-- FIX:
+require("todo-comments").setup({
+  signs = false,
+})
+
 require("indent_blankline").setup({
   use_treesitter = true,
   buftype_exclude = { "terminal", "prompt", "nofile", "help" },
@@ -122,7 +184,8 @@ require("Comment").setup({
 })
 
 -- Status bar -----------------------------------------------------------------
-require("statusline")
+require("statusline").setup()
+require("bufferline").setup()
 
 -- Language Server Protocol ----------------------------------------------------------------------------
 Border = {
@@ -234,6 +297,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
     signs = true,
     underline = true,
+    severity_sort = true,
     virtual_text = {
       spacing = 4,
       prefix = "",
@@ -331,14 +395,15 @@ require("diffview").setup({
     folder_open = "",
   },
   signs = {
-    fold_closed = "",
-    fold_open = "",
+    fold_closed = "",
+    fold_open = "",
   },
   file_panel = {
     position = "left", -- One of 'left', 'right', 'top', 'bottom'
     width = 35, -- Only applies when position is 'left' or 'right'
     height = 10, -- Only applies when position is 'top' or 'bottom'
-    listing_style = "list", -- One of 'list' or 'tree'
+    -- listing_style = "list", -- One of 'list' or 'tree'
+    listing_style = "tree", -- One of 'list' or 'tree'
     tree_options = {
       -- Only applies when listing_style is 'tree'
       flatten_dirs = true, -- Flatten dirs that only contain one single dir

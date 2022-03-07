@@ -12,16 +12,20 @@ cmp.event:on(
 )
 
 local config = {
-  window = {
-    documentation = { -- no border; native-style scrollbar
-      border = "rounded",
-      scrollbar = "",
-    },
-  },
+  -- window = {
+  --   documentation = { -- no border; native-style scrollbar
+  --     border = "rounded",
+  --     scrollbar = "",
+  --   },
+  --   completion = { -- rounded border; thin-style scrollbar
+  --     border = "rounded",
+  --     scrollbar = "║",
+  --   },
+  -- },
   formatting = {
     format = lspkind.cmp_format({
       preset = "codicons",
-      -- mode = "symbol"
+      -- mode = "symbol", -- icon only
     }),
   },
   snippet = {

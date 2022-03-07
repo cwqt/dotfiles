@@ -4,8 +4,12 @@ bg = "#16161d"
 local kanagawa = {}
 
 kanagawa.normal = {
-  a = { bg = colors.crystalBlue, fg = colors.bg_dark },
-  b = { bg = colors.winterBlue, fg = colors.crystalBlue },
+  a = { bg = colors.oniViolet, fg = colors.bg_dark },
+  b = { bg = bg, fg = colors.oniViolet },
+
+  -- a = { bg = colors.crystalBlue, fg = colors.bg_dark },
+  -- b = { bg = bg, fg = colors.crystalBlue },
+  -- b = { bg = colors.winterBlue, fg = colors.crystalBlue },
   c = { bg = bg, fg = colors.fg },
 }
 
@@ -20,8 +24,8 @@ kanagawa.command = {
 }
 
 kanagawa.visual = {
-  a = { bg = colors.oniViolet, fg = colors.bg_dark },
-  b = { bg = bg, fg = colors.oniViolet },
+  a = { bg = colors.crystalBlue, fg = colors.bg_dark },
+  b = { bg = bg, fg = colors.crystalBlue },
 }
 
 kanagawa.replace = {
@@ -41,29 +45,41 @@ if vim.g.kanagawa_lualine_bold then
   end
 end
 
-require("lualine").setup({
-  extensions = { "nvim-tree", "fzf" },
-  options = {
-    icons_enabled = false,
-    section_separators = "",
-    component_separators = "",
-    theme = kanagawa,
-    -- theme = "auto",
-  },
-  sections = {
-    lualine_c = {
-      {
-        "filename",
-        color = { bg = bg },
-      }
-    },
-    lualine_x = {
-      {
+local M = {}
 
-        "filetype",
-        color = { bg = bg },
-      },
+M.setup = function()
+  require("lualine").setup({
+    extensions = { "nvim-tree", "fzf" },
+    options = {
+      icons_enabled = true,
+      component_separators = "",
+      theme = kanagawa,
+      section_separators = { left = "", right = "" },
     },
-    lualine_y = {},
-  },
-})
+    sections = {
+      lualine_a = {
+        {
+          "mode",
+          fmt = string.lower,
+        },
+      },
+      lualine_b = { "branch", "diff" },
+      lualine_c = {
+        {
+          "filename",
+          color = { bg = bg },
+        },
+      },
+      lualine_x = {
+        {
+
+          "filetype",
+          color = { bg = bg },
+        },
+      },
+      lualine_y = {},
+    },
+  })
+end
+
+return M

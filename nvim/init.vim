@@ -13,7 +13,8 @@ Plug 'rmagatti/goto-preview'                                " pop open definitio
 Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
 Plug 'supercrabtree/vim-resurrect'                          " reopen closed buffers
 Plug 'pantharshit00/vim-prisma'                             " prisma syntax highlighting
-Plug 'romgrk/barbar.nvim'                                   " tab/buffer top bar
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'noib3/nvim-cokeline'
 Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
@@ -25,7 +26,7 @@ Plug 'ggandor/lightspeed.nvim'                              " better easymotion
 Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'rebelot/kanagawa.nvim'                                " color theme
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua'                             " file tree
+Plug 'kyazdani42/nvim-tree.lua', {'branch': 'feat/add-mark-capabilities'}                             " file tree
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
@@ -45,17 +46,17 @@ Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in q
 " lsp --------------------------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'Iron-E/nvim-cmp'                                      " autocomplete
+Plug 'hrsh7th/nvim-cmp', { 'branch': 'dev' }                                      " autocomplete
 Plug 'hrsh7th/cmp-vsnip'                                    " snippets completion integration
 Plug 'hrsh7th/vim-vsnip'                                    " snippets engine
 Plug 'rafamadriz/friendly-snippets'                         " snippets collection
 Plug 'neovim/nvim-lspconfig'                                " language servers
 Plug 'creativenull/efmls-configs-nvim'                      " efm formatters & linters
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
-Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
+" Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
 Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
 Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
 Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
@@ -73,7 +74,7 @@ syntax on             " hi syntax
 syntax sync minlines=256
 set number            " show line numbers
 set encoding=UTF-8    " character encoding
-set relativenumber    " relative line numbers
+" set relativenumber    " relative line numbers
 set noswapfile        " disable the swapfile
 set hlsearch          " hi all results
 set ignorecase        " ignore case in search
@@ -98,6 +99,9 @@ set splitbelow
 set splitright
 set foldlevelstart=99 " start file with all folds opened
 set foldmethod=expr
+
+set nosm
+" let g:loaded_matchparen=1
 
 " change leaderkey to spacebar
 " nnoremap <SPACE> <Nop>
@@ -138,22 +142,23 @@ highlight! link mkdLineBreak NONE
 hi! Pmenu guibg=#1f202b guifg=#717168
 hi! PmenuSel guibg=#2a2a37 guifg=#dcd7ba
 set completeopt=menu,menuone,noselect
+
 " gray
-hi! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
+highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
 " blue
-hi! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-hi! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
+highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
 " light blue
-hi! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-hi! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-hi! CmpItemKindText guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
 " pink
-hi! CmpItemKindFunction guibg=NONE guifg=#C586C0
-hi! CmpItemKindMethod guibg=NONE guifg=#C586C0
+highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
+highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
 " front
-hi! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-hi! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-hi! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
 " easymotion labelling
 let g:sneak#label = 1
@@ -247,6 +252,9 @@ map <A-L> :vertical resize -4<CR>
 map <Tab> <C-W><C-W>
 map <S-Tab> <C-W><S-W>
 
+" visual mode align
+xmap ga <Plug>(EasyAlign)
+
 " quickly insert an empty new line without entering insert mode
 nnoremap <Leader>o o<Esc>0"_D
 nnoremap <Leader>O O<Esc>0"_D
@@ -266,59 +274,33 @@ nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 nnoremap <leader>cx <cmd>TSContextToggle<cr>
 
 " tabline -----------------------------------------------------------------
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.icons = v:false
-let bufferline.icon_separator_inactive = ''
-let bufferline.icon_separator_active = ''
-let bufferline.closable = v:false
-let bufferline.animation = v:false
-let bufferline.maximum_padding = 2
-let bufferline.minimum_padding = 2
-let bufferline.auto_hide = v:true
+" background color
+hi TabLineFill guibg=#0d1014
 
-" separator color
-hi BufferTabpageFill guibg=#0d1014
-" active
-hi BufferCurrent guibg=#0d1014
-hi BufferCurrentIndex guibg=#0d1014 guifg=#957FB8
-hi BufferCurrentSign guibg=#0d1014
-hi BufferCurrentMod guibg=#0d1014 guifg=#FF9E3B
+" " Move to previous/next
+nnoremap <silent>    <A-,> <Plug>(cokeline-focus-prev)<CR>
+nnoremap <silent>    <A-.> <Plug>(cokeline-focus-next)<CR>
+nnoremap <silent>    <A->> <Plug>(cokeline-switch-prev)<CR>
+nnoremap <silent>    <A-<> <Plug>(cokeline-switch-next)<CR>
 
-hi BufferVisible guibg=#0d1014 guifg=#727169
-hi BufferVisibleSign guibg=#0d1014 guifg=#727169
-hi BufferVisibleIndex guibg=#0d1014 guifg=#727169
-hi BufferVisibleMod guibg=#0d1014 guifg=#B35200
-
-hi BufferInactive guibg=#0d1014 guifg=#727169
-hi BufferInactiveSign guibg=#0d1014 guifg=#727169
-hi BufferInactiveIndex guibg=#0d1014 guifg=#727169
-hi BufferInactiveMod guibg=#0d1014 guifg=#B35200
-
-" Move to previous/next
-nnoremap <silent>    <A-,> :BufferPrevious<CR>
-nnoremap <silent>    <A-.> :BufferNext<CR>
-" Open and close a buffer
+" " Open and close a buffer
 nnoremap <silent>    <A-n> :enew<CR>
-nnoremap <silent>    <A-w> :BufferClose<CR>
+nnoremap <silent>    <A-w> :Sayonara!<CR>
+nnoremap <silent>    <A-q> :Sayonara<CR>
 nnoremap <silent>    <A-W> :Resurrect<CR>
-nnoremap <silent>    <A-x> :BufferCloseAllButCurrent<CR>
 " Goto buffer in position...
-nnoremap <silent>    <A-1> :BufferGoto 1<CR>
-nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-1> <Plug>(cokeline-focus-1)<CR>
+nnoremap <silent>    <A-2> <Plug>(cokeline-focus-2)<CR>
 " kitty sends a raw hashtag for A-3
-nnoremap <silent>    # :BufferGoto 3<CR>
-nnoremap <silent>    <A-4> :BufferGoto 4<CR>
-nnoremap <silent>    <A-5> :BufferGoto 5<CR>
-nnoremap <silent>    <A-6> :BufferGoto 6<CR>
-nnoremap <silent>    <A-7> :BufferGoto 7<CR>
-nnoremap <silent>    <A-8> :BufferGoto 8<CR>
-nnoremap <silent>    <A-9> :BufferLast<CR>
+nnoremap <silent>    # <Plug>(cokeline-focus-3)<CR>
+nnoremap <silent>    <A-4> <Plug>(cokeline-focus-4)<CR>
+nnoremap <silent>    <A-5> <Plug>(cokeline-focus-5)<CR>
+nnoremap <silent>    <A-6> <Plug>(cokeline-focus-6)<CR>
+nnoremap <silent>    <A-7> <Plug>(cokeline-focus-7)<CR>
+nnoremap <silent>    <A-8> <Plug>(cokeline-focus-8)<CR>
+nnoremap <silent>    <A-8> <Plug>(cokeline-focus-9)<CR>
 " sneak-like select buffer
-nnoremap <silent>    <A-s> :BufferPick<CR>
-
-" visual mode align
-xmap ga <Plug>(EasyAlign)
-
+nnoremap <silent>    <A-s> <Plug>(cokeline-pick-focus)<CR>
 
 " git blame in cursor
 let g:blamer_enabled = 1
@@ -339,6 +321,9 @@ function! HighlightConflictMarker() abort
     highlight ConflictMarkerEnd guibg=#552527
     highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 endfunction
+
+
+
 " call timer_start(200, { tid -> execute('call HighlightConflictMarker()') })
 autocmd VimEnter * call HighlightConflictMarker()
 
@@ -365,4 +350,31 @@ let g:startify_custom_header = ""
 " Lazy shift finger
 command! -bar -nargs=* -complete=file -range=% -bang W         <line1>,<line2>write<bang> <args>
 command! -bar -nargs=* -complete=file -range=% -bang Wq        <line1>,<line2>wq<bang> <args>
+
+" delete html tags
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes += [
+      \   {
+      \     'buns'    : ['TagInput(1)', 'TagInput(0)'],
+      \     'expr'    : 1,
+      \     'filetype': ['html'],
+      \     'kind'    : ['add', 'replace', 'delete'],
+      \     'action'  : ['add'],
+      \     'input'   : ['t'],
+      \   },
+      \ ]
+
+function! TagInput(is_head) abort
+  if a:is_head
+    let s:TagLast = input('Tag: ')
+    if s:TagLast !=# ''
+      let tag = printf('<%s>', s:TagLast)
+    else
+      throw 'OperatorSandwichCancel'
+    endif
+  else
+    let tag = printf('</%s>', matchstr(s:TagLast, '^\a[^[:blank:]>/]*'))
+  endif
+  return tag
+endfunction
 

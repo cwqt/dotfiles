@@ -13,7 +13,7 @@ thefuck --alias | source
 
 # try and switch nvm to version listed in .nvmrc on cd
 function _nvm_on_pwd --on-variable PWD
-    test -e $PWD/.nvmrc && nvm use
+  test -e $PWD/.nvmrc && nvm use
 end
 
 set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow -g "!{.git,.next,node_modules,dist,.yarn.lock}"'

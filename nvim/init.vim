@@ -13,11 +13,12 @@ Plug 'rmagatti/goto-preview'                                " pop open definitio
 Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
 Plug 'supercrabtree/vim-resurrect'                          " reopen closed buffers
 Plug 'pantharshit00/vim-prisma'                             " prisma syntax highlighting
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
-Plug 'noib3/nvim-cokeline'
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }             " closing buffers/windows
+Plug 'cwqt/nvim-cokeline'                                   " bufferline
 Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
 Plug 'machakann/vim-sandwich'                               " allows for ci( etc.
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
@@ -26,7 +27,7 @@ Plug 'ggandor/lightspeed.nvim'                              " better easymotion
 Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'rebelot/kanagawa.nvim'                                " color theme
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua', {'branch': 'feat/add-mark-capabilities'}                             " file tree
+Plug 'kyazdani42/nvim-tree.lua', {'branch': 'feat/add-mark-capabilities'} " file tree
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
@@ -49,7 +50,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp', { 'branch': 'dev' }                                      " autocomplete
+Plug 'hrsh7th/nvim-cmp', { 'branch': 'dev' }                " autocomplete
 Plug 'hrsh7th/cmp-vsnip'                                    " snippets completion integration
 Plug 'hrsh7th/vim-vsnip'                                    " snippets engine
 Plug 'rafamadriz/friendly-snippets'                         " snippets collection
@@ -185,13 +186,6 @@ inoremap <A-Backspace> <C-o>d0
 nnoremap <silent> _ :nohl<CR>
 " recenter cursor
 map <silent><leader>cc :set so=999 <CR>:set cursorline<CR>:set number<CR>
-" git mappings
-nmap <leader>gg :Git<CR>
-nmap <leader>gc :Git commit<CR>
-nmap <leader>gr :Git rebase -i<CR>
-nmap <leader>df :lua DiffviewToggle()<CR>
-nmap <silent><leader>gf :GBranches --locals<CR>
-nmap <silent><leader>gt :GTags<CR>
 
 nmap <leader>rl :LspRestart<CR>
 " search and replace
@@ -219,25 +213,12 @@ endfunction
 nnoremap <expr> i IndentWithI()
 
 " override Blines fzf to have a preview window
-command! -bang -nargs=* BLines
-    \ call fzf#vim#grep(
-    \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
-    \   fzf#vim#with_preview({'options': '--query '.shellescape(<q-args>).' --with-nth=4.. --delimiter=":"'}, 'right:50%'))
-
-" fuzzy finder
-noremap <silent> <leader>p :FZF<CR>
-nnoremap <silent> <leader>f :Rg<CR>
-nnoremap <silent> <leader>l :BLines<cr>
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-
-" autocmd! FileType fzf
-" autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber nornu
-"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler number
-
-" let g:fzf_layout = { 'down': '40%' }
-let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'top' } }
+" command! -bang -nargs=* BLines
+"     \ call fzf#vim#grep(
+"     \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
+"     \   fzf#vim#with_preview({'options': '--query '.shellescape(<q-args>).' --with-nth=4.. --delimiter=":"'}, 'right:50%'))
 " escape to quit https://github.com/junegunn/fzf/issues/1393
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+" autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 " create split and move to it
 nnoremap <A-;> <C-w>v<C-w>l<CR>
@@ -260,47 +241,7 @@ nnoremap <Leader>o o<Esc>0"_D
 nnoremap <Leader>O O<Esc>0"_D
 
 " git conflicts quickfix menu
-nnoremap <Leader>co <cmd>call conflicts#PopulateConflicts() <bar> TroubleToggle quickfix<CR>
-
-" trouble
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap gR <cmd>TroubleToggle lsp_references<cr>
-
-" context
-nnoremap <leader>cx <cmd>TSContextToggle<cr>
-
-" tabline -----------------------------------------------------------------
-" background color
-hi TabLineFill guibg=#0d1014
-
-" " Move to previous/next
-nnoremap <silent>    <A-,> <Plug>(cokeline-focus-prev)<CR>
-nnoremap <silent>    <A-.> <Plug>(cokeline-focus-next)<CR>
-nnoremap <silent>    <A->> <Plug>(cokeline-switch-prev)<CR>
-nnoremap <silent>    <A-<> <Plug>(cokeline-switch-next)<CR>
-
-" " Open and close a buffer
-nnoremap <silent>    <A-n> :enew<CR>
-nnoremap <silent>    <A-w> :Sayonara!<CR>
-nnoremap <silent>    <A-q> :Sayonara<CR>
-nnoremap <silent>    <A-W> :Resurrect<CR>
-" Goto buffer in position...
-nnoremap <silent>    <A-1> <Plug>(cokeline-focus-1)<CR>
-nnoremap <silent>    <A-2> <Plug>(cokeline-focus-2)<CR>
-" kitty sends a raw hashtag for A-3
-nnoremap <silent>    # <Plug>(cokeline-focus-3)<CR>
-nnoremap <silent>    <A-4> <Plug>(cokeline-focus-4)<CR>
-nnoremap <silent>    <A-5> <Plug>(cokeline-focus-5)<CR>
-nnoremap <silent>    <A-6> <Plug>(cokeline-focus-6)<CR>
-nnoremap <silent>    <A-7> <Plug>(cokeline-focus-7)<CR>
-nnoremap <silent>    <A-8> <Plug>(cokeline-focus-8)<CR>
-nnoremap <silent>    <A-8> <Plug>(cokeline-focus-9)<CR>
-" sneak-like select buffer
-nnoremap <silent>    <A-s> <Plug>(cokeline-pick-focus)<CR>
+nnoremap <Leader>cx <cmd>call conflicts#PopulateConflicts() <bar> TroubleToggle quickfix<CR>
 
 " git blame in cursor
 let g:blamer_enabled = 1
@@ -322,8 +263,6 @@ function! HighlightConflictMarker() abort
     highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 endfunction
 
-
-
 " call timer_start(200, { tid -> execute('call HighlightConflictMarker()') })
 autocmd VimEnter * call HighlightConflictMarker()
 
@@ -334,9 +273,8 @@ nnoremap <silent> <a-j> :KittyNavigateDown<cr>
 nnoremap <silent> <a-k> :KittyNavigateUp<cr>
 nnoremap <silent> <a-l> :KittyNavigateRight<cr>
 
-" goto preview
-nnoremap gp <cmd>lua require('goto-preview').goto_preview_definition()<CR>
-nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+" background color
+hi TabLineFill guibg=#0d1014
 
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()

@@ -1,9 +1,11 @@
 function portkill -d "(╯°□°)--︻╦╤─ - - - kills all ports passed into func"
   for option in $argv
-    set process (lsof -i :$option | grep LISTEN | awk '{ print $2 }')
+    set stdout (lsof -i :$option | grep LISTEN)
+    set process (echo $stdout | awk '{ print $2 }')
+    set name (echo $stdout | awk '{ print $1 }')
     
     if test $process;
-      kill $process;
+      kill -9 $process;
     else;
       echo "nothing currently running on port $option"; continue;
     end;
@@ -11,7 +13,7 @@ function portkill -d "(╯°□°)--︻╦╤─ - - - kills all ports passed in
     if test (lsof -i :$option | grep LISTEN | awk '{ print $2 }'); 
       echo "nothing currently running on port $option";
     else; 
-      echo "killed port $option (pid: $process)";
+      echo "killed $name (pid: $process)";
     end;
 
   end;

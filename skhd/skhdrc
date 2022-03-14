@@ -30,6 +30,12 @@ cmd - j : yabai -m window --focus south
 cmd - k : yabai -m window --focus north
 cmd - l : yabai -m window --focus east
 
+# move windows
+cmd + alt - h : yabai -m window --swap west
+cmd + alt - j : yabai -m window --swap south
+cmd + alt - k : yabai -m window --swap north
+cmd + alt - l : yabai -m window --swap east
+
 # throw window to desktop & follow
 cmd + shift - 1 : yabai -m window --space 1; yabai -m space --focus 1
 cmd + shift - 2 : yabai -m window --space 2; yabai -m space --focus 2

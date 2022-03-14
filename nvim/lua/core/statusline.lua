@@ -1,15 +1,11 @@
 local colors = require("kanagawa.colors").setup()
 
-bg = "#16161d"
+local bg = "#16161d"
 local kanagawa = {}
 
 kanagawa.normal = {
   a = { bg = colors.oniViolet, fg = colors.bg_dark },
   b = { bg = bg, fg = colors.oniViolet },
-
-  -- a = { bg = colors.crystalBlue, fg = colors.bg_dark },
-  -- b = { bg = bg, fg = colors.crystalBlue },
-  -- b = { bg = colors.winterBlue, fg = colors.crystalBlue },
   c = { bg = bg, fg = colors.fg },
 }
 
@@ -49,11 +45,16 @@ local M = {}
 
 M.setup = function()
   require("lualine").setup({
-    extensions = { "nvim-tree", "fzf" },
+    extensions = {
+      "nvim-tree",
+      -- "fzf",
+      "fugitive",
+    },
     options = {
       icons_enabled = true,
       component_separators = "",
       theme = kanagawa,
+      disabled_filetypes = { "DiffviewFiles", "fzf" },
       section_separators = { left = "", right = "" },
     },
     sections = {

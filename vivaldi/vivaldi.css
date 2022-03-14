@@ -15,3 +15,27 @@
 .tab.active .favicon {
   filter: none !important;
 }
+
+/* Hide tracking status */
+#main
+  > div.UrlBar.toolbar.toolbar-mainbar.toolbar-large
+  > div.UrlBar-AddressField
+  > div:nth-child(1) {
+  display: none;
+}
+
+/* Hide dropdown */
+#main
+  > div.UrlBar.toolbar.toolbar-mainbar.toolbar-large
+  > div.UrlBar-AddressField
+  > div:nth-child(6) {
+  display: none;
+}
+
+/* Hide bookmarks button */
+#main
+  > div.UrlBar.toolbar.toolbar-mainbar.toolbar-large
+  > div.UrlBar-AddressField
+  > div.BookmarkButton {
+  display: none;
+}

@@ -61,7 +61,7 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
 Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
 Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
 Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
-Plug 'cwqt/nvim-code-action-menu'                           " lsp code action menu
+Plug 'weilbith/nvim-code-action-menu', { 'branch': 'feature/add-configuration-to-alternate-window-border'}                           " lsp code action menu
 Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
@@ -100,6 +100,7 @@ set splitbelow
 set splitright
 set foldlevelstart=99 " start file with all folds opened
 set foldmethod=expr
+" set list listchars=tab:>-
 
 set nosm
 " let g:loaded_matchparen=1
@@ -196,7 +197,6 @@ nnoremap <silent> <leader>kk :silent !kitty @ set-spacing padding=0 margin=0<CR>
 " disable irrating command history
 nnoremap q: <nop>
 nnoremap Q <nop>
-
 " yank to end of line, like D
 map Y y$
 " super fast switch between last 2 buffers
@@ -292,15 +292,17 @@ command! -bar -nargs=* -complete=file -range=% -bang Wq        <line1>,<line2>wq
 " delete html tags
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 let g:sandwich#recipes += [
-      \   {
-      \     'buns'    : ['TagInput(1)', 'TagInput(0)'],
-      \     'expr'    : 1,
-      \     'filetype': ['html'],
-      \     'kind'    : ['add', 'replace', 'delete'],
-      \     'action'  : ['add'],
-      \     'input'   : ['t'],
-      \   },
-      \ ]
+  \   {
+  \     'buns'    : ['TagInput(1)', 'TagInput(0)'],
+  \     'expr'    : 1,
+  \     'filetype': ['html'],
+  \     'kind'    : ['add', 'replace', 'delete'],
+  \     'action'  : ['add'],
+  \     'input'   : ['t'],
+  \   },
+  \ ]
+
+let g:code_action_menu_window_border = 'rounded'
 
 function! TagInput(is_head) abort
   if a:is_head
@@ -315,4 +317,3 @@ function! TagInput(is_head) abort
   endif
   return tag
 endfunction
-

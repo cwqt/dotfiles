@@ -10,4 +10,4 @@
 * limelight: window borders
 * spacebar: top bar thing
 
-![](https://ftp.cass.si/6n2s1=f~y.png)
+![](https://ftp.cass.si/qmz125879.png)

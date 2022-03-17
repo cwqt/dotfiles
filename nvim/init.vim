@@ -27,7 +27,7 @@ Plug 'ggandor/lightspeed.nvim'                              " better easymotion
 Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'rebelot/kanagawa.nvim'                                " color theme
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua', {'branch': 'feat/add-mark-capabilities'} " file tree
+Plug 'kyazdani42/nvim-tree.lua' ", {'branch': 'feat/add-mark-capabilities'} 
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
@@ -303,6 +303,8 @@ let g:sandwich#recipes += [
   \ ]
 
 let g:code_action_menu_window_border = 'rounded'
+let g:code_action_menu_show_details = v:false
+let g:code_action_menu_show_diff = v:false
 
 function! TagInput(is_head) abort
   if a:is_head

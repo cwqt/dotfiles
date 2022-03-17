@@ -8,8 +8,19 @@ M.setup = function()
     width = 80,
   })
 
-  map("n", "gp", ":lua require('goto-preview').goto_preview_definition()<CR>")
-  map("n", "gP", ":lua require('goto-preview').close_all_win()<CR>")
+  map(
+    "n",
+    "gp",
+    ":lua require('goto-preview').goto_preview_definition()<CR>",
+    { silent = true }
+  )
+
+  map(
+    "n",
+    "gP",
+    ":lua require('goto-preview').close_all_win()<CR>",
+    { silent = true }
+  )
 end
 
 return M

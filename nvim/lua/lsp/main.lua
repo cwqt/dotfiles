@@ -8,7 +8,8 @@ local on_attach = function(_, bufnr)
   -- Mappings
   local opts = { noremap = true, silent = true }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  -- buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_set_keymap("n", "gd", "<Cmd>TroubleToggle lsp_definitions<CR>", opts)
   buf_set_keymap("n", "ga", "<Cmd>CodeActionMenu<CR>", opts)
 
   -- buf_set_keymap("n", "ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)

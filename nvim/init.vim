@@ -20,7 +20,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
-Plug 'machakann/vim-sandwich'                               " allows for ci( etc.
+Plug 'machakann/vim-sandwich'                               " operations on text objects
+Plug 'wellle/targets.vim'                                   " more text objects
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
 Plug 'junegunn/vim-easy-align'                              " aligning characters
 Plug 'ggandor/lightspeed.nvim'                              " better easymotion
@@ -31,6 +32,8 @@ Plug 'kyazdani42/nvim-tree.lua' ", {'branch': 'feat/add-mark-capabilities'}
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
+Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
+Plug 'stevearc/dressing.nvim'
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
@@ -61,7 +64,7 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
 Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
 Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
 Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
-Plug 'weilbith/nvim-code-action-menu', { 'branch': 'feature/add-configuration-to-alternate-window-border'}                           " lsp code action menu
+Plug 'weilbith/nvim-code-action-menu'                       " lsp code action menu
 Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
@@ -224,10 +227,10 @@ nnoremap <expr> i IndentWithI()
 nnoremap <A-;> <C-w>v<C-w>l<CR>
 nnoremap <A-'> <C-w>s<C-w>j<CR>
 " change split dimensions
-map <A-H> :vertical resize +4<CR>
-map <A-J> :resize -2<CR>
-map <A-K> :resize +2<CR>
-map <A-L> :vertical resize -4<CR>
+map <silent><A-H> :SmartResizeLeft 4<CR>
+map <silent><A-J> :SmartResizeDown 2<CR>
+map <silent><A-K> :SmartResizeUp 2<CR>
+map <silent><A-L> :SmartResizeRight 4<CR>
 
 " moving around splits, backwards and forwards
 map <Tab> <C-W><C-W>
@@ -253,8 +256,8 @@ let g:blamer_show_in_visual_modes = 0
 " motion!
 let g:lightspeed_no_default_keymaps = 1
 nmap <silent> f <Plug>Lightspeed_omni_s
-nmap <silent> <C-f> <Plug>Lightspeed_omni_s
 
+" change highlight marker colors
 function! HighlightConflictMarker() abort
     highlight ConflictMarkerBegin guibg=#1e4428
     highlight ConflictMarkerOurs guibg=#13271e
@@ -262,12 +265,10 @@ function! HighlightConflictMarker() abort
     highlight ConflictMarkerEnd guibg=#552527
     highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 endfunction
-
-" call timer_start(200, { tid -> execute('call HighlightConflictMarker()') })
 autocmd VimEnter * call HighlightConflictMarker()
 
+" moving between splits / kitty splits
 let g:kitty_navigator_no_mappings = 1
-
 nnoremap <silent> <a-h> :KittyNavigateLeft<cr>
 nnoremap <silent> <a-j> :KittyNavigateDown<cr>
 nnoremap <silent> <a-k> :KittyNavigateUp<cr>
@@ -280,7 +281,7 @@ xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
- endfunction
+endfunction
 
 let g:scrollbar_excluded_filetypes = ['NvimTree']
 let g:startify_custom_header = ""

@@ -184,6 +184,7 @@ nmap <silent><leader>gc :Git commit<CR>
 nmap <silent><leader>gr :Git rebase -i staging<CR>
 nmap <silent><leader>gpp :Git push<CR>
 nmap <silent><leader>gpf :Git push --force<CR>
+nmap <silent><leader>gpl :Git pull<CR>
 nmap <silent><leader>df :lua DiffviewToggle()<CR>
 nmap <silent><leader>gf :GBranches --locals<CR>
 nmap <silent><leader>gt :GTags<CR>

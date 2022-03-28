@@ -58,6 +58,9 @@ cmd - e : yabai -m window --toggle split
 
 # rotate tree
 cmd + shift - r : yabai -m space --rotate 90
+# flip tree
+cmd + shift - x : yabai -m space --mirror y-axis
+cmd + shift - y : yabai -m space --mirror x-axis
 
 # quake style show spotify
 cmd + shift - s : /opt/homebrew/bin/python3 /Users/cass/.config/yabai/dropdown Spotify

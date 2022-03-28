@@ -1,3 +1,5 @@
+vim.cmd("colorscheme kanagawa")
+
 -- Core components ---------------------------------------------------------------
 require("core.bufferline").setup()
 require("core.file-tree").setup()

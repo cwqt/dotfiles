@@ -21,6 +21,14 @@ require("plugins.twilight").setup()
 require("plugins.which-key").setup()
 require("plugins.fzf").setup()
 
+-- require("glow-hover").setup({
+--   -- The followings are the default values
+--   max_width = 500,
+--   padding = 1,
+--   border = "rounded",
+--   glow_path = "glow",
+-- })
+
 -- Miscellaneous -----------------------------------------------------------------
 -- Remove/add terminal padding when entering/leaving vim
 vim.cmd([[

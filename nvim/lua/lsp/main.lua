@@ -13,7 +13,8 @@ local on_attach = function(_, bufnr)
   buf_set_keymap("n", "ga", "<Cmd>CodeActionMenu<CR>", opts)
 
   -- buf_set_keymap("n", "ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  buf_set_keymap("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  -- buf_set_keymap("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  buf_set_keymap("n", "gi", "<Cmd>TroubleToggle lsp_implementations<CR>", opts)
   buf_set_keymap(
     "n",
     "gr",

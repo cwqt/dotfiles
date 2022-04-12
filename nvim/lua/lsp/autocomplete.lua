@@ -11,6 +11,7 @@ cmp.event:on(
   cmp_autopairs.on_confirm_done({ map_char = { tex = "" } })
 )
 
+
 local config = {
   window = {
     -- documentation = { -- no border; native-style scrollbar

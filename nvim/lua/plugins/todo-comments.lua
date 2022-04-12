@@ -1,4 +1,7 @@
+local map = require("utils.map")
+
 local M = {}
+
 M.setup = function()
   -- comments highlighting -------------------------------------------
   -- HACK:
@@ -10,5 +13,8 @@ M.setup = function()
   require("todo-comments").setup({
     signs = false,
   })
+
+  map("n", "<leader>xc", ":TodoTrouble<CR>", { silent = true })
 end
+
 return M

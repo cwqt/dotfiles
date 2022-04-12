@@ -57,7 +57,7 @@ M.setup = function()
     { key = "]c", action = "next_git_item" },
     { key = "-", action = "dir_up" },
     { key = "S", action = "system_open" },
-    { key = "g?", action = "toggle_help" },
+    { key = "?", action = "toggle_help" },
     { key = "C", action = "collapse_all" },
     { key = ".", action = "run_file_command" },
     -- { key = "q", action = "close" },
@@ -72,7 +72,6 @@ M.setup = function()
     -- { key = "J", action = "last_sibling" },
   }
   require("nvim-tree").setup({
-    auto_close = true,
     diagnostics = {
       enable = false,
     },

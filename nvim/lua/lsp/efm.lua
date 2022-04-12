@@ -4,10 +4,6 @@ local lsp = require("lspconfig")
 -- npm install -g eslint_d
 -- npm install -g @fsouza/prettierd
 -- npm install -g stylelint
--- paru -S stylua
--- paru -S luacheck
--- paru -S shfmt-bin
--- paru -S shellcheck-bin
 
 -- local eslint_d = require("efmls-configs.linters.eslint_d")
 local prettier_d = require("efmls-configs.formatters.prettier_d")

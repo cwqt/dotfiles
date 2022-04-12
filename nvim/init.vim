@@ -34,6 +34,7 @@ Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
 Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
 Plug 'stevearc/dressing.nvim'
+" Plug 'JASONews/glow-hover'
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
@@ -302,6 +303,8 @@ let g:sandwich#recipes += [
   \     'input'   : ['t'],
   \   },
   \ ]
+
+
 
 let g:code_action_menu_window_border = 'rounded'
 let g:code_action_menu_show_details = v:false

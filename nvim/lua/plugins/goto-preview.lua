@@ -5,7 +5,9 @@ local M = {}
 M.setup = function()
   -- peek window
   require("goto-preview").setup({
-    width = 80,
+    width = 10000,
+    border = {"╭", "─" ,"╮", "│", "╯", "─", "╰", "│"}
+
   })
 
   map(

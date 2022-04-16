@@ -174,10 +174,10 @@ M.setup = function()
   })
 
   vim.cmd([[
-nmap <silent><leader>gc :AsyncRun Git commit<CR>
-nmap <silent><leader>gp :AsyncRun Git push<CR>
-nmap <silent><leader>gfp :AsyncRun Git push --force<CR>
-nmap <silent><leader>gf :AsyncRun Git pull<CR>
+nmap <silent><leader>gc :Git commit<CR>
+nmap <silent><leader>gp :Git push<CR>
+nmap <silent><leader>gfp :Git push --force<CR>
+nmap <silent><leader>gf :Git pull<CR>
 
 nmap <silent><leader>gg :0G<CR>
 nmap <silent><leader>gr :Git rebase -i staging<CR>

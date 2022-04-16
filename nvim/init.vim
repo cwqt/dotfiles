@@ -43,7 +43,6 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comm
 Plug 'windwp/nvim-ts-autotag'                               " autoclose jsx/html tags
 " git ---------------------------------------------
 Plug 'tpope/vim-fugitive'                                   " git porcelain
-Plug 'skywind3000/asyncrun.vim'                             " run actions async
 Plug 'APZelos/blamer.nvim'                                  " git blame on cursor
 Plug 'lewis6991/gitsigns.nvim'                              " git gutter
 Plug 'sindrets/diffview.nvim'                               " git diff viewer
@@ -177,7 +176,7 @@ xnoremap <expr> P 'Pgv"'.v:register.'y`>'
 " Source Vim configuration file and install plugins
 nnoremap <silent><leader>1 :source $MYVIMRC \| :PlugInstall \| :LuaCacheClear<CR>
 " redo
-noremap U <C-R>
+nnoremap U <C-R>
 " line wrap go to next line
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'

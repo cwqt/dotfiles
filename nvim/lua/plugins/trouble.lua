@@ -6,7 +6,7 @@ M.setup = function()
   require("trouble").setup({
     icons = false,
     padding = false,
-    auto_jump = { "lsp_implementations" },
+    auto_jump = { "lsp_implementations", "lsp_definitions" },
   })
 
   map("n", "<Leader>xx", ":TroubleToggle<CR>", { silent = true })

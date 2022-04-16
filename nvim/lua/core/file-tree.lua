@@ -1,7 +1,12 @@
+local map = require("utils.map")
+
 local M = {}
 
 --
 M.setup = function()
+  -- file tree sidebar key binding
+  map("n", "<leader>b", ":NvimTreeToggle<CR>", { silent = true })
+
   vim.cmd([[
   let g:nvim_tree_highlight_opened_files = 2
 

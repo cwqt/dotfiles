@@ -35,6 +35,7 @@ Plug 'windwp/nvim-spectre'                                  " global search and 
 Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
 Plug 'stevearc/dressing.nvim'
 " Plug 'JASONews/glow-hover'
+" Plug 'mfussenegger/nvim-dap'
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
@@ -54,7 +55,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp', { 'branch': 'dev' }                " autocomplete
+Plug 'hrsh7th/nvim-cmp',                                    " autocomplete
 Plug 'hrsh7th/cmp-vsnip'                                    " snippets completion integration
 Plug 'hrsh7th/vim-vsnip'                                    " snippets engine
 Plug 'rafamadriz/friendly-snippets'                         " snippets collection
@@ -74,12 +75,14 @@ call plug#end()
 " cuts my load time from 120ms to 50ms
 lua require('impatient')
 
-set completeopt=menu,menuone,noselect
+set laststatus=3      " global statusline
 syntax on             " hi syntax
 syntax sync minlines=256
-set number            " show line numbers
+syntax sync maxlines=256
+set synmaxcol=250
+set shell=/bin/dash   " use fastest shell
+set nonumber          " hide line numbers
 set encoding=UTF-8    " character encoding
-" set relativenumber    " relative line numbers
 set noswapfile        " disable the swapfile
 set hlsearch          " hi all results
 set ignorecase        " ignore case in search
@@ -92,9 +95,10 @@ set shiftwidth  =2    " amount of whitespace in normal mode
 set expandtab         " indent using spaces instead of tabs
 set noshowmode        " hide --INSERT-- stuff
 set mouse=a           " allow trackpad scrolling
-set shell=/bin/dash   " use fastest shell
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
 set nowrap
-set cursorline        " hi line of cursor
+set cursorline      " hi line of cursor
 set ignorecase        " ignore case in search
 set so=999            " set cursor to always be in the center
 set clipboard=unnamed " make yy add to system clipboard
@@ -104,15 +108,11 @@ set splitbelow
 set splitright
 set foldlevelstart=99 " start file with all folds opened
 set foldmethod=expr
-" set list listchars=tab:>-
-
-set nosm
-" let g:loaded_matchparen=1
+set signcolumn=yes
 
 " change leaderkey to spacebar
-" nnoremap <SPACE> <Nop>
 let mapleader=" "
-set timeoutlen=0 ttimeoutlen=0
+set timeoutlen=500 ttimeoutlen=0
 
 " redraw on these events
 autocmd VimResized,FocusGained * redraw
@@ -126,9 +126,10 @@ autocmd FocusLost * silent! wall
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
 " ci" don't yank
 nnoremap c "_c
-" maintain cursor position in buffers
+" maintain cursor position in buffers, except in git commit windows
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
+" import lua config
 lua require('main')
 
 " pretty colours, must be set after main lua call
@@ -145,6 +146,7 @@ hi Search guibg=#21324a
 
 highlight! link mkdLineBreak NONE
 
+" plumbline colours
 hi! Pmenu guibg=#1f202b guifg=#717168
 hi! PmenuSel guibg=#2a2a37 guifg=#dcd7ba
 set completeopt=menu,menuone,noselect
@@ -187,17 +189,9 @@ noremap <Right> <nop>
 noremap gV `[v`]
 " delete whole line from cursor
 inoremap <A-Backspace> <C-o>d0
-" hide hi from search
-nnoremap <silent> _ :nohl<CR>
-" recenter cursor
-map <silent><leader>cc :set so=999 <CR>:set cursorline<CR>:set number<CR>
 
-nmap <leader>rl :LspRestart<CR>
 " search and replace
 nnoremap <leader>sr :lua require('spectre').open()<CR>
-" file tree sidebar key binding 
-noremap <silent> <leader>b :NvimTreeToggle<CR>
-nnoremap <silent> <leader>kk :silent !kitty @ set-spacing padding=0 margin=0<CR>
 " disable irrating command history
 nnoremap q: <nop>
 nnoremap Q <nop>
@@ -215,14 +209,6 @@ function! IndentWithI()
   endif
 endfunction
 nnoremap <expr> i IndentWithI()
-
-" override Blines fzf to have a preview window
-" command! -bang -nargs=* BLines
-"     \ call fzf#vim#grep(
-"     \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
-"     \   fzf#vim#with_preview({'options': '--query '.shellescape(<q-args>).' --with-nth=4.. --delimiter=":"'}, 'right:50%'))
-" escape to quit https://github.com/junegunn/fzf/issues/1393
-" autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 " create split and move to it
 nnoremap <A-;> <C-w>v<C-w>l<CR>
@@ -303,7 +289,6 @@ let g:sandwich#recipes += [
   \     'input'   : ['t'],
   \   },
   \ ]
-
 
 
 let g:code_action_menu_window_border = 'rounded'

@@ -96,7 +96,10 @@ end
 
 local M = {}
 
+local map = require("utils.map")
 M.setup = function()
+  map("n", "<leader>rl", ":LspRestart<CR>", { silent = true })
+
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {

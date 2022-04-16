@@ -4,13 +4,13 @@ local M = {}
 
 M.setup = function()
   vim.cmd([[
-function! MyHighlights()
-    highlight CustomBorder guifg=#54546e
+function! FzfHighlights()
+    highlight FzfBorder guifg=#54546e
 endfunction
 
-augroup MyHighlights
+augroup FzfHighlights
     autocmd!
-    autocmd ColorScheme * call MyHighlights()
+    autocmd ColorScheme * call FzfHighlights()
 augroup END
 ]])
 
@@ -35,9 +35,7 @@ augroup END
       --   vim.cmd(":resize 18")
       -- end,
       border = { "─", "─", "─", " ", "", "", "", " " },
-      hl = {
-        border = "CustomBorder",
-      },
+      hl = { border = "FzfBorder" },
       preview = {
         winopts = { -- builtin previewer window options
           number = false,
@@ -76,15 +74,12 @@ augroup END
   map("n", "<Leader>f", ":FzfLua grep_project<CR>", { silent = true })
   map("n", "<Leader>p", ":FzfLua files<CR>", { silent = true })
   map("n", "<Leader>l", ":FzfLua blines<CR>", { silent = true })
+  map("n", "<Leader>;", ":FzfLua buffers<CR>", { silent = true })
 
-  -- nnoremap <silent> <leader>f :lua require('fzf-lua').grep()<CR>
-  -- noremap <silent> <leader>p :lua require('fzf-lua').files()<CR>
-  -- nnoremap <silent> <leader>l :lua require('fzf-lua').blines()<CR>
-  --
-  --   map("n", ",<Space>", ":nohlsearch<CR>", { silent = true })
-  -- map("n", "<Leader>", ":<C-u>WhichKey ','<CR>" { silent = true })
-  -- map("n", "<Leader>?", ":WhichKey ','<CR>")
-  -- map("n", "<Leader>a", ":cclose<CR>")
+  -- hide fzf statusline
+  vim.api.nvim_command(
+    "autocmd! FileType fzf set laststatus=0 | autocmd BufLeave <buffer> set laststatus=3"
+  )
 end
 
 return M

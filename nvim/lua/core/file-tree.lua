@@ -95,9 +95,7 @@ M.setup = function()
     },
   })
 
-  -- vim.cmd(
-  --   "autocmd Colorscheme * highlight NvimTreeNormal guibg=#21252B guifg=#9da5b3"
-  -- )
+  vim.cmd("autocmd Colorscheme * highlight NvimTreeNormal guibg=#0b0d11")
 end
 
 return M

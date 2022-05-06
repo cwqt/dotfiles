@@ -33,9 +33,11 @@ Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
 Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
-Plug 'stevearc/dressing.nvim'
-" Plug 'JASONews/glow-hover'
-" Plug 'mfussenegger/nvim-dap'
+Plug 'stevearc/dressing.nvim'                               " prettier ui elements
+Plug 'chr4/nginx.vim'                                       " syntax highlights for nginx
+Plug 'AndrewRadev/dsf.vim'                                  " function motions
+Plug 'metakirby5/codi.vim'                                  " code scratchpad
+Plug 'mizlan/iswap.nvim'                                    " swap args
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
@@ -62,7 +64,7 @@ Plug 'rafamadriz/friendly-snippets'                         " snippets collectio
 Plug 'neovim/nvim-lspconfig'                                " language servers
 Plug 'creativenull/efmls-configs-nvim'                      " efm formatters & linters
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
-" Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
+Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
 Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
 Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
 Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
@@ -75,12 +77,14 @@ call plug#end()
 " cuts my load time from 120ms to 50ms
 lua require('impatient')
 
+map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline
 syntax on             " hi syntax
 syntax sync minlines=256
 syntax sync maxlines=256
 set synmaxcol=250
 set shell=/bin/dash   " use fastest shell
+" set shell=/opt/homebrew/bin/fish
 set nonumber          " hide line numbers
 set encoding=UTF-8    " character encoding
 set noswapfile        " disable the swapfile
@@ -106,9 +110,12 @@ set synmaxcol=128
 set pumheight=5       " maximum number of items in completion popup
 set splitbelow
 set splitright
-set foldlevelstart=99 " start file with all folds opened
-set foldmethod=expr
+" always have 1 column space on left
 set signcolumn=yes
+set foldlevelstart=99 " start file with all folds opened
+" tree-sitter folding
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
 " change leaderkey to spacebar
 let mapleader=" "
@@ -127,7 +134,7 @@ tnoremap <silent> <C-[><C-[> <C-\><C-n>
 " ci" don't yank
 nnoremap c "_c
 " maintain cursor position in buffers, except in git commit windows
-autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " import lua config
 lua require('main')
@@ -198,7 +205,8 @@ nnoremap Q <nop>
 " yank to end of line, like D
 map Y y$
 " super fast switch between last 2 buffers
-nnoremap <leader><leader> <c-^>
+" nnoremap <leader><leader> <c-^>
+nnoremap  <silent><leader><leader> :JABSOpen<CR>
 
 " smart indent on i
 function! IndentWithI()
@@ -290,7 +298,6 @@ let g:sandwich#recipes += [
   \   },
   \ ]
 
-
 let g:code_action_menu_window_border = 'rounded'
 let g:code_action_menu_show_details = v:false
 let g:code_action_menu_show_diff = v:false
@@ -308,3 +315,8 @@ function! TagInput(is_head) abort
   endif
   return tag
 endfunction
+
+
+let g:codi#aliases = {
+\ 'ts': 'typescript',
+\ }

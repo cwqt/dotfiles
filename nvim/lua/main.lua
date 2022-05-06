@@ -23,4 +23,22 @@ require("plugins.trouble").setup()
 require("plugins.twilight").setup()
 require("plugins.which-key").setup()
 require("plugins.fzf").setup()
-require("nvim-lightbulb").setup()
+require("plugins.nvim-lightbulb").setup()
+-- require("plugins.vim-yoink").setup()
+require("plugins.nvim-spectre").setup()
+
+-- function wow(hello, world, how, are, you) end
+
+map("n", "S", ":ISwapWith<CR>", { silent = true })
+require("iswap").setup({
+  -- The keys that will be used as a selection, in order
+  keys = "jkiop",
+  -- Grey out the rest of the text when making a selection
+  grey = "enabled",
+  -- Highlight group for the sniping value (asdf etc.)
+  hl_snipe = "LightspeedUnlabeledMatch",
+  -- Highlight group for the visual selection of terms
+  hl_selection = "Comment",
+  -- Automatically swap with only two arguments
+  autoswap = true,
+})

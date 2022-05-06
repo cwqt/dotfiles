@@ -9,6 +9,7 @@ M.setup = function()
 
   -- toggle line numbers
   map("n", "<leader>n", ":set number! number?<CR>", { silent = true })
+
   -- " recenter cursor
   map(
     "n",

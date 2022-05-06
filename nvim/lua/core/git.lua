@@ -144,6 +144,11 @@ M.setup = function()
       topdelete = { text = "┃" },
       changedelete = { text = "┃" },
     },
+    preview_config = {
+      border = "rounded",
+      style = "minimal",
+      row = 1,
+    },
     on_attach = function(bufnr)
       local function map(mode, lhs, rhs, opts)
         opts = vim.tbl_extend(
@@ -168,8 +173,8 @@ M.setup = function()
         { expr = true }
       )
 
-      map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
-      map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
+      map("n", "hp", "<cmd>Gitsigns preview_hunk<CR>")
+      map("n", "hd", "<cmd>Gitsigns toggle_deleted<CR>")
     end,
   })
 

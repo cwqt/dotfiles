@@ -7,6 +7,9 @@ M.setup = function()
     icons = false,
     padding = false,
     auto_jump = { "lsp_implementations", "lsp_definitions" },
+    action_keys = {
+      jump = { "<cr>" },
+    },
   })
 
   map("n", "<Leader>xx", ":TroubleToggle<CR>", { silent = true })

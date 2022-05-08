@@ -122,6 +122,8 @@ set foldexpr=nvim_treesitter#foldexpr()
 let mapleader=" "
 set timeoutlen=500 ttimeoutlen=0
 
+nnoremap <leader><leader> :w<CR>
+
 " redraw on these events
 autocmd VimResized,FocusGained * redraw
 " move quickfix to bottom of window
@@ -191,7 +193,6 @@ nnoremap Q <nop>
 map Y y$
 " super fast switch between last 2 buffers
 " nnoremap <leader><leader> <c-^>
-nnoremap  <silent><leader><leader> :JABSOpen<CR>
 
 " smart indent on i
 function! IndentWithI()
@@ -233,9 +234,13 @@ let g:blamer_delay = 500
 let g:blamer_show_in_insert_modes = 0
 let g:blamer_show_in_visual_modes = 0
 
-" motion!
+" lightspeed motions
 let g:lightspeed_no_default_keymaps = 1
-nmap <silent> f <Plug>Lightspeed_omni_s
+nmap f <Plug>Lightspeed_omni_s
+xmap f <Plug>Lightspeed_omni_s
+
+" TODO: try out using surround maps https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
+" runtime macros/sandwich/keymap/surround.vim
 
 " change highlight marker colors
 function! HighlightConflictMarker() abort

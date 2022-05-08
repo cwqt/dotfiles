@@ -2,7 +2,7 @@ local map = require("utils.map")
 
 local M = {}
 
---
+-- --
 M.setup = function()
   -- file tree sidebar key binding
   map("n", "<leader>b", ":NvimTreeToggle<CR>", { silent = true })
@@ -77,8 +77,15 @@ M.setup = function()
     -- { key = "J", action = "last_sibling" },
   }
   require("nvim-tree").setup({
+    update_cwd = true,
     diagnostics = {
       enable = false,
+    },
+    renderer = {
+      icons = {
+        webdev_colors = false,
+        git_placement = "after",
+      },
     },
     view = {
       width = 40,

@@ -24,7 +24,7 @@ require("plugins.twilight").setup()
 require("plugins.which-key").setup()
 require("plugins.fzf").setup()
 require("plugins.nvim-lightbulb").setup()
--- require("plugins.vim-yoink").setup()
+require("plugins.vim-yoink").setup()
 require("plugins.nvim-spectre").setup()
 
 -- function wow(hello, world, how, are, you) end

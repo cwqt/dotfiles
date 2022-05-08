@@ -38,6 +38,7 @@ Plug 'chr4/nginx.vim'                                       " syntax highlights 
 Plug 'AndrewRadev/dsf.vim'                                  " function motions
 Plug 'metakirby5/codi.vim'                                  " code scratchpad
 Plug 'mizlan/iswap.nvim'                                    " swap args
+Plug 'svermeulen/vim-yoink'                                 " clipboard
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
 Plug 'romgrk/nvim-treesitter-context'                       " context bar

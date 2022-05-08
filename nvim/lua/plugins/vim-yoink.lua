@@ -7,8 +7,8 @@ M.setup = function()
   map("n", "P", "<plug>(YoinkPaste_P)", {})
 
   -- Cycling through yanks
-  map("n", "<c-n>", "<plug>(YoinkPostPasteSwapBack)", { silent = true })
-  map("n", "<c-p>", "<plug>(YoinkPostPasteSwapForward)", { silent = true })
+  map("n", "<c-n>", "<plug>(YoinkPostPasteSwapForward)", { silent = true })
+  map("n", "<c-p>", "<plug>(YoinkPostPasteSwapBack)", { silent = true })
 
   -- See all yanks
   map("n", "<leader>y", ":Yanks<CR>", { silent = true })

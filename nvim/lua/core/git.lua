@@ -173,8 +173,8 @@ M.setup = function()
         { expr = true }
       )
 
-      map("n", "hp", "<cmd>Gitsigns preview_hunk<CR>")
-      map("n", "hd", "<cmd>Gitsigns toggle_deleted<CR>")
+      map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
+      map("n", "<leader>hd", "<cmd>Gitsigns toggle_deleted<CR>")
     end,
   })
 

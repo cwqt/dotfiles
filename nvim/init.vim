@@ -134,8 +134,6 @@ autocmd FocusLost * silent! wall
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
 " ci" don't yank
 nnoremap c "_c
-" maintain cursor position in buffers, except in git commit windows
-" autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " import lua config
 lua require('main')
@@ -155,26 +153,12 @@ hi Search guibg=#21324a
 highlight! link mkdLineBreak NONE
 
 " plumbline colours
-hi! Pmenu guibg=#1f202b guifg=#717168
-hi! PmenuSel guibg=#2a2a37 guifg=#dcd7ba
 set completeopt=menu,menuone,noselect
-
-" gray
-highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-" blue
-highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-" light blue
-highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-" pink
-highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-" front
-highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
+highlight! Pmenu            guibg=#16161d
+highlight! PmenuSbar        guibg=#16161d
+highlight! PmenuThumb       guibg=#6b6b8d 
+" highlight! PmenuSel         guibg=#6b6b8d guifg=#16161d gui=Bold
+highlight! PmenuSel         guibg=#947fb8 guifg=#16161d gui=Bold
 
 " easymotion labelling
 let g:sneak#label = 1

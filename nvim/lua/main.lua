@@ -28,7 +28,7 @@ require("plugins.vim-yoink").setup()
 require("plugins.nvim-spectre").setup()
 
 -- function wow(hello, world, how, are, you) end
-
+--
 map("n", "S", ":ISwapWith<CR>", { silent = true })
 require("iswap").setup({
   -- The keys that will be used as a selection, in order

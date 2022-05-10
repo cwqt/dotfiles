@@ -80,7 +80,7 @@ call plug#end()
 runtime macros/sandwich/keymap/surround.vim
 
 " cuts my load time from 120ms to 50ms
-lua require(impatient)
+lua require('impatient')
 
 map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline

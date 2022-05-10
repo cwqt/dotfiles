@@ -27,8 +27,6 @@ require("plugins.nvim-lightbulb").setup()
 require("plugins.vim-yoink").setup()
 require("plugins.nvim-spectre").setup()
 
--- function wow(hello, world, how, are, you) end
---
 map("n", "S", ":ISwapWith<CR>", { silent = true })
 require("iswap").setup({
   -- The keys that will be used as a selection, in order
@@ -41,4 +39,32 @@ require("iswap").setup({
   hl_selection = "Comment",
   -- Automatically swap with only two arguments
   autoswap = true,
+})
+
+require("nvim-treesitter.configs").setup({
+  textobjects = {
+    lsp_interop = {
+      enable = true,
+      border = "none",
+      peek_definition_code = {
+        ["<leader>dF"] = "@function.outer",
+        ["<leader>df"] = "@class.outer",
+      },
+    },
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/206
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
 })

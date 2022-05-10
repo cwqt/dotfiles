@@ -21,7 +21,6 @@ Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
 Plug 'machakann/vim-sandwich'                               " operations on text objects
-Plug 'wellle/targets.vim'                                   " more text objects
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
 Plug 'junegunn/vim-easy-align'                              " aligning characters
 Plug 'ggandor/lightspeed.nvim'                              " better easymotion
@@ -40,7 +39,8 @@ Plug 'metakirby5/codi.vim'                                  " code scratchpad
 Plug 'mizlan/iswap.nvim'                                    " swap args
 Plug 'svermeulen/vim-yoink'                                 " clipboard
 " treesitter --------------------------------------
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " treesitting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax aware highlighting/objects
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'          " tree-sitter powered objects
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comment, jsx
 Plug 'windwp/nvim-ts-autotag'                               " autoclose jsx/html tags
@@ -75,8 +75,12 @@ Plug 'kosayoda/nvim-lightbulb'                              " lsp code action hi
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
 call plug#end()
 
+" use vim-surroud keybinds, e.g. sd" is now ds"
+" saa{} is now ysa{}
+runtime macros/sandwich/keymap/surround.vim
+
 " cuts my load time from 120ms to 50ms
-lua require('impatient')
+lua require(impatient)
 
 map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline

@@ -21,6 +21,8 @@ Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
 Plug 'machakann/vim-sandwich'                               " operations on text objects
+Plug 'AndrewRadev/dsf.vim'                                  " function text objects
+Plug 'wellle/targets.vim'                                   " more text objects!
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
 Plug 'junegunn/vim-easy-align'                              " aligning characters
 Plug 'ggandor/lightspeed.nvim'                              " better easymotion
@@ -34,10 +36,13 @@ Plug 'windwp/nvim-spectre'                                  " global search and 
 Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
 Plug 'stevearc/dressing.nvim'                               " prettier ui elements
 Plug 'chr4/nginx.vim'                                       " syntax highlights for nginx
-Plug 'AndrewRadev/dsf.vim'                                  " function motions
 Plug 'metakirby5/codi.vim'                                  " code scratchpad
 Plug 'mizlan/iswap.nvim'                                    " swap args
 Plug 'svermeulen/vim-yoink'                                 " clipboard
+" debug adapter protocol -------------------------
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax aware highlighting/objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'          " tree-sitter powered objects
@@ -314,3 +319,6 @@ endfunction
 let g:codi#aliases = {
 \ 'ts': 'typescript',
 \ }
+
+au BufRead,BufNewFile *.md setlocal textwidth=80
+

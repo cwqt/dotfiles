@@ -2,7 +2,6 @@ call plug#begin("~/.local/share/nvim/plugged")
 Plug 'nvim-lua/plenary.nvim'                                " async for coroutines
 Plug 'tweekmonster/startuptime.vim'                         " startup time tracker
 Plug 'nathom/filetype.nvim'                                 " startup time improvement
-Plug 'mhinz/vim-startify'                                   " startup screen
 Plug 'lewis6991/impatient.nvim'                             " startup speed via binaries
 Plug 'windwp/nvim-autopairs'                                " creates pairs for () {} []
 Plug 'kqito/vim-easy-replace'                               " replace words under cursor/visual
@@ -29,7 +28,7 @@ Plug 'ggandor/lightspeed.nvim'                              " better easymotion
 Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'rebelot/kanagawa.nvim'                                " color theme
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua' ", {'branch': 'feat/add-mark-capabilities'} 
+Plug 'kyazdani42/nvim-tree.lua' , {'tag': 'nightly'} 
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
@@ -78,6 +77,9 @@ Plug 'weilbith/nvim-code-action-menu'                       " lsp code action me
 Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
+
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make'}
 call plug#end()
 
 " use vim-surroud keybinds, e.g. sd" is now ds"
@@ -167,7 +169,9 @@ highlight! link mkdLineBreak NONE
 set completeopt=menu,menuone,noselect
 highlight! Pmenu            guibg=#16161d
 highlight! PmenuSbar        guibg=#16161d
-highlight! PmenuThumb       guibg=#6b6b8d 
+highlight! PmenuThumb       guibg=#2d2f3d
+
+" highlight! PmenuThumb       guibg=#6b6b8d 
 " highlight! PmenuSel         guibg=#6b6b8d guifg=#16161d gui=Bold
 highlight! PmenuSel         guibg=#947fb8 guifg=#16161d gui=Bold
 
@@ -277,12 +281,12 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-let g:scrollbar_excluded_filetypes = ['NvimTree']
-let g:startify_custom_header = ""
 
 " Lazy shift finger
 command! -bar -nargs=* -complete=file -range=% -bang W         <line1>,<line2>write<bang> <args>
 command! -bar -nargs=* -complete=file -range=% -bang Wq        <line1>,<line2>wq<bang> <args>
+" Quick close all forced
+command Q qa!
 
 " delete html tags
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)

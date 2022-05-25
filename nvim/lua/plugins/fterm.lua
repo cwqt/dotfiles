@@ -7,6 +7,10 @@ M.setup = function()
   require("FTerm").setup({
     cmd = "/opt/homebrew/bin/fish",
     border = "rounded",
+    dimensions = {
+      height = 0.87,
+      width = 0.8,
+    },
   })
 
   local opts = { noremap = true, silent = true }

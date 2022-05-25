@@ -72,9 +72,9 @@ augroup END
   })
 
   map("n", "<Leader>f", ":FzfLua grep_project<CR>", { silent = true })
-  map("n", "<Leader>p", ":FzfLua files<CR>", { silent = true })
-  map("n", "<Leader>l", ":FzfLua blines<CR>", { silent = true })
-  map("n", "<Leader>;", ":FzfLua buffers<CR>", { silent = true })
+  -- map("n", "<Leader>p", ":FzfLua files<CR>", { silent = true })
+  -- map("n", "<Leader>l", ":FzfLua blines<CR>", { silent = true })
+  -- map("n", "<Leader>;", ":FzfLua buffers<CR>", { silent = true })
 
   -- hide fzf statusline
   vim.api.nvim_command(

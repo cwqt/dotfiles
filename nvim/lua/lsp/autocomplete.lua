@@ -48,7 +48,9 @@ local config = {
   formatting = {
     format = lspkind.cmp_format({
       preset = "codicons",
-      -- mode = "symbol", -- icon only
+      symbol_map = {
+        Snippet = "",
+      },
     }),
   },
   snippet = {

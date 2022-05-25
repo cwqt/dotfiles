@@ -2,7 +2,17 @@ local map = require("utils.map")
 
 local M = {}
 
--- --
+-- \ 'git': {
+-- \   'unstaged': "",
+-- \   'staged': "",
+-- \   'unmerged': "",
+-- \   'renamed': "",
+-- \   'untracked': "",
+-- \   'deleted': "",
+-- \   'ignored': ""
+-- \   },
+
+--
 M.setup = function()
   -- file tree sidebar key binding
   map("n", "<leader>b", ":NvimTreeToggle<CR>", { silent = true })
@@ -14,13 +24,13 @@ M.setup = function()
       \ 'default': '',
       \ 'symlink': '',
       \ 'git': {
-      \   'unstaged': "",
-      \   'staged': "",
-      \   'unmerged': "",
-      \   'renamed': "",
-      \   'untracked': "",
-      \   'deleted': "",
-      \   'ignored': ""
+      \   'unstaged': "u",
+      \   'staged': "s",
+      \   'unmerged': "m",
+      \   'renamed': "r",
+      \   'untracked': "t",
+      \   'deleted': "d",
+      \   'ignored': "i"
       \   },
       \ 'folder': {
       \   'arrow_open': "",

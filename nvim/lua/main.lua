@@ -26,12 +26,13 @@ require("plugins.fzf").setup()
 require("plugins.nvim-lightbulb").setup()
 require("plugins.vim-yoink").setup()
 require("plugins.nvim-spectre").setup()
-require("plugins.dap").setup()
+require("plugins.dap.main").setup()
+require("plugins.telescope")
 
 map("n", "S", ":ISwapWith<CR>", { silent = true })
 require("iswap").setup({
   -- The keys that will be used as a selection, in order
-  keys = "jkiop",
+  keys = "jkliopqweasd",
   -- Grey out the rest of the text when making a selection
   grey = "enabled",
   -- Highlight group for the sniping value (asdf etc.)

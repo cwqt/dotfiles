@@ -8,6 +8,9 @@ M.setup = function()
   })
 
   require("scrollbar").setup({
+    excluded_filetypes = {
+      "NvimTree",
+    },
     handle = {
       color = colors.sumiInk1,
     },

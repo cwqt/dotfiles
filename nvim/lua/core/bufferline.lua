@@ -131,11 +131,6 @@ nnoremap <silent>    <A-.> <Plug>(cokeline-focus-next)<CR>
 nnoremap <silent>    <A->> <Plug>(cokeline-switch-prev)<CR>
 nnoremap <silent>    <A-<> <Plug>(cokeline-switch-next)<CR>
 
-" Open and close a buffer
-nnoremap <silent>    <A-n> :enew<CR>
-nnoremap <silent>    <A-w> :Sayonara!<CR>
-nnoremap <silent>    <A-q> :Sayonara<CR>
-nnoremap <silent>    <A-W> :Resurrect<CR>
 " Goto buffer in position...
 nnoremap <silent>    <A-1> <Plug>(cokeline-focus-1)<CR>
 nnoremap <silent>    <A-2> <Plug>(cokeline-focus-2)<CR>

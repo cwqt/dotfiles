@@ -1,10 +1,11 @@
-vim.cmd("colorscheme kanagawa")
+require("kanagawa").setup({
+  transparent = true, -- do not set background color
+})
 
 -- Core -----------------------------------------
 require("core.main").setup()
 require("core.bufferline").setup()
 require("core.file-tree").setup()
-require("core.git").setup()
 require("core.statusline").setup()
 require("core.tree-sitter").setup()
 require("core.keymaps").setup()
@@ -29,7 +30,12 @@ require("plugins.nvim-spectre").setup()
 require("plugins.dap.main").setup()
 require("plugins.telescope")
 
-map("n", "S", ":ISwapWith<CR>", { silent = true })
+vim.cmd("colorscheme kanagawa")
+
+-- Diffview has to be called before applying themem
+require("core.git").setup()
+
+map("n", "S", ":ISwapWith<CR>", { silent = false })
 require("iswap").setup({
   -- The keys that will be used as a selection, in order
   keys = "jkliopqweasd",
@@ -64,3 +70,5 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
+
+require("spellsitter").setup()

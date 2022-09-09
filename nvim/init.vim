@@ -1,4 +1,5 @@
 call plug#begin("~/.local/share/nvim/plugged")
+Plug 'https://github.com/mathieupost/nuake'
 Plug 'nvim-lua/plenary.nvim'                                " async for coroutines
 Plug 'tweekmonster/startuptime.vim'                         " startup time tracker
 Plug 'nathom/filetype.nvim'                                 " startup time improvement
@@ -38,6 +39,9 @@ Plug 'chr4/nginx.vim'                                       " syntax highlights 
 Plug 'metakirby5/codi.vim'                                  " code scratchpad
 Plug 'mizlan/iswap.nvim'                                    " swap args
 Plug 'svermeulen/vim-yoink'                                 " clipboard
+Plug 'kevinhwang91/promise-async'
+Plug 'kevinhwang91/nvim-ufo'
+Plug 'lewis6991/spellsitter.nvim'
 " debug adapter protocol -------------------------
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
@@ -89,6 +93,12 @@ runtime macros/sandwich/keymap/surround.vim
 " cuts my load time from 120ms to 50ms
 lua require('impatient')
 
+nnoremap <silent><A-i> :Nuake<CR>
+inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+let g:nuake_shell="/opt/homebrew/bin/fish"
+let g:nuake_size=0.4
+
 map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline
 syntax on             " hi syntax
@@ -126,8 +136,8 @@ set splitright
 set signcolumn=yes
 set foldlevelstart=99 " start file with all folds opened
 " tree-sitter folding
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+set foldmethod=manual
+" set foldexpr=nvim_treesitter#foldexpr()
 
 " change leaderkey to spacebar
 let mapleader=" "
@@ -153,7 +163,6 @@ lua require('main')
 
 " pretty colours, must be set after main lua call
 set termguicolors
-colorscheme kanagawa
 autocmd ColorScheme * hi! Normal ctermbg=NONE guibg=NONE
 autocmd ColorScheme & hi! hi! NormalFloat guibg=#1f202b
 " indentation marker colour
@@ -166,7 +175,7 @@ hi Search guibg=#21324a
 highlight! link mkdLineBreak NONE
 
 " plumbline colours
-set completeopt=menu,menuone,noselect
+" set completeopt=menu,noinsert
 highlight! Pmenu            guibg=#16161d
 highlight! PmenuSbar        guibg=#16161d
 highlight! PmenuThumb       guibg=#2d2f3d
@@ -272,6 +281,9 @@ nnoremap <silent> <a-j> :KittyNavigateDown<cr>
 nnoremap <silent> <a-k> :KittyNavigateUp<cr>
 nnoremap <silent> <a-l> :KittyNavigateRight<cr>
 
+
+nnoremap <silent> <leader>t :terminal fish<cr>
+
 " background color
 hi TabLineFill guibg=#0d1014
 
@@ -280,7 +292,6 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
-
 
 " Lazy shift finger
 command! -bar -nargs=* -complete=file -range=% -bang W         <line1>,<line2>write<bang> <args>
@@ -325,4 +336,21 @@ let g:codi#aliases = {
 \ }
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+autocmd BufNewFile,BufReadPost .env* set syntax=bash
+
+" next / prev fold
+nnoremap <silent> [z zk
+nnoremap <silent> ]z zj
+
+" Diffview empty gaps
+set fillchars+=diff:╱
+
+hi Folded guibg=#16161d
 

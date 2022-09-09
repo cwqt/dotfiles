@@ -26,11 +26,7 @@ M.setup = function()
       fold_open = "",
     },
     file_panel = {
-      position = "bottom", -- One of 'left', 'right', 'top', 'bottom'
-      width = 35, -- Only applies when position is 'left' or 'right'
-      height = 10, -- Only applies when position is 'top' or 'bottom'
-      -- listing_style = "list", -- One of 'list' or 'tree'
-      listing_style = "list", -- One of 'list' or 'tree'
+      listing_style = "tree", -- One of 'list' or 'tree'
       tree_options = {
         -- Only applies when listing_style is 'tree'
         flatten_dirs = true, -- Flatten dirs that only contain one single dir
@@ -38,24 +34,25 @@ M.setup = function()
       },
     },
     file_history_panel = {
-      position = "bottom",
-      width = 35,
-      height = 16,
-      log_options = {
-        max_count = 256, -- Limit the number of commits
-        follow = false, -- Follow renames (only for single file)
-        all = false, -- Include all refs under 'refs/' including HEAD
-        merges = false, -- List only merge commits
-        no_merges = false, -- List no merge commits
-        reverse = false, -- List commits in reverse order
-      },
+      -- log_options = {
+      --   max_count = 256, -- Limit the number of commits
+      --   follow = false, -- Follow renames (only for single file)
+      --   all = false, -- Include all refs under 'refs/' including HEAD
+      --   merges = false, -- List only merge commits
+      --   no_merges = false, -- List no merge commits
+      --   reverse = false, -- List commits in reverse order
+      -- },
     },
     default_args = {
       -- Default args prepended to the arg-list for the listed commands
       DiffviewOpen = {},
       DiffviewFileHistory = {},
     },
-    hooks = {}, -- See ':h diffview-config-hooks'
+    hooks = {
+      diff_buf_read = function(bufnr)
+        vim.opt_local.signcolumn = "no"
+      end,
+    }, -- See ':h diffview-config-hooks'
     key_bindings = {
       disable_defaults = false, -- Disable the default key bindings
       -- The `view` bindings are active in the diff buffers, only when the current
@@ -114,26 +111,22 @@ M.setup = function()
       },
     },
   })
-  local last_tabpage = vim.api.nvim_get_current_tabpage()
 
   function DiffviewToggle()
     local lib = require("diffview.lib")
     local view = lib.get_current_view()
     if view then
-      -- Current tabpage is a Diffview: go to previous tabpage
-      vim.api.nvim_set_current_tabpage(last_tabpage)
+      -- Current tabpage is a Diffview; close it
+      vim.cmd(":DiffviewClose")
+      -- require("cokeline")
     else
-      -- We are not in a Diffview: save current tabpagenr and go to a Diffview.
-      last_tabpage = vim.api.nvim_get_current_tabpage()
-      if #lib.views > 0 then
-        -- An open Diffview exists: go to that one.
-        vim.api.nvim_set_current_tabpage(lib.views[1].tabpage)
-      else
-        -- No open Diffview exists: Open a new one
-        vim.cmd(":DiffviewOpen")
-      end
+      -- No open Diffview exists: open a new one
+      vim.cmd(":DiffviewOpen")
     end
   end
+
+  map("n", "<leader>gh", ":DiffviewFileHistory %<CR>")
+  map("n", "<leader>df", ":lua DiffviewToggle()<CR>")
 
   -- Gutter diff/hunk markers
   require("gitsigns").setup({
@@ -181,14 +174,15 @@ M.setup = function()
   })
 
   vim.cmd([[
+nmap <silent><leader>gg :0G<CR>
 nmap <silent><leader>gc :Git commit<CR>
 nmap <silent><leader>gp :Git push<CR>
-nmap <silent><leader>gfp :Git push --force<CR>
-nmap <silent><leader>gf :Git pull<CR>
+nmap <silent><leader>gP :Git pull<CR>
 
-nmap <silent><leader>gg :0G<CR>
+nmap <silent><leader>gff :Git fetch --all<CR>
+nmap <silent><leader>gfp :Git push --force<CR>
+
 nmap <silent><leader>gr :Git rebase -i staging<CR>
-nmap <silent><leader>df :lua DiffviewToggle()<CR>
 nmap <silent><leader>gb :GBranches --locals<CR>
 nmap <silent><leader>gt :GTags<CR>
   ]])

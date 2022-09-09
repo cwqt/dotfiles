@@ -9,8 +9,6 @@ set -x PATH $PATH $GOPATH/bin
 # increase file table limit
 ulimit -n 65536
 
-thefuck --alias | source
-
 # try and switch nvm to version listed in .nvmrc on cd
 function _nvm_on_pwd --on-variable PWD
   test -e $PWD/.nvmrc && nvm use

@@ -19,6 +19,15 @@ M.setup = function()
   )
   -- hide hi from search
   map("n", "_", ":nohl<CR>", { silent = true })
+
+  vim.cmd([[
+    " Open and close a buffer
+    nnoremap <silent>    <A-n> :enew<CR>
+    nnoremap <silent>    <A-w> :Sayonara!<CR>
+    nnoremap <silent>    <A-q> :Sayonara<CR>
+    " Revive previously closed buffers
+    nnoremap <silent>    <A-W> :Resurrect<CR>
+  ]])
 end
 
 return M

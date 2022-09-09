@@ -80,18 +80,18 @@ local on_attach = function(_, bufnr)
     opts
   )
 
-  local lsp_signature = require("lsp_signature")
-  if lsp_signature then
-    lsp_signature.on_attach({
-      bind = true,
-      floating_window = true,
-      floating_window_above_cur_line = true,
-      hint_enable = false,
-      handler_opts = {
-        border = "rounded",
-      },
-    }, bufnr)
-  end
+  -- local lsp_signature = require("lsp_signature")
+  -- if lsp_signature then
+  --   lsp_signature.on_attach({
+  --     bind = true,
+  --     floating_window = true,
+  --     floating_window_above_cur_line = true,
+  --     hint_enable = false,
+  --     handler_opts = {
+  --       border = "rounded",
+  --     },
+  --   }, bufnr)
+  -- end
 end
 
 local M = {}
@@ -136,6 +136,8 @@ M.setup = function()
   }) do
     lsp[server].setup(with_autocomplete(configure(on_attach)))
   end
+
+  -- require("ufo").setup()
 
   -- LSP loading indicator
   require("fidget").setup({

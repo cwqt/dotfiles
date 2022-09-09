@@ -12,6 +12,8 @@ local M = {}
 -- \   'ignored': ""
 -- \   },
 
+-- \   'arrow_open': "",
+-- \   'arrow_closed': "",
 --
 M.setup = function()
   -- file tree sidebar key binding
@@ -22,7 +24,7 @@ M.setup = function()
 
   let g:nvim_tree_icons = {
       \ 'default': '',
-      \ 'symlink': '',
+      \ 'symlink': ' ',
       \ 'git': {
       \   'unstaged': "u",
       \   'staged': "s",
@@ -33,10 +35,10 @@ M.setup = function()
       \   'ignored': "i"
       \   },
       \ 'folder': {
-      \   'arrow_open': "",
-      \   'arrow_closed': "",
+      \   'arrow_open': " ",
+      \   'arrow_closed': " ",
       \   'default': "",
-      \   'open': "",
+      \   'open': "",
       \   'empty': "",
       \   'empty_open': "",
       \   'symlink': "",
@@ -51,13 +53,11 @@ M.setup = function()
     { key = { "O" }, action = "edit_no_picker" },
     { key = "<A-;>", action = "vsplit" },
     { key = "<A-'>", action = "split" },
-    { key = "<", action = "prev_sibling" },
-    { key = ">", action = "next_sibling" },
+    { key = "<A-r>", action = "refresh" },
     { key = "P", action = "parent_node" },
     { key = "<BS>", action = "close_node" },
     { key = "i", action = "toggle_ignored" },
     { key = "h", action = "toggle_dotfiles" },
-    { key = "r", action = "refresh" },
     { key = "a", action = "create" },
     { key = "d", action = "trash" },
     { key = "r", action = "rename" },
@@ -71,20 +71,13 @@ M.setup = function()
     { key = "[c", action = "prev_git_item" },
     { key = "]c", action = "next_git_item" },
     { key = "-", action = "dir_up" },
+    { key = "+", action = "cd" },
     { key = "S", action = "system_open" },
     { key = "?", action = "toggle_help" },
     { key = "C", action = "collapse_all" },
     { key = ".", action = "run_file_command" },
-    -- { key = "q", action = "close" },
-    -- { key = "d", action = "remove" },
-    -- { key = "S", action = "search_node" },
-    -- { key = "<C-k>", action = "toggle_file_info" },
-    -- { key = "<C-e>", action = "edit_in_place" },
-    -- { key = { "<2-RightMouse>", "<C-]>" }, action = "cd" },
-    -- { key = "<C-t>", action = "tabnew" },
-    -- { key = "<Tab>", action = "preview" },
-    -- { key = "K", action = "first_sibling" },
-    -- { key = "J", action = "last_sibling" },
+    { key = "t", action = "tabnew" },
+    { key = "p", action = "preview" },
   }
   require("nvim-tree").setup({
     update_cwd = true,
@@ -100,7 +93,7 @@ M.setup = function()
     view = {
       width = 40,
       hide_root_folder = true,
-      signcolumn = "yes",
+      signcolumn = "no",
       mappings = {
         custom_only = true,
         list = list,
@@ -112,7 +105,16 @@ M.setup = function()
     },
   })
 
-  vim.cmd("autocmd Colorscheme * highlight NvimTreeNormal guibg=#0b0d11")
+  local colors = require("kanagawa.colors").setup()
+  vim.cmd(
+    "autocmd Colorscheme * highlight! NvimTreeWindowPicker guibg="
+      .. colors.sumiInk2
+  )
+
+  -- vim.cmd(
+  --   "autocmd Colorscheme * highlight! NvimTreeNormalNC guifg=NONE guibg=#080a0d"
+  -- )
+  -- vim.cmd("autocmd Colorscheme * highlight! NvimTreeNormal guibg=#080a0d")
 end
 
 return M

@@ -1,5 +1,4 @@
 local ok, telescope = pcall(require, "telescope")
-
 if not ok then
   return
 end
@@ -28,18 +27,18 @@ telescope.setup({
     initial_mode = "insert",
     selection_strategy = "reset",
     sorting_strategy = "descending",
-    layout_strategy = "horizontal",
+    layout_strategy = "flex",
     layout_config = {
       horizontal = {
         prompt_position = "bottom",
         preview_width = 0.4,
       },
       vertical = {
-        mirror = false,
+        mirror = true,
       },
       width = 0.8,
       height = 0.8,
-      preview_cutoff = 80,
+      preview_cutoff = 100,
     },
     file_sorter = require("telescope.sorters").get_fuzzy_file,
     file_ignore_patterns = {
@@ -67,6 +66,7 @@ telescope.setup({
       i = {
         ["<Tab>"] = "move_selection_next",
         ["<S-Tab>"] = "move_selection_previous",
+        ["<A-w>"] = require("telescope.actions").delete_buffer,
         ["<esc>"] = actions.close,
       },
       n = {
@@ -99,3 +99,5 @@ map(
   ":Telescope find_files hidden=true<CR>",
   { silent = true }
 )
+
+-- map("n", "<Leader>b", ":Telescope buffers hidden=true<CR>", { silent = true })

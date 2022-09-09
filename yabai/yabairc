@@ -27,7 +27,6 @@ yabai -m rule --add app="^(Anki)$" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Preview$" manage=off
 
-
 # window focus follows mouse
 yabai -m config mouse_follows_focus on
 # move window with mouse

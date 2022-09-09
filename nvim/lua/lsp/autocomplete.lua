@@ -34,7 +34,8 @@ highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
 highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 ]])
 
-local config = {
+
+cmp.setup({
   window = {
     documentation = { -- no border; native-style scrollbar
       border = "none",
@@ -43,6 +44,7 @@ local config = {
     completion = { -- rounded border; thin-style scrollbar
       border = "none",
       scrollbar = "",
+      completeopt = "menuone,noinsert,noselect",
     },
   },
   formatting = {
@@ -55,7 +57,7 @@ local config = {
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
@@ -82,9 +84,7 @@ local config = {
   }, {
     { name = "buffer" },
   }),
-}
-
-cmp.setup(config)
+})
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {

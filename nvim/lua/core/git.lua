@@ -125,7 +125,7 @@ M.setup = function()
     end
   end
 
-  map("n", "<leader>gh", ":DiffviewFileHistory %<CR>")
+  map("n", "<leader>gfh", ":DiffviewFileHistory %<CR>")
   map("n", "<leader>df", ":lua DiffviewToggle()<CR>")
 
   -- Gutter diff/hunk markers
@@ -163,10 +163,10 @@ M.setup = function()
         { expr = true }
       )
 
-      map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-      map("v", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-      map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
-      map("n", "<leader>hd", "<cmd>Gitsigns toggle_deleted<CR>")
+      map("n", "ghr", ":Gitsigns reset_hunk<CR>")
+      map("v", "ghr", ":Gitsigns reset_hunk<CR>")
+      map("n", "ghp", ":Gitsigns preview_hunk<CR>")
+      map("n", "ghh", ":Gitsigns toggle_deleted<CR>")
 
       -- Text object
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")

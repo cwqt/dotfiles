@@ -14,8 +14,8 @@ M.setup = function()
   map("n", "<leader>y", ":Yanks<CR>", { silent = true })
 
   -- Also replace the default gp with yoink paste so we can toggle paste in this case too
-  map("n", "gp", "<plug>(YoinkPaste_gp)", {})
-  map("n", "gP", "<plug>(YoinkPaste_gP)", {})
+  -- map("n", "gp", "<plug>(YoinkPaste_gp)", {})
+  -- map("n", "gP", "<plug>(YoinkPaste_gP)", {})
 end
 
 return M

@@ -81,7 +81,7 @@ Plug 'weilbith/nvim-code-action-menu'                       " lsp code action me
 Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
 Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
-
+Plug 'wakatime/vim-wakatime'                                " time tracking
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make'}
 call plug#end()
@@ -258,8 +258,8 @@ let g:blamer_show_in_visual_modes = 0
 
 " lightspeed motions
 let g:lightspeed_no_default_keymaps = 1
-nmap f <Plug>Lightspeed_omni_s
-xmap f <Plug>Lightspeed_omni_s
+nmap s <Plug>Lightspeed_omni_s
+xmap s <Plug>Lightspeed_omni_s
 
 " TODO: try out using surround maps https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
 " runtime macros/sandwich/keymap/surround.vim

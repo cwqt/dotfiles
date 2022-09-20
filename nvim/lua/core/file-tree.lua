@@ -77,7 +77,7 @@ M.setup = function()
     { key = "C", action = "collapse_all" },
     { key = ".", action = "run_file_command" },
     { key = "t", action = "tabnew" },
-    { key = "p", action = "preview" },
+    -- { key = "p", action = "preview" },
   }
   require("nvim-tree").setup({
     update_cwd = true,

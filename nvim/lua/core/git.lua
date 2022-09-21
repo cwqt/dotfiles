@@ -49,7 +49,10 @@ M.setup = function()
       DiffviewFileHistory = {},
     },
     hooks = {
-      diff_buf_read = function(bufnr)
+      diff_buf_win_enter = function(bufnr)
+        require("gitsigns").detach(bufnr)
+      end,
+      diff_buf_read = function()
         vim.opt_local.signcolumn = "no"
       end,
     }, -- See ':h diffview-config-hooks'
@@ -114,19 +117,21 @@ M.setup = function()
 
   function DiffviewToggle()
     local lib = require("diffview.lib")
+
     local view = lib.get_current_view()
     if view then
       -- Current tabpage is a Diffview; close it
       vim.cmd(":DiffviewClose")
-      -- require("cokeline")
+      vim.cmd(":WindowsEnableAutowidth")
     else
       -- No open Diffview exists: open a new one
+      vim.cmd(":WindowsDisableAutowidth")
       vim.cmd(":DiffviewOpen")
     end
   end
 
-  map("n", "<leader>gfh", ":DiffviewFileHistory %<CR>")
   map("n", "<leader>df", ":lua DiffviewToggle()<CR>")
+  map("n", "<leader>gfh", ":DiffviewFileHistory %<CR>")
 
   -- Gutter diff/hunk markers
   require("gitsigns").setup({

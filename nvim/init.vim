@@ -42,6 +42,11 @@ Plug 'svermeulen/vim-yoink'                                 " clipboard
 Plug 'kevinhwang91/promise-async'
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'lewis6991/spellsitter.nvim'
+
+
+Plug 'anuvyklack/middleclass'
+Plug 'anuvyklack/animation.nvim'
+Plug 'anuvyklack/windows.nvim'
 " debug adapter protocol -------------------------
 Plug 'mfussenegger/nvim-dap'
 Plug 'leoluz/nvim-dap-go'
@@ -84,7 +89,11 @@ Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share 
 Plug 'wakatime/vim-wakatime'                                " time tracking
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make'}
+Plug 'tommcdo/vim-exchange'
 call plug#end()
+
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " use vim-surroud keybinds, e.g. sd" is now ds"
 " saa{} is now ysa{}
@@ -93,9 +102,10 @@ runtime macros/sandwich/keymap/surround.vim
 " cuts my load time from 120ms to 50ms
 lua require('impatient')
 
-nnoremap <silent><A-i> :Nuake<CR>
-inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
-tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+nnoremap <silent><A-i> :execute 'WindowsDisableAutowidth' \| Nuake<CR>
+inoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
+tnoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
+
 let g:nuake_shell="/opt/homebrew/bin/fish"
 let g:nuake_size=0.4
 
@@ -106,7 +116,6 @@ syntax sync minlines=256
 syntax sync maxlines=256
 set synmaxcol=250
 set shell=/bin/dash   " use fastest shell
-" set shell=/opt/homebrew/bin/fish
 set nonumber          " hide line numbers
 set encoding=UTF-8    " character encoding
 set noswapfile        " disable the swapfile
@@ -124,7 +133,7 @@ set mouse=a           " allow trackpad scrolling
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
 set nowrap
-set cursorline      " hi line of cursor
+set cursorline        " hi line of cursor
 set ignorecase        " ignore case in search
 set so=999            " set cursor to always be in the center
 set clipboard=unnamed " make yy add to system clipboard

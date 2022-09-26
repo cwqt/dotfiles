@@ -6,7 +6,7 @@ M.setup = function()
 augroup kitty_mp
   autocmd!
   autocmd VimLeave,VimSuspend * :silent !kitty @ set-spacing padding=15 margin=0
-  autocmd VimEnter,VimResume * :silent !kitty @ set-spacing padding=0 margin=0
+ autocmd VimEnter,VimResume * :silent !kitty @ set-spacing padding=0 margin=0
 augroup END
 ]])
 

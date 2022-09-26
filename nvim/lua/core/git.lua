@@ -122,10 +122,10 @@ M.setup = function()
     if view then
       -- Current tabpage is a Diffview; close it
       vim.cmd(":DiffviewClose")
-      vim.cmd(":WindowsEnableAutowidth")
+      -- vim.cmd(":WindowsEnableAutowidth")
     else
       -- No open Diffview exists: open a new one
-      vim.cmd(":WindowsDisableAutowidth")
+      -- vim.cmd(":WindowsDisableAutowidth")
       vim.cmd(":DiffviewOpen")
     end
   end

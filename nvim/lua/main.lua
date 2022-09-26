@@ -30,16 +30,16 @@ require("plugins.nvim-spectre").setup()
 require("plugins.dap.main").setup()
 require("plugins.telescope")
 
-vim.o.winwidth = 2
-vim.o.winminwidth = 2
-vim.o.equalalways = false
-require("windows").setup({
-  animation = {
-    duration = 200, -- ms
-  },
-})
-map("n", "<leader>m", ":WindowsMaximize<CR>", { silent = true })
-vim.cmd(":WindowsEnableAutowidth")
+-- vim.o.winwidth = 2
+-- vim.o.winminwidth = 2
+-- vim.o.equalalways = false
+-- require("windows").setup({
+--   animation = {
+--     duration = 200, -- ms
+--   },
+-- })
+-- map("n", "<leader>m", ":WindowsMaximize<CR>", { silent = true })
+-- vim.cmd(":WindowsEnableAutowidth")
 
 vim.cmd("colorscheme kanagawa")
 

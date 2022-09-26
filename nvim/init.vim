@@ -102,9 +102,12 @@ runtime macros/sandwich/keymap/surround.vim
 " cuts my load time from 120ms to 50ms
 lua require('impatient')
 
-nnoremap <silent><A-i> :execute 'WindowsDisableAutowidth' \| Nuake<CR>
-inoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
-tnoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
+nnoremap <silent><A-i> :Nuake<CR>
+inoremap <silent><A-i> <C-\><C-n> :Nuake<CR>
+tnoremap <silent><A-i> <C-\><C-n> :Nuake<CR>
+" nnoremap <silent><A-i> :execute 'WindowsDisableAutowidth' \| Nuake<CR>
+" inoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
+" tnoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
 
 let g:nuake_shell="/opt/homebrew/bin/fish"
 let g:nuake_size=0.4

@@ -42,6 +42,7 @@ Plug 'svermeulen/vim-yoink'                                 " clipboard
 Plug 'kevinhwang91/promise-async'
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'lewis6991/spellsitter.nvim'
+Plug 'michaeljsmith/vim-indent-object'                      " indentation objects
 
 
 Plug 'anuvyklack/middleclass'
@@ -103,8 +104,8 @@ runtime macros/sandwich/keymap/surround.vim
 lua require('impatient')
 
 nnoremap <silent><A-i> :Nuake<CR>
-inoremap <silent><A-i> <C-\><C-n> :Nuake<CR>
-tnoremap <silent><A-i> <C-\><C-n> :Nuake<CR>
+inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
 " nnoremap <silent><A-i> :execute 'WindowsDisableAutowidth' \| Nuake<CR>
 " inoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
 " tnoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
@@ -360,6 +361,10 @@ autocmd BufNewFile,BufReadPost .env* set syntax=bash
 " next / prev fold
 nnoremap <silent> [z zk
 nnoremap <silent> ]z zj
+
+" quick close all
+nnoremap <silent> <leader>q :x<CR>
+nnoremap <silent> <leader>Q :qa!<CR>
 
 " Diffview empty gaps
 set fillchars+=diff:╱

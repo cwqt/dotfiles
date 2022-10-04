@@ -131,7 +131,7 @@ M.setup = function()
   end
 
   map("n", "<leader>df", ":lua DiffviewToggle()<CR>")
-  map("n", "<leader>gfh", ":DiffviewFileHistory %<CR>")
+  map("n", "gfh", ":DiffviewFileHistory %<CR>")
 
   -- Gutter diff/hunk markers
   require("gitsigns").setup({

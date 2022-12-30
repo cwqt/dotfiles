@@ -1,7 +1,3 @@
--- require("kanagawa").setup({
---   transparent = true, -- do not set background color
--- })
-
 -- Core -----------------------------------------
 require("core.main").setup()
 require("core.bufferline").setup()
@@ -10,8 +6,8 @@ require("core.statusline").setup()
 require("core.tree-sitter").setup()
 require("core.keymaps").setup()
 require("core.autocommands").setup()
+require("core.tree-sitter").setup()
 require("lsp.main").setup()
-
 -- Plugins ---------------------------------------
 require("plugins.comment").setup()
 require("plugins.filetype").setup()
@@ -22,64 +18,16 @@ require("plugins.todo-comments").setup()
 require("plugins.trouble").setup()
 require("plugins.twilight").setup()
 require("plugins.which-key").setup()
-require("plugins.fzf").setup()
 require("plugins.nvim-lightbulb").setup()
 require("plugins.vim-yoink").setup()
 require("plugins.goto-preview").setup()
 require("plugins.nvim-spectre").setup()
-require("plugins.dap.main").setup()
-require("plugins.telescope")
-
--- vim.o.winwidth = 2
--- vim.o.winminwidth = 2
--- vim.o.equalalways = false
--- require("windows").setup({
---   animation = {
---     duration = 200, -- ms
---   },
--- })
--- map("n", "<leader>m", ":WindowsMaximize<CR>", { silent = true })
--- vim.cmd(":WindowsEnableAutowidth")
+-- require("plugins.dap.main").setup()
 
 vim.cmd("colorscheme kanagawa")
 
 -- Diffview has to be called before applying themem
 require("core.git").setup()
 
-map("n", "S", ":ISwapWith<CR>", { silent = false })
-require("iswap").setup({
-  -- The keys that will be used as a selection, in order
-  keys = "jkliopqweasd",
-  -- Grey out the rest of the text when making a selection
-  grey = "enabled",
-  -- Highlight group for the sniping value (asdf etc.)
-  hl_snipe = "LightspeedUnlabeledMatch",
-  -- Highlight group for the visual selection of terms
-  hl_selection = "Comment",
-  -- Automatically swap with only two arguments
-  autoswap = true,
-})
-
-require("nvim-treesitter.configs").setup({
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/206
-        ["aa"] = "@parameter.outer",
-        ["ia"] = "@parameter.inner",
-        -- ["af"] = "@function.outer",
-        -- ["if"] = "@function.inner",
-        ["ac"] = "@call.outer",
-        ["ic"] = "@call.inner",
-        -- ["ab"] = "@block.outer",
-        -- ["ib"] = "@block.inner",
-      },
-    },
-  },
-})
-
 require("spellsitter").setup()
+require("stabilize").setup()

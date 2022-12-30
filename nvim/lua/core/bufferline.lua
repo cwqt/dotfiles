@@ -43,29 +43,30 @@ function M.setup()
 
     components = {
       -- tab start
-      {
-        text = function(buffer)
-          if buffer.is_focused then
-            activeIndex = buffer.index
-          end
-
-          if buffer.is_first then
-            return " "
-          end
-
-          if buffer.is_focused then
-            return ""
-          end
-
-          if activeIndex and (buffer.index > activeIndex) then
-            return ""
-          end
-
-          return " "
-        end,
-        fg = colors.bg,
-        bg = "NONE",
-      },
+      -- {
+      --   text = function(buffer)
+      --     if buffer.is_focused then
+      --       activeIndex = buffer.index
+      --     end
+      --
+      --     if buffer.is_first then
+      --       return " "
+      --     end
+      --
+      --     if buffer.is_focused then
+      --       return ""
+      --     end
+      --
+      --     if activeIndex and (buffer.index > activeIndex) then
+      --       return ""
+      --     end
+      --
+      --     return " "
+      --   end,
+      --   fg = colors.bg,
+      --   bg = "NONE",
+      -- },
+      { text = " " },
       {
         text = function(buffer)
           return " " .. buffer.index
@@ -88,10 +89,10 @@ function M.setup()
         style = "NONE",
         text = function(buffer)
           if buffer.diagnostics.errors > 0 then
-            return " ● "
+            return "* "
           end
           if buffer.is_modified then
-            return " ● "
+            return "* "
           end
           return " "
         end,
@@ -105,22 +106,23 @@ function M.setup()
           return "NONE"
         end,
       },
+      { text = " " },
       -- tab end
-      {
-        text = function(buffer)
-          if buffer.is_focused then
-            return ""
-          end
-
-          if activeIndex and (buffer.index < activeIndex) then
-            return ""
-          end
-
-          return " "
-        end,
-        fg = colors.bg,
-        bg = "NONE",
-      },
+      -- {
+      --   text = function(buffer)
+      --     if buffer.is_focused then
+      --       return ""
+      --     end
+      --
+      --     if activeIndex and (buffer.index < activeIndex) then
+      --       return ""
+      --     end
+      --
+      --     return " "
+      --   end,
+      --   fg = colors.bg,
+      --   bg = "NONE",
+      -- },
     },
   })
 

@@ -18,10 +18,10 @@ Plug 'cwqt/nvim-cokeline'                                   " bufferline
 Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
-Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
 Plug 'machakann/vim-sandwich'                               " operations on text objects
 Plug 'AndrewRadev/dsf.vim'                                  " function text objects
+Plug 'tommcdo/vim-exchange'                                 " cxia
 Plug 'wellle/targets.vim'                                   " more text objects!
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
 Plug 'junegunn/vim-easy-align'                              " aligning characters
@@ -29,29 +29,24 @@ Plug 'ggandor/lightspeed.nvim'                              " better easymotion
 Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'rebelot/kanagawa.nvim'                                " color theme
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua' , {'tag': 'nightly'} 
+Plug 'kyazdani42/nvim-tree.lua' , {'tag': 'nightly'}        " file tree
 Plug 'numToStr/FTerm.nvim'                                  " floating terminal
 Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'windwp/nvim-spectre'                                  " global search and replace
-Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigationj
+Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigation
 Plug 'stevearc/dressing.nvim'                               " prettier ui elements
 Plug 'chr4/nginx.vim'                                       " syntax highlights for nginx
 Plug 'metakirby5/codi.vim'                                  " code scratchpad
-Plug 'mizlan/iswap.nvim'                                    " swap args
+Plug 'luukvbaal/stabilize.nvim'                             " stop text jumping up
 Plug 'svermeulen/vim-yoink'                                 " clipboard
 Plug 'kevinhwang91/promise-async'
-Plug 'kevinhwang91/nvim-ufo'
+Plug 'kevinhwang91/nvim-ufo'                                " modern folds
 Plug 'lewis6991/spellsitter.nvim'
 Plug 'michaeljsmith/vim-indent-object'                      " indentation objects
-
-
-Plug 'anuvyklack/middleclass'
-Plug 'anuvyklack/animation.nvim'
-Plug 'anuvyklack/windows.nvim'
 " debug adapter protocol -------------------------
-Plug 'mfussenegger/nvim-dap'
-Plug 'leoluz/nvim-dap-go'
-Plug 'rcarriga/nvim-dap-ui'
+"Plug 'mfussenegger/nvim-dap'
+"Plug 'leoluz/nvim-dap-go'
+"Plug 'rcarriga/nvim-dap-ui'
 " treesitter --------------------------------------
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax aware highlighting/objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'          " tree-sitter powered objects
@@ -69,7 +64,7 @@ Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in q
 " lsp --------------------------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp',                                    " autocomplete
@@ -86,32 +81,15 @@ Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP
 Plug 'weilbith/nvim-code-action-menu'                       " lsp code action menu
 Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
-Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'} " share kitty split keybinds
 Plug 'wakatime/vim-wakatime'                                " time tracking
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make'}
-Plug 'tommcdo/vim-exchange'
 call plug#end()
-
-
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " use vim-surroud keybinds, e.g. sd" is now ds"
 " saa{} is now ysa{}
 runtime macros/sandwich/keymap/surround.vim
 
-" cuts my load time from 120ms to 50ms
+" cache plugins
 lua require('impatient')
-
-nnoremap <silent><A-i> :Nuake<CR>
-inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
-tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
-" nnoremap <silent><A-i> :execute 'WindowsDisableAutowidth' \| Nuake<CR>
-" inoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
-" tnoremap <silent><A-i> <C-\><C-n> :execute 'WindowsEnableAutowidth' \| Nuake<CR>
-
-let g:nuake_shell="/opt/homebrew/bin/fish"
-let g:nuake_size=0.4
 
 map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline
@@ -139,7 +117,7 @@ map <ScrollWheelDown> <C-E>
 set nowrap
 set cursorline        " hi line of cursor
 set ignorecase        " ignore case in search
-set so=999            " set cursor to always be in the center
+set so=30             " set cursor to always be in the center
 set clipboard=unnamed " make yy add to system clipboard
 set synmaxcol=128
 set pumheight=5       " maximum number of items in completion popup
@@ -156,6 +134,7 @@ set foldmethod=manual
 let mapleader=" "
 set timeoutlen=500 ttimeoutlen=0
 
+" fast save
 nnoremap <leader><leader> :w<CR>
 
 " redraw on these events
@@ -166,8 +145,6 @@ autocmd FileType qf wincmd J
 autocmd TermOpen * startinsert
 " autosave all buffers on focus loss
 autocmd FocusLost * silent! wall
-" exit terminal on double escape
-tnoremap <silent> <C-[><C-[> <C-\><C-n>
 " ci" don't yank
 nnoremap c "_c
 
@@ -199,6 +176,7 @@ highlight! PmenuSel         guibg=#947fb8 guifg=#16161d gui=Bold
 
 " easymotion labelling
 let g:sneak#label = 1
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " sane pasting in visual mode https://vi.stackexchange.com/a/25274
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 xnoremap <expr> P 'Pgv"'.v:register.'y`>'
@@ -239,6 +217,14 @@ function! IndentWithI()
 endfunction
 nnoremap <expr> i IndentWithI()
 
+" split movement
+nnoremap <silent> <a-h> <C-W><C-H>
+nnoremap <silent> <a-j> <C-W><C-J>
+nnoremap <silent> <a-k> <C-W><C-K>
+nnoremap <silent> <a-l> <C-W><C-L>
+" backwards and forwards
+map <Tab> <C-W><C-W>
+map <S-Tab> <C-W><S-W>
 " create split and move to it
 nnoremap <A-;> <C-w>v<C-w>l<CR>
 nnoremap <A-'> <C-w>s<C-w>j<CR>
@@ -247,10 +233,6 @@ map <silent><A-H> :SmartResizeLeft 4<CR>
 map <silent><A-J> :SmartResizeDown 2<CR>
 map <silent><A-K> :SmartResizeUp 2<CR>
 map <silent><A-L> :SmartResizeRight 4<CR>
-
-" moving around splits, backwards and forwards
-map <Tab> <C-W><C-W>
-map <S-Tab> <C-W><S-W>
 
 " visual mode align
 xmap ga <Plug>(EasyAlign)
@@ -274,9 +256,6 @@ let g:lightspeed_no_default_keymaps = 1
 nmap s <Plug>Lightspeed_omni_s
 xmap s <Plug>Lightspeed_omni_s
 
-" TODO: try out using surround maps https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
-" runtime macros/sandwich/keymap/surround.vim
-
 " change highlight marker colors
 function! HighlightConflictMarker() abort
     highlight ConflictMarkerBegin guibg=#1e4428
@@ -287,15 +266,22 @@ function! HighlightConflictMarker() abort
 endfunction
 autocmd VimEnter * call HighlightConflictMarker()
 
-" moving between splits / kitty splits
-let g:kitty_navigator_no_mappings = 1
-nnoremap <silent> <a-h> :KittyNavigateLeft<cr>
-nnoremap <silent> <a-j> :KittyNavigateDown<cr>
-nnoremap <silent> <a-k> :KittyNavigateUp<cr>
-nnoremap <silent> <a-l> :KittyNavigateRight<cr>
-
-
+" open a terminal as a tab
 nnoremap <silent> <leader>t :terminal fish<cr>
+"tnoremap <Esc> <C-\><C-n>
+" exit terminal on double escape
+tnoremap <silent> <C-[><C-[> <C-\><C-n>
+
+
+" close the terminal when process ended
+autocmd TermClose * execute 'bdelete! ' . expand('<abuf>')
+" quake style terminal
+nnoremap <silent><A-i> :Nuake<CR>
+inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
+let g:nuake_shell="/opt/homebrew/bin/fish"
+let g:nuake_size=0.4
+
 
 " background color
 hi TabLineFill guibg=#0d1014
@@ -350,12 +336,13 @@ let g:codi#aliases = {
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
-" Jump forward or backward
+" Jump forward or backward on snippets
 imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
+" use correct highlighting for .env files
 autocmd BufNewFile,BufReadPost .env* set syntax=bash
 
 " next / prev fold
@@ -369,5 +356,23 @@ nnoremap <silent> <leader>Q :qa!<CR>
 " Diffview empty gaps
 set fillchars+=diff:╱
 
+" folds background
 hi Folded guibg=#16161d
+
+" fzf.nvim config
+let $FZF_DEFAULT_OPTS = "--color=dark --keep-right --marker=+ --margin=0,0 --padding=0,0 --prompt='' --info=hidden"
+let g:fzf_layout = { 'down': '40%' }
+let g:fzf_preview_window = []
+let g:fzf_statusline = 0
+let g:fzf_nvim_statusline = 0
+map <silent><leader>p :Files<CR>
+map <silent><leader>f :Rg<CR>
+
+" change directory to current file
+nnoremap <silent><leader>cd :cd %:p:h<CR>
+
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" cx highlight
+highlight ExchangeRegion gui=underline guibg=#223249
 

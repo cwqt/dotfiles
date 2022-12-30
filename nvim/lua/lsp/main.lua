@@ -9,16 +9,16 @@ local on_attach = function(_, bufnr)
   local opts = { noremap = true, silent = true }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   -- buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", "gd", "<Cmd>TroubleToggle lsp_definitions<CR>", opts)
+  buf_set_keymap("n", "gd", "<Cmd>Trouble lsp_definitions<CR>", opts)
   buf_set_keymap("n", "ga", "<Cmd>CodeActionMenu<CR>", opts)
 
   -- buf_set_keymap("n", "ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   -- buf_set_keymap("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", "gi", "<Cmd>TroubleToggle lsp_implementations<CR>", opts)
+  buf_set_keymap("n", "gi", "<Cmd>Trouble lsp_implementations<CR>", opts)
   buf_set_keymap(
     "n",
     "gr",
-    "<Cmd>TroubleToggle lsp_references<CR>",
+    "<Cmd>Trouble lsp_references<CR>",
     -- "<Cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>",
     opts
   )
@@ -29,12 +29,10 @@ local on_attach = function(_, bufnr)
     opts
   )
   buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap(
-    "n",
-    "<C-k>",
-    "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
-    opts
-  )
+
+  -- Uses <Up> because of karabiner ctrl+k rebinding
+  buf_set_keymap("i", "<Up>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  buf_set_keymap("n", "<Up>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
   --   vim.keymap.set("i", "<c-w>", function()
   --   vim.lsp.buf.signature_help()
@@ -129,7 +127,7 @@ M.setup = function()
   for server, configure in pairs({
     efm = require("lsp.efm"),
     sumneko_lua = require("lsp.lua"),
-    tsserver = require("lsp.ts"),
+    tsserver = require("lsp.typescript"),
     gopls = require("lsp.go"),
     prismals = require("lsp.prisma"),
     jsonls = require("lsp.json"),

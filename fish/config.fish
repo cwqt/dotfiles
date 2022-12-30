@@ -19,3 +19,4 @@ set FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 
 set -gx EDITOR nvim
 
+alias notify='terminal-notifier -title "Terminal" -message "Done with task! Exit status: $status"'

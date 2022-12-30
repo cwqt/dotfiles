@@ -16,18 +16,15 @@ M.setup = function()
   map(
     "n",
     "<Leader>xw",
-    ":TroubleToggle workspace_diagnostics<CR>",
+    ":Trouble workspace_diagnostics<CR>",
     { silent = true }
   )
-  map(
-    "n",
-    "<Leader>xd",
-    ":TroubleToggle document_diagnostics<CR>",
-    { silent = true }
-  )
-  map("n", "<Leader>xq", ":TroubleToggle quickfix<CR>", { silent = true })
-  map("n", "<Leader>xl", ":TroubleToggle loclist<CR>", { silent = true })
-  map("n", "gR", ":TroubleToggle lsp_references<CR>", { silent = true })
+  map("n", "<Leader>xd", ":Trouble document_diagnostics<CR>", {
+    silent = true,
+  })
+  map("n", "<Leader>xq", ":Trouble quickfix<CR>", { silent = true })
+  map("n", "<Leader>xl", ":Trouble loclist<CR>", { silent = true })
+  map("n", "gR", ":Trouble lsp_references<CR>", { silent = true })
 end
 
 return M

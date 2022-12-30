@@ -6,7 +6,11 @@ table.insert(runtime_path, "lua/?/init.lua")
 
 return function(on_attach)
   return {
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+      return on_attach(client, bufnr)
+    end,
+
     settings = {
       Lua = {
         runtime = {

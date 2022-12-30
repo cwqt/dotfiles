@@ -71,15 +71,16 @@ M.setup = function()
   require("lualine").setup({
     extensions = {
       "nvim-tree",
-      -- "fzf",
+      "fzf",
       "fugitive",
     },
     options = {
-      icons_enabled = true,
+      icons_enabled = false,
       component_separators = "",
       theme = kanagawa,
-      disabled_filetypes = { "DiffviewFiles", "fzf" },
-      section_separators = { left = "", right = "" },
+      disabled_filetypes = { "DiffviewFiles", "fzf", "DiffviewFileHistory" },
+      -- section_separators = { left = "", right = "" },
+      section_separators = { left = "", right = "" },
       globalstatus = true,
     },
     sections = {
@@ -89,7 +90,7 @@ M.setup = function()
           fmt = string.lower,
         },
       },
-      lualine_b = { "branch", "diff" },
+      lualine_b = {},
       lualine_c = {
         {
           "filename",
@@ -98,12 +99,14 @@ M.setup = function()
       },
       lualine_x = {
         {
-
           "filetype",
           color = { bg = background },
         },
       },
-      lualine_y = {},
+      lualine_y = {
+        "diff",
+        "branch",
+      },
     },
   })
 end

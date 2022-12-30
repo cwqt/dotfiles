@@ -34,12 +34,13 @@ highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
 highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 ]])
 
-
 cmp.setup({
   window = {
     documentation = { -- no border; native-style scrollbar
       border = "none",
       scrollbar = "",
+      max_width = 60,
+      max_height = 15,
     },
     completion = { -- rounded border; thin-style scrollbar
       border = "none",
@@ -48,6 +49,7 @@ cmp.setup({
     },
   },
   formatting = {
+    -- fields = { "kind", "abbr", "menu" },
     format = lspkind.cmp_format({
       preset = "codicons",
       symbol_map = {

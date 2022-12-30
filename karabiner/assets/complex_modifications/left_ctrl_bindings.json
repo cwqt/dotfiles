@@ -12,11 +12,7 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "left_arrow"
-            }
-          ],
+          "to": [ { "key_code": "left_arrow" } ],
           "type": "basic"
         },
         {
@@ -27,11 +23,7 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "down_arrow"
-            }
-          ],
+          "to": [ { "key_code": "down_arrow" } ],
           "type": "basic"
         },
         {
@@ -42,11 +34,7 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "up_arrow"
-            }
-          ],
+          "to": [ { "key_code": "up_arrow" } ],
           "type": "basic"
         },
         {
@@ -57,11 +45,33 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "right_arrow"
+          "to": [ { "key_code": "right_arrow" } ],
+          "type": "basic"
+        }
+      ]
+    },{
+      "description": "Left ctrl + option + s/a brightness up/down",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "s",
+            "modifiers": {
+              "mandatory": ["left_control", "left_command"],
+              "optional": ["any"]
             }
-          ],
+          },
+          "to": [ { "key_code": "display_brightness_increment" } ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "a",
+            "modifiers": {
+              "mandatory": ["left_control", "left_command"],
+              "optional": ["any"]
+            }
+          },
+          "to": [ { "key_code": "display_brightness_decrement" } ],
           "type": "basic"
         }
       ]
@@ -77,11 +87,7 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "volume_up"
-            }
-          ],
+          "to": [ { "key_code": "volume_up" } ],
           "type": "basic"
         },
         {
@@ -92,14 +98,11 @@
               "optional": ["any"]
             }
           },
-          "to": [
-            {
-              "key_code": "volume_down"
-            }
-          ],
+          "to": [ { "key_code": "volume_down" } ],
           "type": "basic"
         }
       ]
     }
+    
   ]
 }

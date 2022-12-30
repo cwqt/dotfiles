@@ -57,12 +57,13 @@ return function(_)
       local cwd = lsp.util.root_pattern("tsconfig.json")(fname)
         or lsp.util.root_pattern(".eslintrc.json", ".git")(fname)
         or lsp.util.root_pattern("package.json", ".git/", ".zshrc")(fname)
+
       return cwd
     end,
     filetypes = vim.tbl_keys(languages),
     init_options = { documentFormatting = true },
     settings = {
-      rootMarkers = { "package.json", ".git" },
+      rootMarkers = { "package.json", ".git", "tsconfig.json" },
       lintDebounce = 500,
       languages = languages,
     },

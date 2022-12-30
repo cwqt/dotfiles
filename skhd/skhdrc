@@ -2,11 +2,7 @@
 # so blacklist the whole app -- good enough
 .blacklist ["anki"]
 
-# center window on ultrawide monitor
-cmd + alt - u : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:0:2:4
-
-# open kitty terminal
+# open terminal
 cmd - return : kitty -c ~/.config/kitty/kitty.conf --single-instance -d ~
 
 # prevent mispresses on hhkb
@@ -57,6 +53,7 @@ cmd + shift - l : yabai -m window east --resize left:100:0 2> /dev/null || yabai
 
 # hide window
 cmd - m : yabai -m window --minimize
+cmd + shift - m : yabai -m window --deminimize prev
 
 # toggle window split type
 cmd - e : yabai -m window --toggle split

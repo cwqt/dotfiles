@@ -39,3 +39,12 @@
   > div.BookmarkButton {
   display: none;
 }
+
+/* hide tiling border */
+.mosaic-tile {
+    margin: 3px;
+}
+.tiled.webpageview {
+    box-shadow: none;
+}
+

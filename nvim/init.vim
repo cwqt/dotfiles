@@ -18,7 +18,6 @@ Plug 'cwqt/nvim-cokeline'                                   " bufferline
 Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
-Plug 'stsewd/fzf-checkout.vim'                              " fuzzy finder switching branches
 Plug 'machakann/vim-sandwich'                               " operations on text objects
 Plug 'AndrewRadev/dsf.vim'                                  " function text objects
 Plug 'tommcdo/vim-exchange'                                 " cxia

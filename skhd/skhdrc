@@ -66,7 +66,7 @@ cmd + shift - x : yabai -m space --mirror y-axis
 cmd + shift - y : yabai -m space --mirror x-axis
 
 # quake style show spotify
-cmd + shift - s : /opt/homebrew/bin/python3 /Users/cass/.config/yabai/dropdown Spotify
+cmd + shift - s : python3 /Users/cass/.config/yabai/dropdown Spotify
 
 # toggle sticky, float and resize to picture-in-picture size
 cmd + alt - v : yabai -m window --toggle sticky;\

@@ -26,7 +26,7 @@ M.setup = function()
       fold_open = "",
     },
     file_panel = {
-      listing_style = "tree", -- One of 'list' or 'tree'
+      listing_style = "list", -- One of 'list' or 'tree'
       tree_options = {
         -- Only applies when listing_style is 'tree'
         flatten_dirs = true, -- Flatten dirs that only contain one single dir
@@ -131,7 +131,7 @@ M.setup = function()
   end
 
   map("n", "<leader>df", ":lua DiffviewToggle()<CR>", { silent = true })
-  map("n", "gfh", ":DiffviewFileHistory %<CR>", { silent = true })
+  map("n", "<leader>dh", ":DiffviewFileHistory %<CR>", { silent = true })
 
   -- Gutter diff/hunk markers
   require("gitsigns").setup({

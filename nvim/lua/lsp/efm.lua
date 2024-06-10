@@ -1,11 +1,11 @@
 local lsp = require("lspconfig")
 
 -- brew install efm-langserver
--- npm install -g eslint_d
--- npm install -g @fsouza/prettierd
--- npm install -g stylelint
+--   npm install -g eslint_d
+--   npm install -g @fsouza/prettierd
+--   npm install -g stylelint
 
--- local eslint_d = require("efmls-configs.linters.eslint_d")
+local eslint_d = require("efmls-configs.linters.eslint_d")
 local prettier_d = require("efmls-configs.formatters.prettier_d")
 local luacheck = require("efmls-configs.linters.luacheck")
 local stylua = require("efmls-configs.formatters.stylua")
@@ -63,7 +63,12 @@ return function(_)
     filetypes = vim.tbl_keys(languages),
     init_options = { documentFormatting = true },
     settings = {
-      rootMarkers = { "package.json", ".git", "tsconfig.json" },
+      rootMarkers = {
+        "package.json",
+        ".git",
+        "tsconfig.json",
+        ".eslintrc.json",
+      },
       lintDebounce = 500,
       languages = languages,
     },

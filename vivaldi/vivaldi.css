@@ -11,6 +11,17 @@
   display: none !important;
 }
 
+.mac #tabs-container:not(.none).top {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tabs-top#browser.mac .window-buttongroup {
+  display: none;
+  visibility: hidden;
+}
+
+
 /* Hide active tab favicon highlight */
 .tab.active .favicon {
   filter: none !important;

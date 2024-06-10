@@ -61,6 +61,9 @@ Plug 'ruifm/gitlinker.nvim'                                 " link to specific l
 Plug 'rhysd/conflict-marker.vim'                            " merge conflict markers
 Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in quickfix
 " lsp --------------------------------------------
+Plug 'williamboman/mason.nvim'
+"
+" 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -135,6 +138,9 @@ set timeoutlen=500 ttimeoutlen=0
 
 " fast save
 nnoremap <leader><leader> :w<CR>
+
+" use same version of node  - npm root -g
+let g:node_host_prog = '/Users/cass/.local/share/nvm/v18.19.0/lib/node_modules'
 
 " redraw on these events
 autocmd VimResized,FocusGained * redraw
@@ -279,7 +285,7 @@ nnoremap <silent><A-i> :Nuake<CR>
 inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
 tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
 let g:nuake_shell="/opt/homebrew/bin/fish"
-let g:nuake_size=0.4
+let g:nuake_size=0.5
 
 
 " background color
@@ -375,3 +381,5 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " cx highlight
 highlight ExchangeRegion gui=underline guibg=#223249
 
+" wall of text issue in husky hooks
+let g:fugitive_pty = 0

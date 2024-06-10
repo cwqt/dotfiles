@@ -3,7 +3,7 @@
 .blacklist ["anki"]
 
 # open terminal
-cmd - return : kitty -c ~/.config/kitty/kitty.conf --single-instance -d ~
+cmd - return : /opt/homebrew/bin/kitty -c ~/.config/kitty/kitty.conf --single-instance -d ~
 
 # prevent mispresses on hhkb
 pageup : skhd --key "backspace"
@@ -19,8 +19,8 @@ cmd - 5 : yabai -m space --focus 5
 cmd - 6 : yabai -m space --focus 6
 
 # focus desktop left/right 
-cmd - 0x2F : yabai -m space --focus next # comma
-cmd - 0x2B : yabai -m space --focus prev # period
+cmd - 0x2F : yabai -m space --focus next
+cmd - 0x2B : yabai -m space --focus prev
 
 # focus window
 cmd - h : yabai -m window --focus west
@@ -56,7 +56,7 @@ cmd - m : yabai -m window --minimize
 cmd + shift - m : yabai -m window --deminimize prev
 
 # toggle window split type
-cmd - e : yabai -m window --toggle split
+cmd - r : yabai -m window --toggle split
 
 # rotate tree
 cmd + shift - r : yabai -m space --rotate 90
@@ -66,7 +66,7 @@ cmd + shift - x : yabai -m space --mirror y-axis
 cmd + shift - y : yabai -m space --mirror x-axis
 
 # quake style show spotify
-cmd + shift - s : python3 /Users/cass/.config/yabai/dropdown Spotify
+cmd + shift - s : /opt/homebrew/bin/python3 /Users/cass/.config/yabai/dropdown Spotify
 
 # toggle sticky, float and resize to picture-in-picture size
 cmd + alt - v : yabai -m window --toggle sticky;\

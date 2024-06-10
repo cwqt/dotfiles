@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/opt/homebrew/bin/fish
 
 # the scripting-addition must be loaded manually if
 # you are running yabai on macOS Big Sur. Uncomment
@@ -15,16 +15,16 @@ sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # start hotkey daemon
-brew services restart skhd 
+SHELL=/bin/bash skhd &; disown
 # status bar daemon
 brew services restart spacebar
 # start window bordering daemon
-brew services restart limelight
+SHELL=/bin/bash limelight &; disown
 
 # let Anki float
-yabai -m rule --add app="^(Anki)$" manage=off
-yabai -m rule --add app="^System Preferences$" manage=off
-yabai -m rule --add app="^Preview$" manage=off
+yabai -m rule --add app="^(Anki)\$" manage=off
+yabai -m rule --add app="^System Preferences\$" manage=off
+yabai -m rule --add app="^Preview\$" manage=off
 
 # window focus follows mouse
 yabai -m config mouse_follows_focus          on

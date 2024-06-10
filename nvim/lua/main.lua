@@ -7,7 +7,7 @@ require("core.tree-sitter").setup()
 require("core.keymaps").setup()
 require("core.autocommands").setup()
 require("core.tree-sitter").setup()
-require("lsp.main").setup()
+-- require("lsp.main").setup()
 -- Plugins ---------------------------------------
 require("plugins.comment").setup()
 require("plugins.filetype").setup()

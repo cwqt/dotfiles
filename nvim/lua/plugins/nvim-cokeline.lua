@@ -8,16 +8,15 @@ function M.setup()
   local cokeline = require("cokeline")
   local oxocarbon = require("oxocarbon").oxocarbon
 
-  -- local theme = require("kanagawa.colors").setup()
-  -- local colors = {
-  --   bg = "#16161d",
-  --   purple = theme.oniViolet,
-  --   light_purple = theme.springViolet1,
-  --   gray = theme.fujiGray,
-  --   red = theme.autumnRed,
-  --   green = theme.autumnGreen,
-  --   yellow = theme.autumnYellow,
-  -- }
+  local colors = {
+    bg = "#16161d",
+    purple = oxocarbon.base14,
+    light_purple = oxocarbon.base15,
+    gray = oxocarbon.base03,
+    red = oxocarbon.base02,
+    green = oxocarbon.base13,
+    yellow = oxocarbon.base00,
+  }
 
   -- append space
   local activeIndex = nil
@@ -29,17 +28,17 @@ function M.setup()
       cycle_prev_next = true,
     },
 
-    -- default_hl = {
-    --   fg = function(buffer)
-    --     return buffer.is_focused and colors.purple or colors.gray
-    --   end,
-    --   bg = function(buffer)
-    --     return buffer.is_focused and colors.bg or "NONE"
-    --   end,
-    --   style = function(buffer)
-    --     return buffer.is_focused and "bold" or nil
-    --   end,
-    -- },
+    default_hl = {
+      fg = function(buffer)
+        return buffer.is_focused and colors.purple or colors.gray
+      end,
+      bg = function(buffer)
+        return buffer.is_focused and colors.bg or "NONE"
+      end,
+      style = function(buffer)
+        return buffer.is_focused and "bold" or nil
+      end,
+    },
 
     components = {
       { text = " " },
@@ -50,9 +49,9 @@ function M.setup()
         style = function(buffer)
           return buffer.is_focused and "bold" or nil
         end,
-        -- fg = function(buffer)
-        --   return buffer.is_focused and colors.light_purple or colors.gray
-        -- end,
+        fg = function(buffer)
+          return buffer.is_focused and colors.purple or colors.gray
+        end,
       },
       {
         text = function(buffer)
@@ -68,19 +67,19 @@ function M.setup()
             return "* "
           end
           if buffer.is_modified then
-            return "* "
+            return "*"
           end
           return " "
         end,
-        -- fg = function(buffer)
-        --   if buffer.diagnostics.errors > 0 then
-        --     return colors.red
-        --   end
-        --   if buffer.is_modified then
-        --     return colors.yellow
-        --   end
-        --   return "NONE"
-        -- end,
+        fg = function(buffer)
+          if buffer.diagnostics.errors > 0 then
+            return colors.red
+          end
+          if buffer.is_modified then
+            return colors.gray
+          end
+          return "NONE"
+        end,
       },
       { text = " " },
     },

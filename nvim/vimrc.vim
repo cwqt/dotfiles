@@ -8,6 +8,7 @@ syntax on             " hi syntax
 syntax sync minlines=256
 syntax sync maxlines=256
 set synmaxcol=250
+set cmdheight=0       " hide cmd line
 set shell=/bin/dash   " use fastest shell
 set nonumber          " hide line numbers
 set encoding=UTF-8    " character encoding
@@ -40,10 +41,23 @@ set foldlevelstart=99 " start file with all folds opened
 " tree-sitter folding
 set foldmethod=manual
 " set foldexpr=nvim_treesitter#foldexpr()
+" disable horizontal mouse scrolling
+set mousescroll=ver:5,hor:0
+" stop screen jumping about
+set splitkeep=screen
 
 " change leaderkey to spacebar
 let mapleader=" "
-set timeoutlen=500 ttimeoutlen=0
+set timeoutlen=0 ttimeoutlen=0
+
+" hide cursor line on non-active splits
+augroup CursorLine
+    au!
+    au VimEnter * setlocal cursorline
+    au WinEnter * setlocal cursorline
+    au BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
 
 " fast save
 nnoremap <leader><leader> :w<CR>
@@ -91,8 +105,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " sane pasting in visual mode https://vi.stackexchange.com/a/25274
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 xnoremap <expr> P 'Pgv"'.v:register.'y`>'
-" Source Vim configuration file and install plugins
-nnoremap <silent><leader>1 :source $MYVIMRC \| :PlugInstall \| :LuaCacheClear<CR>
 " redo
 nnoremap U <C-R>
 " line wrap go to next line
@@ -278,7 +290,7 @@ set fillchars+=diff:╱
 "let g:fzf_nvim_statusline = 0
 "map <silent><leader>p :Files<CR>
 "map <silent><leader>f :Rg<CR>
->
+
 " change directory to current file
 nnoremap <silent><leader>cd :cd %:p:h<CR>
 

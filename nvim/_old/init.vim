@@ -14,61 +14,26 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }         " fuzzy finder
 Plug 'junegunn/fzf.vim'                                     " fuzzy finder ui
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " syntax aware highlighting/objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'          " tree-sitter powered objects
-
-" DONT CARE
-Plug 'windwp/nvim-autopairs'                                " creates pairs for () {} []
-Plug 'kqito/vim-easy-replace'                               " replace words under cursor/visual
-Plug 'sstallion/vim-cursorline'                             " only show cursorline on active window
-Plug 'rmagatti/goto-preview'                                " pop open definition in window
-Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
-Plug 'rebelot/kanagawa.nvim'                                " color theme
-Plug 'kevinhwang91/promise-async'
-Plug 'kevinhwang91/nvim-ufo'                                " modern folds
-
-" TO DO
-Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
-Plug 'machakann/vim-sandwich'                               " operations on text objects
-Plug 'AndrewRadev/dsf.vim'                                  " function text objects
+Plug 'ggandor/lightspeed.nvim'                              " better easymotion
+Plug 'lewis6991/gitsigns.nvim'                              " git gutter
 Plug 'tommcdo/vim-exchange'                                 " cxia
 Plug 'wellle/targets.vim'                                   " more text objects!
 Plug 'folke/todo-comments.nvim'                             " todo comment highlighting
-Plug 'junegunn/vim-easy-align'                              " aligning characters
-Plug 'ggandor/lightspeed.nvim'                              " better easymotion
-Plug 'benstockil/twilight.nvim'                             " for demos
 Plug 'hoob3rt/lualine.nvim'                                 " status bar at the bottom
-Plug 'kyazdani42/nvim-tree.lua' , {'tag': 'nightly'}        " file tree
-Plug 'numToStr/FTerm.nvim'                                  " floating terminal
-Plug 'folke/which-key.nvim'                                 " keybindings helper
-Plug 'windwp/nvim-spectre'                                  " global search and replace
 Plug 'mrjones2014/smart-splits.nvim'                        " sane split resizing/navigation
-Plug 'stevearc/dressing.nvim'                               " prettier ui elements
-Plug 'chr4/nginx.vim'                                       " syntax highlights for nginx
-Plug 'metakirby5/codi.vim'                                  " code scratchpad
-Plug 'luukvbaal/stabilize.nvim'                             " stop text jumping up
-Plug 'svermeulen/vim-yoink'                                 " clipboard
-Plug 'lewis6991/spellsitter.nvim'
 Plug 'michaeljsmith/vim-indent-object'                      " indentation objects
-" debug adapter protocol -------------------------
-"Plug 'mfussenegger/nvim-dap'
-"Plug 'leoluz/nvim-dap-go'
-"Plug 'rcarriga/nvim-dap-ui'
-" treesitter --------------------------------------
+Plug 'kyazdani42/nvim-tree.lua' , {'tag': 'nightly'}        " file tree
 Plug 'romgrk/nvim-treesitter-context'                       " context bar
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comment, jsx
-Plug 'windwp/nvim-ts-autotag'                               " autoclose jsx/html tags
-" git ---------------------------------------------
+Plug 'luukvbaal/stabilize.nvim'                             " stop text jumping up
+Plug 'ruifm/gitlinker.nvim'                                 " link to specific lines
+Plug 'folke/which-key.nvim'                                 " keybindings helper
 Plug 'tpope/vim-fugitive'                                   " git porcelain
 Plug 'APZelos/blamer.nvim'                                  " git blame on cursor
-Plug 'lewis6991/gitsigns.nvim'                              " git gutter
 Plug 'sindrets/diffview.nvim'                               " git diff viewer
-Plug 'ruifm/gitlinker.nvim'                                 " link to specific lines
 Plug 'rhysd/conflict-marker.vim'                            " merge conflict markers
-Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in quickfix
-" lsp --------------------------------------------
-Plug 'williamboman/mason.nvim'
-"
-" 
-Plug 'neovim/nvim-lspconfig'
+Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
+Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
+Plug 'windwp/nvim-autopairs'                                " creates pairs for () {} []
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -76,16 +41,49 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp',                                    " autocomplete
 Plug 'hrsh7th/cmp-vsnip'                                    " snippets completion integration
 Plug 'hrsh7th/vim-vsnip'                                    " snippets engine
+Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
+Plug 'weilbith/nvim-code-action-menu'                       " lsp code action menu
+Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
+Plug 'windwp/nvim-ts-autotag'                               " autoclose jsx/html tags
+
+" DONT CARE
+Plug 'kqito/vim-easy-replace'                               " replace words under cursor/visual
+Plug 'sstallion/vim-cursorline'                             " only show cursorline on active window
+Plug 'rmagatti/goto-preview'                                " pop open definition in window
+Plug 'RRethy/vim-illuminate'                                " highlight tokens under cursor
+Plug 'rebelot/kanagawa.nvim'                                " color theme
+Plug 'kevinhwang91/promise-async'
+Plug 'kevinhwang91/nvim-ufo'                                " modern folds
+Plug 'benstockil/twilight.nvim'                             " for demos
+Plug 'chr4/nginx.vim'                                       " syntax highlights for nginx
+Plug 'svermeulen/vim-yoink'                                 " clipboard
+Plug 'metakirby5/codi.vim'                                  " code scratchpad
+Plug 'numToStr/FTerm.nvim'                                  " floating terminal
+Plug 'lewis6991/spellsitter.nvim'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'          " embedded lang comment, jsx  FIXED IN MAIN
+Plug 'OJFord/vim-quickfix-conflicts'                        " all conflicts in quickfix
+Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
+" debug adapter protocol -------------------------
+"Plug 'mfussenegger/nvim-dap'
+"Plug 'leoluz/nvim-dap-go'
+"Plug 'rcarriga/nvim-dap-ui'
+
+" TO DO
+Plug 'folke/trouble.nvim'                                   " quickfix, doc errors etc.
+Plug 'machakann/vim-sandwich'                               " operations on text objects
+Plug 'AndrewRadev/dsf.vim'                                  " function text objects
+Plug 'junegunn/vim-easy-align'                              " aligning characters
+Plug 'windwp/nvim-spectre'                                  " global search and replace
+Plug 'stevearc/dressing.nvim'                               " prettier ui elements
+" treesitter --------------------------------------
+" git ---------------------------------------------
+" lsp --------------------------------------------
+" 
 Plug 'rafamadriz/friendly-snippets'                         " snippets collection
 Plug 'neovim/nvim-lspconfig'                                " language servers
 Plug 'creativenull/efmls-configs-nvim'                      " efm formatters & linters
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'                 " ts lsp utils
-Plug 'ray-x/lsp_signature.nvim'                             " fn signature while typing
-Plug 'onsails/lspkind-nvim'                                 " pictograms for completion menu
-Plug 'j-hui/fidget.nvim'                                    " lsp loading indicator
-Plug 'petertriho/nvim-scrollbar'                            " scrollbar with LSP error indicators
-Plug 'weilbith/nvim-code-action-menu'                       " lsp code action menu
-Plug 'kosayoda/nvim-lightbulb'                              " lsp code action highlight
 " ------------------------------------------------
 Plug 'wakatime/vim-wakatime'                                " time tracking
 call plug#end()

@@ -37,10 +37,12 @@ M.setup = function()
     vim.keymap.set('n', 'c', api.fs.copy.node, opts('Copy'))
     vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
     vim.keymap.set('n', 'a', api.fs.create, opts('Create File Or Directory'))
-    vim.keymap.set('n', '-', api.node.navigate.parent, opts('Parent Directory'))
+    vim.keymap.set('n', '-', api.tree.change_root_to_parent, opts('Up'))
     vim.keymap.set('n', '+', api.tree.change_root_to_node, opts('CD'))
     vim.keymap.set('n', 's', api.node.run.system, opts('Run System'))
     vim.keymap.set('n', 'C', api.tree.collapse_all, opts('Collapse'))
+    vim.keymap.set('n', 'd', api.fs.trash, opts('Trash'))
+    vim.keymap.set('n', 'i', api.tree.toggle_hidden_filter, opts('Toggle Filter: Dotfiles'))
 
     -- vim.keymap.set('n', '<BS>', api.node.navigate.parent_close, opts('Close Directory'))
     -- vim.keymap.set('n', '>', api.node.navigate.sibling.next, opts('Next Sibling'))
@@ -114,15 +116,30 @@ M.setup = function()
 
   require("nvim-tree").setup({
     update_cwd = true,
+    open_on_tab = true,
     on_attach = on_attach,
     diagnostics = {
       enable = false,
     },
     renderer = {
-      root_folder_label = false,
+      root_folder_label = ":~:s?$?",
       icons = {
         webdev_colors = false,
         git_placement = "after",
+        show = {
+          file = false
+        },
+        glyphs = {
+          git = {
+            unstaged = "",
+            staged = "+",
+            unmerged = "",
+            renamed = "r",
+            untracked = "",
+            deleted = "",
+            ignored = "i"
+          }
+        }
       },
     },
     view = {

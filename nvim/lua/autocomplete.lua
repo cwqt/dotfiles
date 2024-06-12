@@ -1,8 +1,3 @@
-require("nvim-autopairs").setup({
-  check_ts = true,
-  enable_check_bracket_line = true,
-})
-
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
@@ -87,7 +82,7 @@ cmp.setup({
       entry_filter = function()
         local context = require("cmp.config.context")
         return not context.in_treesitter_capture("string")
-          and not context.in_syntax_group("String")
+            and not context.in_syntax_group("String")
       end,
     },
   }, {
@@ -112,11 +107,6 @@ cmp.setup.cmdline(":", {
 })
 
 -- Setup lspconfig.
-local capabilities = require("cmp_nvim_lsp").update_capabilities(
+local capabilities = require("cmp_nvim_lsp").default_capabilities(
   vim.lsp.protocol.make_client_capabilities()
 )
-
-return function(config)
-  config.capabilities = capabilities
-  return config
-end

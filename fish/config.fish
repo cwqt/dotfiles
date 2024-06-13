@@ -4,7 +4,7 @@ set -U fish_user_paths /Users/cass/.cargo/bin $fish_user_paths
 set -U fish_user_paths /Users/cass/Library/Python/3.8/bin $fish_user_paths
 set -U fish_user_paths /Users/cass/.bun/bin $fish_user_paths
 
-source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+#source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 # set go path
 set -x GOPATH $HOME/go

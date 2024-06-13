@@ -4,7 +4,6 @@ local M = {}
 
 M.setup = function()
   require("trouble").setup({
-    icons = false,
     padding = false,
     auto_jump = { "lsp_implementations", "lsp_definitions" },
     action_keys = {

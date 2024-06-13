@@ -8,7 +8,7 @@ syntax on             " hi syntax
 syntax sync minlines=256
 syntax sync maxlines=256
 set synmaxcol=250
-set cmdheight=0       " hide cmd line
+"set cmdheight=0       " hide cmd line
 set shell=/bin/dash   " use fastest shell
 set nonumber          " hide line numbers
 set encoding=UTF-8    " character encoding
@@ -86,6 +86,7 @@ hi IndentBlanklineChar guifg=#2f303e gui=nocombine
 hi illuminatedWord guibg=#1f202a
 hi CursorLine guibg=#16161d
 hi Search guibg=#21324a
+
 
 highlight! link mkdLineBreak NONE
 

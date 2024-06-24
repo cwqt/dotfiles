@@ -1,38 +1,29 @@
 local M = {}
 
 M.setup = function()
-  -- Remove/add terminal padding when entering/leaving or Ctrl+Z'ing
-  -- vim.cmd([[
-  -- augroup kitty_mp
-  --   autocmd!
-  --   autocmd VimLeave,VimSuspend * :silent !kitty @ set-spacing padding=0 margin=0
-  --  autocmd VimEnter,VimResume * :silent !kitty @ set-spacing padding=0 margin=0
-  -- augroup END
-  -- ]])
-
   -- Highlight yanked text for 200ms using the "Visual" highlight group
-  vim.cmd([[
+  vim.cmd [[
 augroup highlight_yank
   autocmd!
   au TextYankPost * silent! lua vim.highlight.on_yank({ higroup="Visual", timeout=200 })
 augroup END
-]])
+]]
 
   -- FIXME: stop numbers from fucking appearing
-  vim.cmd([[
+  vim.cmd [[
   augroup rm_numbers
     autocmd!
     autocmd WinEnter * :silent :set nonumber
   augroup END
-  ]])
+  ]]
 
   -- remember cursor position in files
-  vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    pattern = { "*" },
+  vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
+    pattern = { '*' },
     callback = function()
       local ft = vim.opt_local.filetype:get()
       -- don't apply to git messages
-      if ft:match("commit") or ft:match("rebase") then
+      if ft:match 'commit' or ft:match 'rebase' then
         return
       end
       -- get position of last saved edit

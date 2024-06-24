@@ -196,16 +196,8 @@ nnoremap <silent> <leader>t :terminal fish<cr>
 " exit terminal on double escape
 tnoremap <silent> <C-[><C-[> <C-\><C-n>
 
-
 " close the terminal when process ended
-autocmd TermClose * execute 'bdelete! ' . expand('<abuf>')
-" quake style terminal
-nnoremap <silent><A-i> :Nuake<CR>
-inoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
-tnoremap <silent><A-i> <C-\><C-n>:Nuake<CR>
-let g:nuake_shell="/opt/homebrew/bin/fish"
-let g:nuake_size=0.5
-
+" autocmd TermClose * execute 'bdelete! ' . expand('<abuf>')
 
 " background color
 hi TabLineFill guibg=#0d1014
@@ -279,18 +271,6 @@ nnoremap <silent> <leader>Q :qa!<CR>
 
 " Diffview empty gaps
 set fillchars+=diff:╱
-
-" folds background
-"hi Folded guibg=#16161d
-
-" fzf.nvim config
-"let $FZF_DEFAULT_OPTS = "--color=dark --keep-right --marker=+ --margin=0,0 --padding=0,0 --prompt='' --info=hidden"
-"let g:fzf_layout = { 'down': '40%' }
-"let g:fzf_preview_window = []
-"let g:fzf_statusline = 0
-"let g:fzf_nvim_statusline = 0
-"map <silent><leader>p :Files<CR>
-"map <silent><leader>f :Rg<CR>
 
 " change directory to current file
 nnoremap <silent><leader>cd :cd %:p:h<CR>

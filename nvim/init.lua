@@ -26,21 +26,42 @@ vim.g.lsp_zero_extend_lspconfig = 0
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = '\\' -- Same for `maplocalleader`
 
+vim.opt.shortmess:append { W = true, I = true, c = true, a = true, s = true }
+
 local oxocarbon = require 'oxocarbon'
 
 require('lazy').setup {
   -- LSP ------------------------------------------------
-  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
   'neovim/nvim-lspconfig',
+  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
+  'nvimtools/none-ls.nvim', -- null-ls formatting engine
   'williamboman/mason.nvim', -- install lsp servers
   'williamboman/mason-lspconfig.nvim',
-  'hrsh7th/cmp-nvim-lsp', -- autocomplete
-  'hrsh7th/nvim-cmp', -- autocomplete
+  -- mason null-ls integration
+  {
+    'jayp0521/mason-null-ls.nvim',
+    config = true,
+    opts = {
+      ensure_installed = { 'prettierd', 'stylua' },
+      automatic_installation = true,
+    },
+  },
+  -- autocompletion
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp', -- lsp sourcw
+      'hrsh7th/cmp-vsnip', -- vsnip sorce
+    },
+  },
+  -- snippets
+  {
+    'hrsh7th/vim-vsnip',
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+    },
+  },
   'onsails/lspkind.nvim', -- autocomplete icons
-  'hrsh7th/vim-vsnip', -- snippets
-  'L3MON4D3/LuaSnip', -- snippets
-  'neovim/nvim-lspconfig', -- lsp configurations
-  'j-hui/fidget.nvim', -- lsp loading indicator
   -- syntax aware highlighting/objects
   {
     'nvim-treesitter/nvim-treesitter',
@@ -61,6 +82,7 @@ require('lazy').setup {
           'html',
           'css',
         },
+        auto_install = true,
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
@@ -73,16 +95,8 @@ require('lazy').setup {
     opts = {},
   }, --
   'nvim-treesitter/nvim-treesitter-textobjects', -- tree-sitter powered objects
-  'nvimtools/none-ls.nvim', -- null-ls formatting engine
-  -- mason null-ls integration
-  {
-    'jayp0521/mason-null-ls.nvim',
-    config = true,
-    opts = {
-      ensure_installed = { 'prettier_d_slim', 'stylua' },
-      automatic_installation = true,
-    },
-  },
+  'nvim-treesitter/nvim-treesitter-context', -- function context
+  { 'windwp/nvim-ts-autotag', config = true },
 
   -------------------------------------------------------
 
@@ -94,23 +108,40 @@ require('lazy').setup {
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
-      {
-        cmdline = { view = 'cmdline' },
-        lsp = {
-          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-          override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-          },
+      routes = {
+        {
+          filter = { event = 'msg_show', kind = '', find = 'written' },
+          opts = { skip = true },
         },
-        presets = {
-          bottom_search = true, -- use a classic bottom cmdline for search
-          command_palette = false, -- position the cmdline and popupmenu together
-          long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = true, -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = true, -- add a border to hover docs and signature help
+        {
+          filter = { event = 'msg_show', kind = '', find = 'Modified' },
+          opts = { skip = true },
         },
+        {
+          filter = { event = 'msg_show', kind = '', find = 'lines' },
+          opts = { skip = true },
+        },
+        {
+          filter = { event = 'msg_show', kind = '', find = '--' },
+          opts = { skip = true },
+        },
+      },
+      cmdline = { view = 'cmdline' },
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      presets = {
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = false, -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = true, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = true, -- add a border to hover docs and signature help
+        long_message_to_split = true, -- long messages will be sent to a split
       },
     },
     dependencies = {
@@ -119,13 +150,19 @@ require('lazy').setup {
     },
   },
   'ggandor/lightspeed.nvim', -- s navigation
-  'mathieupost/nuake', -- quake terminal
-  'petertriho/nvim-scrollbar', -- scrollbar hints
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {
+      open_mapping = [[<A-i>]],
+      shade_terminals = false,
+      size = 20,
+    },
+  },
+  { 'petertriho/nvim-scrollbar', opts = { marks = { Cursor = { text = ' ', highlight = 'CursorColumn' } } } }, -- scrollbar hints
   'lewis6991/gitsigns.nvim', -- git signs
   'machakann/vim-sandwich', -- operations on text objects
   'kyazdani42/nvim-tree.lua', -- file tree
-  'rktjmp/lush.nvim',
-  'PyGamer0/darc.nvim',
   {
     'numToStr/Comment.nvim',
     dependencies = {
@@ -143,7 +180,6 @@ require('lazy').setup {
   'folke/todo-comments.nvim', -- highlight TODO markers
   'mrjones2014/smart-splits.nvim', -- better split resizing
   'michaeljsmith/vim-indent-object', -- indent text objects
-  'nvim-treesitter/nvim-treesitter-context', -- function context
   'ruifm/gitlinker.nvim', -- link to git repos
   'folke/which-key.nvim', -- show motions
   'tpope/vim-fugitive', -- interactive git
@@ -153,24 +189,14 @@ require('lazy').setup {
   'folke/trouble.nvim', -- better quickfix menu
   'kosayoda/nvim-lightbulb', -- code action lightbulb
   'weilbith/nvim-code-action-menu', -- code action menu
-  {
-    'windwp/nvim-ts-autotag',
-    config = true,
-  },
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = true,
-  },
+  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true },
+  'wakatime/vim-wakatime',
+  -- indentation guides
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     config = function()
-      vim.api.nvim_set_hl(
-        0,
-        'IndentScope',
-        { fg = oxocarbon.blend_hex(oxocarbon.colors.hotPink, oxocarbon.colors.black, 0.1), bg = oxocarbon.colors.none }
-      )
+      vim.api.nvim_set_hl(0, 'IndentScope', { fg = oxocarbon.colors.grey40, bg = oxocarbon.colors.none })
 
       require('ibl').setup {
         indent = {
@@ -183,13 +209,15 @@ require('lazy').setup {
         },
       }
     end,
-  }, -- indentation guides
+  },
+  -- bufferline
   {
     'willothy/nvim-cokeline',
     dependencies = {
       'nvim-lua/plenary.nvim', -- Required for v0.4.0+
     },
-  }, -- bufferline
+  },
+  -- fuzzy finder
   {
     'ibhagwan/fzf-lua',
     -- optional for icon support
@@ -232,6 +260,19 @@ require('lazy').setup {
   },
 }
 
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<A-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<A-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<A-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<A-l>', [[<Cmd>wincmd l<CR>]], opts)
+  vim.keymap.set('t', '<A-w>', [[<C-\><C-n><C-w>]], opts)
+end
+
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
+
 local vimrc = vim.fn.stdpath 'config' .. '/vimrc.vim'
 vim.cmd.source(vimrc)
 
@@ -261,10 +302,6 @@ require('nvim-autopairs').setup {
   enable_check_bracket_line = true,
 }
 
-require('fidget').setup {
-  integration = { ['nvim-tree'] = { enable = true } },
-}
-
 local lsp_zero = require 'lsp-zero'
 lsp_zero.on_attach(function(client, bufnr)
   -- see :help lsp-zero-keybindings
@@ -280,7 +317,7 @@ lsp_zero.on_attach(function(client, bufnr)
   buf_set_keymap('n', 'ga', '<Cmd>CodeActionMenu<CR>', opts)
   -- TS imports
   buf_set_keymap('n', 'gi', '<Cmd>TSToolsAddMissingImports<CR>', opts)
-  buf_set_keymap('n', 'go', '<Cmd>TSToolsSortImports<CR>', opts)
+  buf_set_keymap('n', 'go', '<Cmd>TSToolsOrganizeImports<CR>', opts)
   -- Show signature help, uses <Up> because of karabiner ctrl+k to Up rebinding
   buf_set_keymap('i', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -320,7 +357,7 @@ null_ls.setup {
   offset_encoding = 'utf-8',
   -- setup formatters & linters
   sources = {
-    formatting.prettier, -- js/ts formatter
+    formatting.prettierd, -- js/ts formatter
     formatting.stylua, -- lua formatter
   },
   -- configure format on save
@@ -357,11 +394,34 @@ null_ls.setup {
 
 require('mason').setup {}
 require('mason-lspconfig').setup {
-  ensure_installed = { 'lua_ls', 'tsserver', 'jsonls' },
+  ensure_installed = { 'lua_ls', 'jsonls' },
   automatic_installation = true,
   handlers = {
     function(server_name)
-      require('lspconfig')[server_name].setup {}
+      if server_name == 'tsserver' then
+        return
+      end
+
+      local opts = {
+        lua_ls = {
+          settings = {
+            Lua = {
+              runtime = {
+                -- Tell the language server which version of Lua you're using
+                -- (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+              },
+              diagnostics = { globals = { 'vim', 'require' } },
+              -- Make the server aware of Neovim runtime files
+              workspace = { library = vim.api.nvim_get_runtime_file('', true) },
+              -- Do not send telemetry data containing a randomized but unique identifier
+              telemetry = { enable = false },
+            },
+          },
+        },
+      }
+
+      require('lspconfig')[server_name].setup(opts[server_name] or {})
     end,
   },
 }

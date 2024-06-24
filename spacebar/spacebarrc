@@ -15,16 +15,17 @@ spacebar -m config icon_font           "Roboto:Regular:12.0"
 spacebar -m config display              all
 spacebar -m config spaces_for_all_displays  off
 
-spacebar -m config background_color     0xff0D1014
+
+spacebar -m config background_color     0xff161616
+# spacebar -m config background_color     0xff0D1014
 spacebar -m config foreground_color     0xffd5d5d5
 
 spacebar -m config display_separator   off
 spacebar -m config display_separator_icon -
 
+spacebar -m config space_icon_color     0xffbe95ff
 
-spacebar -m config space_icon_color     0xff865e78
-
-
+#spacebar -m config space_icon_color     0xff865e78
 #spacebar -m config space_icon_color     0xff947fb8
 #spacebar -m config space_icon_color     0xff888780
 

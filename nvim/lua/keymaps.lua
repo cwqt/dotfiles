@@ -16,6 +16,8 @@ M.setup = function()
 
   map('n', '<leader>i', '<cmd>Inspect<CR>', { silent = true })
 
+  map('n', '<leader>r', '<cmd>lua vim.diagnostic.reset()<CR>', { silent = true })
+
   -- vim.cmd([[
   --   " Open and close a buffer
   --   nnoremap <silent>    <A-n> :enew<CR>

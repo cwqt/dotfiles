@@ -31,7 +31,7 @@ set cursorline        " hi line of cursor
 set ignorecase        " ignore case in search
 set so=30             " set cursor to always be in the center
 set clipboard=unnamed " make yy add to system clipboard
-set synmaxcol=128
+set synmaxcol=128     " dont highlight lines after 128 chars
 set pumheight=5       " maximum number of items in completion popup
 set splitbelow
 set splitright
@@ -58,6 +58,9 @@ augroup CursorLine
     au BufWinEnter * setlocal cursorline
     au WinLeave * setlocal nocursorline
 augroup END
+
+" close fzf on escape
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 " fast save
 nnoremap <leader><leader> :w<CR>

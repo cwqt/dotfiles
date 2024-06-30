@@ -37,6 +37,11 @@ require('lazy').setup {
   'nvimtools/none-ls.nvim', -- null-ls formatting engine
   'williamboman/mason.nvim', -- install lsp servers
   'williamboman/mason-lspconfig.nvim',
+  {
+    'zeioth/garbage-day.nvim',
+    dependencies = 'neovim/nvim-lspconfig',
+    event = 'VeryLazy',
+  },
   -- mason null-ls integration
   {
     'jayp0521/mason-null-ls.nvim',
@@ -92,6 +97,7 @@ require('lazy').setup {
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    ft = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
     opts = {},
   }, --
   'nvim-treesitter/nvim-treesitter-textobjects', -- tree-sitter powered objects

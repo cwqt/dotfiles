@@ -1,6 +1,6 @@
 " use vim-surroud keybinds, e.g. sd" is now ds"
 " saa{} is now ysa{}
-runtime macros/sandwich/keymap/surround.vim
+" runtime macros/sandwich/keymap/surround.vim
 
 map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline
@@ -76,20 +76,19 @@ autocmd FileType qf wincmd J
 autocmd TermOpen * startinsert
 " autosave all buffers on focus loss
 autocmd FocusLost * silent! wall
-" ci" don't yank
-nnoremap c "_c
 
 " pretty colours, must be set after main lua call
 set termguicolors
 autocmd ColorScheme * hi! Normal ctermbg=NONE guibg=NONE
 autocmd ColorScheme & hi! hi! NormalFloat guibg=#1f202b
+
 " indentation marker colour
 hi IndentBlanklineChar guifg=#2f303e gui=nocombine
+
 " hi active line
 hi illuminatedWord guibg=#1f202a
 hi CursorLine guibg=#16161d
 hi Search guibg=#21324a
-
 
 highlight! link mkdLineBreak NONE
 
@@ -217,36 +216,38 @@ command! -bar -nargs=* -complete=file -range=% -bang Wq        <line1>,<line2>wq
 " Quick close all forced
 command Q qa!
 
-" delete html tags
-let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-let g:sandwich#recipes += [
-  \   {
-  \     'buns'    : ['TagInput(1)', 'TagInput(0)'],
-  \     'expr'    : 1,
-  \     'filetype': ['html'],
-  \     'kind'    : ['add', 'replace', 'delete'],
-  \     'action'  : ['add'],
-  \     'input'   : ['t'],
-  \   },
-  \ ]
 
+"function! TagInput(is_head) abort
+"  if a:is_head
+"    let s:TagLast = input('Tag: ')
+"    if s:TagLast !=# ''
+"      let tag = printf('<%s>', s:TagLast)
+"    else
+"      throw 'OperatorSandwichCancel'
+"    endif
+"  else
+"    let tag = printf('</%s>', matchstr(s:TagLast, '^\a[^[:blank:]>/]*'))
+"  endif
+"  return tag
+"endfunction
+
+" delete html tags
+" let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+" let g:sandwich#recipes += [
+"   \   {
+"   \     'buns'    : ['TagInput(1)', 'TagInput(0)'],
+"   \     'expr'    : 1,
+"   \     'filetype': ['html'],
+"   \     'kind'    : ['add', 'replace', 'delete'],
+"   \     'action'  : ['add'],
+"   \     'input'   : ['t'],
+"   \   },
+"   \ ]
+ 
 let g:code_action_menu_window_border = 'rounded'
 let g:code_action_menu_show_details = v:false
 let g:code_action_menu_show_diff = v:false
 
-function! TagInput(is_head) abort
-  if a:is_head
-    let s:TagLast = input('Tag: ')
-    if s:TagLast !=# ''
-      let tag = printf('<%s>', s:TagLast)
-    else
-      throw 'OperatorSandwichCancel'
-    endif
-  else
-    let tag = printf('</%s>', matchstr(s:TagLast, '^\a[^[:blank:]>/]*'))
-  endif
-  return tag
-endfunction
 
 
 let g:codi#aliases = {

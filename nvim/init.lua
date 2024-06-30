@@ -55,8 +55,8 @@ require('lazy').setup {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- lsp sourcw
-      'hrsh7th/cmp-vsnip', -- vsnip sorce
+      'hrsh7th/cmp-nvim-lsp', -- lsp source
+      'hrsh7th/cmp-vsnip', -- vsnip source
     },
   },
   -- snippets
@@ -94,15 +94,26 @@ require('lazy').setup {
       }
     end,
   },
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    ft = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
-    opts = {},
-  }, --
-  'nvim-treesitter/nvim-treesitter-textobjects', -- tree-sitter powered objects
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   ft = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
+  --   opts = {},
+  -- }, --
+  -- 'nvim-treesitter/nvim-treesitter-textobjects', -- tree-sitter powered objects
   'nvim-treesitter/nvim-treesitter-context', -- function context
   { 'windwp/nvim-ts-autotag', config = true },
+  -- 'machakann/vim-sandwich', -- operations on text objects
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
 
   -------------------------------------------------------
 
@@ -167,7 +178,6 @@ require('lazy').setup {
   },
   { 'petertriho/nvim-scrollbar', opts = { marks = { Cursor = { text = ' ', highlight = 'CursorColumn' } } } }, -- scrollbar hints
   'lewis6991/gitsigns.nvim', -- git signs
-  'machakann/vim-sandwich', -- operations on text objects
   'kyazdani42/nvim-tree.lua', -- file tree
   {
     'numToStr/Comment.nvim',
@@ -400,13 +410,14 @@ null_ls.setup {
 
 require('mason').setup {}
 require('mason-lspconfig').setup {
-  ensure_installed = { 'lua_ls', 'jsonls' },
+  ensure_installed = { 'lua_ls', 'jsonls', 'tsserver' },
   automatic_installation = true,
   handlers = {
     function(server_name)
-      if server_name == 'tsserver' then
-        return
-      end
+      -- FIXME: typescript-tools blows
+      -- if server_name == 'tsserver' then
+      --   return
+      -- end
 
       local opts = {
         lua_ls = {

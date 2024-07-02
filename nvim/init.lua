@@ -100,22 +100,29 @@ require('lazy').setup {
   --   ft = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
   --   opts = {},
   -- }, --
-  -- 'nvim-treesitter/nvim-treesitter-textobjects', -- tree-sitter powered objects
   'nvim-treesitter/nvim-treesitter-context', -- function context
   { 'windwp/nvim-ts-autotag', config = true },
-  -- 'machakann/vim-sandwich', -- operations on text objects
+
+  -------------------------------------------------------
+  ---
   {
-    'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
-    event = 'VeryLazy',
+    'dnlhc/glance.nvim',
     config = function()
-      require('nvim-surround').setup {
-        -- Configuration here, or leave empty to use defaults
+      require('glance').setup {
+
+        hooks = {
+          -- Don't open glance when there is only one result instead jump to that location
+          before_open = function(results, open, jump, method)
+            if #results == 1 then
+              jump(results[1]) -- argument is optional
+            else
+              open(results) -- argument is optional
+            end
+          end,
+        },
       }
     end,
   },
-
-  -------------------------------------------------------
 
   'mhinz/vim-sayonara', -- closing / re-opening buffers
   'supercrabtree/vim-resurrect', -- bring back closed buffers
@@ -143,7 +150,14 @@ require('lazy').setup {
           opts = { skip = true },
         },
       },
-      cmdline = { view = 'cmdline' },
+      cmdline = {
+        view = 'cmdline',
+
+        -- set IncRename to use command bar
+        format = {
+          inc_rename = { pattern = '^:%s*IncRename%s+', icon = ' ', ft = 'text' },
+        },
+      },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -155,8 +169,6 @@ require('lazy').setup {
       presets = {
         bottom_search = true, -- use a classic bottom cmdline for search
         command_palette = false, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = true, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = true, -- add a border to hover docs and signature help
         long_message_to_split = true, -- long messages will be sent to a split
       },
@@ -191,7 +203,7 @@ require('lazy').setup {
       }
     end,
   }, -- commenting
-  'tommcdo/vim-exchange', -- cxia
+  'tommcdo/vim-exchange', -- cxia, swap args
   'wellle/targets.vim', -- expand on bracket/comma text objects
   'folke/todo-comments.nvim', -- highlight TODO markers
   'mrjones2014/smart-splits.nvim', -- better split resizing
@@ -202,11 +214,10 @@ require('lazy').setup {
   'APZelos/blamer.nvim', -- git blame on cursor
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
   'sindrets/diffview.nvim', -- diff view / merge tool
-  'folke/trouble.nvim', -- better quickfix menu
   'kosayoda/nvim-lightbulb', -- code action lightbulb
   'weilbith/nvim-code-action-menu', -- code action menu
-  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true },
-  'wakatime/vim-wakatime',
+  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true }, -- auto insert closing brackets
+  'wakatime/vim-wakatime', -- time tracking
   -- indentation guides
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -274,6 +285,60 @@ require('lazy').setup {
       }
     end,
   },
+  -- motions for replacing/changing/deleting objects
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
+  -- visualise renaming variables
+  {
+    'smjonas/inc-rename.nvim',
+    config = function()
+      require('inc_rename').setup()
+    end,
+  },
+  -- remember sessions between closing & opening for directoriea
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
+        auto_session_suppress_dirs = { '~/', '~/Downloads', '/' },
+      }
+    end,
+  },
+  -- search and replace
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup {
+        disableBufferLineNumbers = true,
+        icons = {
+          enabled = false,
+        },
+      }
+    end,
+  },
+  -- auto-resize vsplits
+  {
+    'anuvyklack/windows.nvim',
+    dependencies = {
+      'anuvyklack/middleclass',
+      'anuvyklack/animation.nvim',
+    },
+    config = function()
+      vim.o.winwidth = 10
+      vim.o.winminwidth = 10
+      vim.o.equalalways = false
+      require('windows').setup()
+    end,
+  },
 }
 
 function _G.set_terminal_keymaps()
@@ -294,6 +359,7 @@ vim.cmd.source(vimrc)
 
 vim.opt.background = 'dark' -- set this to dark or light
 oxocarbon.setup()
+
 require 'oxocarbon.lualine'
 
 require('plugins.nvim-tree').setup()
@@ -306,7 +372,6 @@ require('plugins.nvim-gitsigns').setup()
 require('plugins.nvim-whichkey').setup()
 require('plugins.nvim-diffview').setup()
 require('plugins.nvim-fugitive').setup()
-require('plugins.nvim-trouble').setup()
 
 require('autocommands').setup()
 require('keymaps').setup()
@@ -319,7 +384,7 @@ require('nvim-autopairs').setup {
 }
 
 local lsp_zero = require 'lsp-zero'
-lsp_zero.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(_, bufnr)
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
   lsp_zero.default_keymaps { buffer = bufnr }
@@ -331,18 +396,28 @@ lsp_zero.on_attach(function(client, bufnr)
 
   -- Code action menu
   buf_set_keymap('n', 'ga', '<Cmd>CodeActionMenu<CR>', opts)
+
   -- TS imports
-  buf_set_keymap('n', 'gi', '<Cmd>TSToolsAddMissingImports<CR>', opts)
-  buf_set_keymap('n', 'go', '<Cmd>TSToolsOrganizeImports<CR>', opts)
+  buf_set_keymap('n', '<leader>gi', '<Cmd>TSToolsAddMissingImports<CR>', opts)
+  buf_set_keymap(
+    'n',
+    'go',
+    '<Cmd>lua vim.lsp.buf.execute_command({command = "_typescript.organizeImports", arguments = {vim.fn.expand("%:p")}}) <CR>',
+    opts
+  )
+
   -- Show signature help, uses <Up> because of karabiner ctrl+k to Up rebinding
   buf_set_keymap('i', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- Rename symbol under the cursor
-  buf_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.keymap.set('n', '<leader>rn', ':IncRename ')
   -- Show code references in Trouble
-  buf_set_keymap('n', 'gr', '<Cmd>Trouble lsp_references<CR>', opts)
+  buf_set_keymap('n', 'gr', '<Cmd>Glance references<CR>', opts)
   -- Go to code definitions
-  buf_set_keymap('n', 'gd', '<Cmd>Trouble lsp_definitions<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>Glance definitions<CR>', opts)
+  -- Go to code definitions
+  buf_set_keymap('n', 'gi', '<Cmd>Glance implementations<CR>', opts)
   -- Go to error diagnostics with [e and ]e
   buf_set_keymap(
     'n',

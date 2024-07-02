@@ -9,6 +9,8 @@ M.setup = function()
   map('n', '<A-q>', '<cmd>Sayonara<CR>', { silent = true })
   map('n', '<A-W>', '<cmd>Resurrect<CR>', { silent = true })
 
+  -- open search and replace
+  map('n', '<leader>sr', ':GrugFar<CR>', { silent = true })
   -- toggle line numbers
   map('n', '<leader>n', ':set number! number?<CR>', { silent = true })
   -- hide hi from search

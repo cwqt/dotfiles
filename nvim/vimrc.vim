@@ -1,8 +1,3 @@
-" use vim-surroud keybinds, e.g. sd" is now ds"
-" saa{} is now ysa{}
-" runtime macros/sandwich/keymap/surround.vim
-
-map <leader>p <Plug>(miniyank-startput)
 set laststatus=3      " global statusline
 syntax on             " hi syntax
 syntax sync minlines=256
@@ -48,6 +43,7 @@ set splitkeep=screen
 
 " change leaderkey to spacebar
 let mapleader=" "
+let maplocalleader=" "
 set timeoutlen=0 ttimeoutlen=0
 
 " hide cursor line on non-active splits
@@ -123,8 +119,6 @@ noremap gV `[v`]
 " delete whole line from cursor
 inoremap <A-Backspace> <C-o>d0
 
-" search and replace
-nnoremap <leader>sr :lua require('spectre').open()<CR>
 " disable irrating command history
 nnoremap q: <nop>
 nnoremap Q <nop>

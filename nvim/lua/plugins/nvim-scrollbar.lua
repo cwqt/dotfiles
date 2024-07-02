@@ -7,9 +7,10 @@ M.setup = function()
   --   dimInactive = true,
   -- })
 
-  require("scrollbar").setup({
+  require('scrollbar').setup {
+    marks = { Cursor = { text = ' ', highlight = 'CursorColumn' } },
     excluded_filetypes = {
-      "NvimTree",
+      'NvimTree',
     },
     -- handle = {
     --   color = colors.sumiInk1,
@@ -22,7 +23,7 @@ M.setup = function()
     --   Hint = { color = colors.dragonBlue },
     --   Misc = { color = colors.oniViolet },
     -- },
-  })
+  }
 end
 
 return M

@@ -4,6 +4,8 @@ vim.opt.shortmess = vim.opt.shortmess
     F = false, -- Do not show file info when editing a file, in the command line
     W = false, -- Do not show "written" in command line when writing
     I = true, -- Do not show intro message when starting Vim
+    a = true,
+    s = true, -- Do not show search hit bottom / top messages
   }
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -22,34 +24,34 @@ vim.opt.rtp:prepend(lazypath)
 -- FIXME: LSP doing something before lsp-zero
 vim.g.lsp_zero_extend_lspconfig = 0
 
--- Example using a list of specs with the default options
 vim.g.mapleader = ' ' -- Make sure to set `mapleader` before lazy so your mappings are correct
-vim.g.maplocalleader = '\\' -- Same for `maplocalleader`
-
-vim.opt.shortmess:append { W = true, I = true, c = true, a = true, s = true }
+vim.g.maplocalleader = ' ' -- Same for `maplocalleader`
+vim.o.fillchars = 'eob: ' -- -- Hide `~` after end of file
+vim.opt.list = true
 
 local oxocarbon = require 'oxocarbon'
 
 require('lazy').setup {
   -- LSP ------------------------------------------------
-  'neovim/nvim-lspconfig',
-  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
-  'nvimtools/none-ls.nvim', -- null-ls formatting engine
-  'williamboman/mason.nvim', -- install lsp servers
-  'williamboman/mason-lspconfig.nvim',
+  { 'neovim/nvim-lspconfig' },
+  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', config = require('plugins.nvim-lsp-zero').setup },
+  { 'williamboman/mason.nvim', config = require('plugins.nvim-mason').setup }, -- Manage LSP servers
+  { 'williamboman/mason-lspconfig.nvim' },
+  -- Garbage collector for hanging LSP clients
   {
     'zeioth/garbage-day.nvim',
     dependencies = 'neovim/nvim-lspconfig',
     event = 'VeryLazy',
   },
   -- mason null-ls integration
+  'nvimtools/none-ls.nvim', -- null-ls formatting engine
   {
     'jayp0521/mason-null-ls.nvim',
-    config = true,
     opts = {
       ensure_installed = { 'prettierd', 'stylua' },
       automatic_installation = true,
     },
+    config = require('plugins.nvim-null-ls').setup,
   },
   -- autocompletion
   {
@@ -58,6 +60,7 @@ require('lazy').setup {
       'hrsh7th/cmp-nvim-lsp', -- lsp source
       'hrsh7th/cmp-vsnip', -- vsnip source
     },
+    config = require('plugins.nvim-cmp').config,
   },
   -- snippets
   {
@@ -66,7 +69,7 @@ require('lazy').setup {
       'rafamadriz/friendly-snippets',
     },
   },
-  'onsails/lspkind.nvim', -- autocomplete icons
+  { 'onsails/lspkind.nvim' }, -- autocomplete icons
   -- syntax aware highlighting/objects
   {
     'nvim-treesitter/nvim-treesitter',
@@ -94,17 +97,29 @@ require('lazy').setup {
       }
     end,
   },
-  -- {
-  --   'pmizio/typescript-tools.nvim',
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-  --   ft = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
-  --   opts = {},
-  -- }, --
-  'nvim-treesitter/nvim-treesitter-context', -- function context
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        line_numbers = true,
+        multiline_threshold = 1, -- Maximum number of lines to show for a single context
+        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
+        -- Separator between context and content. Should be a single character string, like '-'.
+        -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+        separator = nil,
+        zindex = 20, -- The Z-index of the context window
+        on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+      }
+    end,
+  }, -- function context
   { 'windwp/nvim-ts-autotag', config = true },
 
   -------------------------------------------------------
-  ---
+
   {
     'dnlhc/glance.nvim',
     config = function()
@@ -124,9 +139,9 @@ require('lazy').setup {
     end,
   },
 
-  'mhinz/vim-sayonara', -- closing / re-opening buffers
-  'supercrabtree/vim-resurrect', -- bring back closed buffers
-  'nvim-lualine/lualine.nvim', -- status line
+  { 'mhinz/vim-sayonara' }, -- closing / re-opening buffers
+  { 'supercrabtree/vim-resurrect' }, -- bring back closed buffers
+  { 'nvim-lualine/lualine.nvim', config = require('plugins.lualine').setup }, -- status line
   -- replace cmdline / messages
   {
     'folke/noice.nvim',
@@ -178,7 +193,7 @@ require('lazy').setup {
       'MunifTanjim/nui.nvim',
     },
   },
-  'ggandor/lightspeed.nvim', -- s navigation
+  { 'ggandor/lightspeed.nvim' }, -- s navigation
   {
     'akinsho/toggleterm.nvim',
     version = '*',
@@ -188,9 +203,12 @@ require('lazy').setup {
       size = 20,
     },
   },
-  { 'petertriho/nvim-scrollbar', opts = { marks = { Cursor = { text = ' ', highlight = 'CursorColumn' } } } }, -- scrollbar hints
-  'lewis6991/gitsigns.nvim', -- git signs
-  'kyazdani42/nvim-tree.lua', -- file tree
+  {
+    'petertriho/nvim-scrollbar',
+    config = require('plugins.nvim-scrollbar').setup,
+  }, -- scrollbar hints
+  { 'lewis6991/gitsigns.nvim' }, -- git signs
+  { 'kyazdani42/nvim-tree.lua', config = require('plugins.nvim-tree').setup }, -- file tree
   {
     'numToStr/Comment.nvim',
     dependencies = {
@@ -203,21 +221,45 @@ require('lazy').setup {
       }
     end,
   }, -- commenting
-  'tommcdo/vim-exchange', -- cxia, swap args
-  'wellle/targets.vim', -- expand on bracket/comma text objects
-  'folke/todo-comments.nvim', -- highlight TODO markers
-  'mrjones2014/smart-splits.nvim', -- better split resizing
-  'michaeljsmith/vim-indent-object', -- indent text objects
-  'ruifm/gitlinker.nvim', -- link to git repos
-  'folke/which-key.nvim', -- show motions
-  'tpope/vim-fugitive', -- interactive git
-  'APZelos/blamer.nvim', -- git blame on cursor
+  { 'tommcdo/vim-exchange' }, -- cxia, swap args
+  { 'wellle/targets.vim' }, -- expand on bracket/comma text objects
+  { 'folke/todo-comments.nvim' }, -- highlight TODO markers
+  { 'mrjones2014/smart-splits.nvim' }, -- better split resizing
+  { 'michaeljsmith/vim-indent-object' }, -- indent text objects
+  {
+    'ruifm/gitlinker.nvim',
+    config = function()
+      require('gitlinker').setup {
+        opts = { print_url = true },
+        mappings = '<leader>gy',
+      }
+
+      -- Conflict markers
+      map('n', ']x', '<cmd>GitConflictNextConflict<CR>')
+      map('n', '[x', '<cmd>GitConflictPrevConflict<CR>')
+      map('n', '<leader>xo', '<cmd>GitConflictChooseOurs<CR>')
+      map('n', '<leader>xt', '<cmd>GitConflictChooseTheirs<CR>')
+      map('n', '<leader>xb', '<cmd>GitConflictChooseBoth<CR>')
+    end,
+  }, -- link to git repos
+  { 'folke/which-key.nvim', config = require('plugins.nvim-whichkey').setup }, -- show motions
+  { 'tpope/vim-fugitive', config = require('plugins.nvim-fugitive').setup }, -- interactive git
+  { 'APZelos/blamer.nvim' }, -- git blame on cursor
   { 'akinsho/git-conflict.nvim', version = '*', config = true },
-  'sindrets/diffview.nvim', -- diff view / merge tool
-  'kosayoda/nvim-lightbulb', -- code action lightbulb
-  'weilbith/nvim-code-action-menu', -- code action menu
-  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true }, -- auto insert closing brackets
-  'wakatime/vim-wakatime', -- time tracking
+  { 'sindrets/diffview.nvim', config = require('plugins.nvim-diffview').setup }, -- diff view / merge tool
+  { 'kosayoda/nvim-lightbulb', config = require('plugins.nvim-code-lightbulb').setup }, -- code action lightbulb
+  { 'weilbith/nvim-code-action-menu' }, -- code action menu
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-autopairs').setup {
+        check_ts = true,
+        enable_check_bracket_line = true,
+      }
+    end,
+  }, -- auto insert closing brackets
+  { 'wakatime/vim-wakatime' }, -- time tracking
   -- indentation guides
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -240,55 +282,14 @@ require('lazy').setup {
   -- bufferline
   {
     'willothy/nvim-cokeline',
-    dependencies = {
-      'nvim-lua/plenary.nvim', -- Required for v0.4.0+
-    },
+    config = require('plugins.nvim-cokeline').setup,
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
-  -- fuzzy finder
-  {
-    'ibhagwan/fzf-lua',
-    -- optional for icon support
-    config = function()
-      -- calling `setup` is optional for customization
-      require('fzf-lua').setup {
-        grep = {
-          prompt = 'fuzzy: ',
-          header = false,
-          no_header_i = true,
-        },
-        files = {
-          header = false,
-          no_header_i = true,
-        },
-        fzf_opts = {
-          -- options are sent as `<left>=<right>`
-          -- set to `false` to remove a flag
-          -- set to `true` for a no-value flag
-          -- for raw args use `fzf_args` instead
-          ['--ansi'] = true,
-          ['--info'] = 'inline-right',
-          ['--height'] = '100%',
-          ['--layout'] = false,
-          ['--border'] = 'none',
-          ['--highlight-line'] = true, -- fzf >= v0.53
-        },
-        winopts = {
-          height = 0.4, -- window height
-          width = 1, -- window width
-          row = 1, -- window row position (0=top, 1=bottom)
-          col = 0, -- window col position (0=left, 1=right)
-          border = 'none',
-          preview = {
-            hidden = 'hidden',
-          },
-        },
-      }
-    end,
-  },
+  { 'ibhagwan/fzf-lua', config = require('plugins.nvim-fzf').setup }, -- fuzzy finder
   -- motions for replacing/changing/deleting objects
   {
     'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    version = '*',
     event = 'VeryLazy',
     config = function()
       require('nvim-surround').setup {
@@ -341,19 +342,6 @@ require('lazy').setup {
   },
 }
 
-function _G.set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<A-h>', [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<A-j>', [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<A-k>', [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<A-l>', [[<Cmd>wincmd l<CR>]], opts)
-  vim.keymap.set('t', '<A-w>', [[<C-\><C-n><C-w>]], opts)
-end
-
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
-vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
-
 local vimrc = vim.fn.stdpath 'config' .. '/vimrc.vim'
 vim.cmd.source(vimrc)
 
@@ -362,190 +350,8 @@ oxocarbon.setup()
 
 require 'oxocarbon.lualine'
 
-require('plugins.nvim-tree').setup()
-require('plugins.nvim-code-lightbulb').setup()
-require('plugins.nvim-cokeline').setup()
-require('plugins.lualine').setup()
-require('plugins.nvim-scrollbar').setup()
-require('plugins.nvim-fzf-lua').setup()
+-- fixme: colors
 require('plugins.nvim-gitsigns').setup()
-require('plugins.nvim-whichkey').setup()
-require('plugins.nvim-diffview').setup()
-require('plugins.nvim-fugitive').setup()
 
 require('autocommands').setup()
 require('keymaps').setup()
-require 'autocomplete'
-require('git').setup()
-
-require('nvim-autopairs').setup {
-  check_ts = true,
-  enable_check_bracket_line = true,
-}
-
-local lsp_zero = require 'lsp-zero'
-lsp_zero.on_attach(function(_, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp_zero.default_keymaps { buffer = bufnr }
-
-  local opts = { noremap = true, silent = true }
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-
-  -- Code action menu
-  buf_set_keymap('n', 'ga', '<Cmd>CodeActionMenu<CR>', opts)
-
-  -- TS imports
-  buf_set_keymap('n', '<leader>gi', '<Cmd>TSToolsAddMissingImports<CR>', opts)
-  buf_set_keymap(
-    'n',
-    'go',
-    '<Cmd>lua vim.lsp.buf.execute_command({command = "_typescript.organizeImports", arguments = {vim.fn.expand("%:p")}}) <CR>',
-    opts
-  )
-
-  -- Show signature help, uses <Up> because of karabiner ctrl+k to Up rebinding
-  buf_set_keymap('i', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<Up>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- Rename symbol under the cursor
-  -- buf_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.keymap.set('n', '<leader>rn', ':IncRename ')
-  -- Show code references in Trouble
-  buf_set_keymap('n', 'gr', '<Cmd>Glance references<CR>', opts)
-  -- Go to code definitions
-  buf_set_keymap('n', 'gd', '<Cmd>Glance definitions<CR>', opts)
-  -- Go to code definitions
-  buf_set_keymap('n', 'gi', '<Cmd>Glance implementations<CR>', opts)
-  -- Go to error diagnostics with [e and ]e
-  buf_set_keymap(
-    'n',
-    ']e',
-    "<cmd>lua vim.diagnostic.goto_next({ float={ border='rounded' }, severity = "
-      .. tostring(vim.diagnostic.severity.ERROR)
-      .. ' })<CR>',
-    opts
-  )
-  buf_set_keymap(
-    'n',
-    '[e',
-    "<cmd>lua vim.diagnostic.goto_prev({ float={ border='rounded' }, severity = "
-      .. tostring(vim.diagnostic.severity.ERROR)
-      .. ' })<CR>',
-    opts
-  )
-end)
-
-local null_ls = require 'null-ls'
--- to setup format on save
-local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
-local formatting = null_ls.builtins.formatting -- to setup formatters
-
--- configure null_ls
-null_ls.setup {
-  offset_encoding = 'utf-8',
-  -- setup formatters & linters
-  sources = {
-    formatting.prettierd, -- js/ts formatter
-    formatting.stylua, -- lua formatter
-  },
-  -- configure format on save
-  on_attach = function(client, bufnr)
-    if client.supports_method 'textDocument/formatting' then
-      vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format {
-            filter = function(c)
-              --  only use null-ls for formatting instead of lsp server
-              return c.name == 'null-ls'
-            end,
-            bufnr = bufnr,
-          }
-        end,
-      })
-    end
-  end,
-}
-
--- lsp_zero.format_on_save({
---   format_opts = {
---     async = true,
---     timeout_ms = 10000,
---   },
---   servers = {
---     ['null-ls'] = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
---     ['lua_ls'] = { 'lua' },
---   }
--- })
-
-require('mason').setup {}
-require('mason-lspconfig').setup {
-  ensure_installed = { 'lua_ls', 'jsonls', 'tsserver' },
-  automatic_installation = true,
-  handlers = {
-    function(server_name)
-      -- FIXME: typescript-tools blows
-      -- if server_name == 'tsserver' then
-      --   return
-      -- end
-
-      local opts = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              runtime = {
-                -- Tell the language server which version of Lua you're using
-                -- (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-              },
-              diagnostics = { globals = { 'vim', 'require' } },
-              -- Make the server aware of Neovim runtime files
-              workspace = { library = vim.api.nvim_get_runtime_file('', true) },
-              -- Do not send telemetry data containing a randomized but unique identifier
-              telemetry = { enable = false },
-            },
-          },
-        },
-      }
-
-      require('lspconfig')[server_name].setup(opts[server_name] or {})
-    end,
-  },
-}
-
--- -- Hide `~` after end of file
-vim.o.fillchars = 'eob: '
-vim.opt.list = true
-
--- gutter symbols
-local signs = {
-  Error = '',
-  Warn = '',
-  Hint = '',
-  Info = '',
-}
-
-for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-require('treesitter-context').setup {
-  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-  line_numbers = true,
-  multiline_threshold = 1, -- Maximum number of lines to show for a single context
-  trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-  mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
-  -- Separator between context and content. Should be a single character string, like '-'.
-  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-  separator = nil,
-  zindex = 20, -- The Z-index of the context window
-  on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-}

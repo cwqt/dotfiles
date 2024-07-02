@@ -42,8 +42,6 @@ set mousescroll=ver:5,hor:0
 set splitkeep=screen
 
 " change leaderkey to spacebar
-let mapleader=" "
-let maplocalleader=" "
 set timeoutlen=0 ttimeoutlen=0
 
 " hide cursor line on non-active splits

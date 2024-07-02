@@ -2,11 +2,11 @@ local map = require 'utils.map'
 
 local M = {}
 
-local get_hex = require('cokeline/utils').get_hex
 
 function M.setup()
   local cokeline = require 'cokeline'
   local oxocarbon = require('oxocarbon').colors
+  local get_hex = require('cokeline/utils').get_hex
 
   local colors = {
     activeBg = 'NONE',
